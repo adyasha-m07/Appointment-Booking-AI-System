@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>SmartQueue - Hospital Queue Management</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- ================= HEADER ================= -->
+
+    <header class="header">
+
+        <div class="logo-section">
+
+            <div class="logo">
+                🏥
+            </div>
+
+            <div>
+                <h1 id="websiteName">SmartQueue</h1>
+
+                <p id="subtitle">
+                    AI-Powered Hospital Queue Management
+                </p>
+            </div>
+
+        </div>
+
+
+        <!-- LANGUAGE BUTTONS -->
+
+        <div class="language-buttons">
+
+            <button onclick="changeLanguage('en')">
+                English
+            </button>
+
+            <button onclick="changeLanguage('hi')">
+                हिन्दी
+            </button>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- ================= NAVIGATION ================= -->
+
+    <nav class="navbar">
+
+        <button onclick="showPage('home')" id="navHome">
+            Home
+        </button>
+
+        <button onclick="showPage('booking')" id="navBooking">
+            Book Appointment
+        </button>
+
+        <button onclick="showPage('token')" id="navToken">
+            My Token
+        </button>
+
+        <button onclick="showPage('staff')" id="navStaff">
+            Staff Dashboard
+        </button>
+
+        <button onclick="showPage('emergency')" id="navEmergency">
+            Emergency
+        </button>
+
+    </nav>
+
+
+
+    <!-- ================= HOME ================= -->
+
+    <main>
+
+        <section id="home" class="page active">
+
+            <div class="hero">
+
+                <h2 id="homeTitle">
+                    Welcome to SmartQueue
+                </h2>
+
+                <p id="homeDescription">
+                    A smart hospital queue management system
+                    designed to reduce waiting time.
+                </p>
+
+                <button class="primary-button"
+                        onclick="showPage('booking')"
+                        id="startButton">
+                    Book an Appointment
+                </button>
+
+            </div>
+
+
+            <!-- FEATURES -->
+
+            <div class="cards">
+
+                <div class="card">
+
+                    <div class="card-icon">
+                        👤
+                    </div>
+
+                    <h3 id="normalTitle">
+                        Normal Patient
+                    </h3>
+
+                    <p id="normalDescription">
+                        Book your appointment and receive a token.
+                    </p>
+
+                </div>
+
+
+                <div class="card">
+
+                    <div class="card-icon">
+                        ♿
+                    </div>
+
+                    <h3 id="specialTitle">
+                        Specially-Abled Patient
+                    </h3>
+
+                    <p id="specialDescription">
+                        Get priority assistance and a suitable doctor.
+                    </p>
+
+                </div>
+
+
+                <div class="card emergency-card">
+
+                    <div class="card-icon">
+                        🚑
+                    </div>
+
+                    <h3 id="emergencyTitle">
+                        Emergency
+                    </h3>
+
+                    <p id="emergencyDescription">
+                        Quickly register an emergency patient.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ================= BOOKING PAGE ================= -->
+
+        <section id="booking" class="page">
+
+            <div class="section-heading">
+
+                <h2 id="bookingTitle">
+                    Book Appointment
+                </h2>
+
+                <p id="bookingDescription">
+                    Select your patient type and enter your details.
+                </p>
+
+            </div>
+
+
+            <div class="form-container">
+
+                <!-- PATIENT TYPE -->
+
+                <label id="patientTypeLabel">
+                    Patient Type
+                </label>
+
+                <select id="patientType"
+                        onchange="patientTypeChanged()">
+
+                    <option value="normal" id="normalOption">
+                        Normal Patient
+                    </option>
+
+                    <option value="special"
+                            id="specialOption">
+                        Specially-Abled Patient
+                    </option>
+
+                </select>
+
+
+                <!-- PATIENT NAME -->
+
+                <label id="nameLabel">
+                    Patient Name
+                </label>
+
+                <input type="text"
+                       id="patientName"
+                       placeholder="Enter patient name">
+
+
+                <!-- AGE -->
+
+                <label id="ageLabel">
+                    Age
+                </label>
+
+                <input type="number"
+                       id="patientAge"
+                       placeholder="Enter age">
+
+
+                <!-- DEPARTMENT -->
+
+                <label for="department">Department</label>
+
+<select id="department" onchange="loadDoctors()">
+
+    <option value="">Select Department</option>
+
+    <option value="General Medicine">
+        General Medicine
+    </option>
+
+    <option value="Orthopedics">
+        Orthopedics
+    </option>
+
+</select>
+
+
+                <!-- DOCTOR -->
+
+                <label for="doctor">Doctor</label>
+
+<select id="doctor">
+
+    <option value="">Select Doctor</option>
+
+</select>
+                <!-- AI RECOMMENDATION -->
+
+                <div class="ai-recommendation">
+
+    <h3>🤖 AI Recommendation</h3>
+
+    <p id="aiMessage">
+        Select a department to see waiting times.
+    </p>
+
+    <button
+        type="button"
+        onclick="getAIRecommendation()">
+
+        Find Doctor With Less Waiting
+
+    </button>
+
+</div>
+
+
+                <!-- BOOK BUTTON -->
+
+                <button onclick="bookAppointment()"
+                        class="primary-button"
+                        id="bookButton">
+
+                    Book Appointment
+
+                </button>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ================= TOKEN PAGE ================= -->
+
+        <section id="token" class="page">
+
+            <div class="section-heading">
+
+                <h2 id="tokenTitle">
+                    Your Appointment Token
+                </h2>
+
+                <p id="tokenDescription">
+                    Your appointment details will appear here.
+                </p>
+
+            </div>
+
+
+            <div id="tokenResult"
+                 class="token-card">
+
+                <h3 id="noToken">
+                    No appointment booked yet.
+                </h3>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ================= STAFF DASHBOARD ================= -->
+
+        <section id="staff" class="page">
+
+            <div class="section-heading">
+
+                <h2 id="staffTitle">
+                    Staff Dashboard
+                </h2>
+
+                <p id="staffDescription">
+                    Monitor patients and queue status.
+                </p>
+
+            </div>
+
+
+            <!-- QUEUE TABLE -->
+
+            <div class="table-container">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th id="thToken">
+                                Token
+                            </th>
+
+                            <th id="thName">
+                                Patient
+                            </th>
+
+                            <th id="thDoctor">
+                                Doctor
+                            </th>
+
+                            <th id="thType">
+                                Type
+                            </th>
+
+                            <th id="thWaiting">
+                                Waiting Time
+                            </th>
+
+                            <th id="thStatus">
+                                Status
+                            </th>
+
+                            <th id="thAction">
+                                Action
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="queueTable">
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+
+            <!-- BED DASHBOARD -->
+
+            <div class="bed-dashboard">
+
+                <h3 id="bedTitle">
+                    Emergency Bed Status
+                </h3>
+
+                <div class="bed-cards">
+
+                    <div class="bed-card">
+
+                        <h4 id="totalBedsText">
+                            Total Beds
+                        </h4>
+
+                        <p id="totalBeds">
+                            20
+                        </p>
+
+                    </div>
+
+
+                    <div class="bed-card">
+
+                        <h4 id="occupiedBedsText">
+                            Occupied
+                        </h4>
+
+                        <p id="occupiedBeds">
+                            5
+                        </p>
+
+                    </div>
+
+
+                    <div class="bed-card">
+
+                        <h4 id="availableBedsText">
+                            Available
+                        </h4>
+
+                        <p id="availableBeds">
+                            15
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ================= EMERGENCY ================= -->
+
+        <section id="emergency" class="page">
+
+            <div class="section-heading">
+
+                <h2 id="emergencyPageTitle">
+                    Emergency Registration
+                </h2>
+
+                <p id="emergencyPageDescription">
+                    Register an emergency patient immediately.
+                </p>
+
+            </div>
+
+
+            <div class="emergency-container">
+
+                <div class="emergency-warning">
+
+                    <h3 id="emergencyWarningTitle">
+                        🚑 Emergency Patient
+                    </h3>
+
+                    <p id="emergencyWarning">
+                        Emergency patients receive priority
+                        in the hospital queue.
+                    </p>
+
+                </div>
+
+
+                <label id="emergencyNameLabel">
+                    Patient Name
+                </label>
+
+                <input type="text"
+                       id="emergencyName"
+                       placeholder="Enter patient name">
+
+
+                <label id="emergencyAgeLabel">
+                    Age
+                </label>
+
+                <input type="number"
+                       id="emergencyAge"
+                       placeholder="Enter age">
+
+
+                <label id="emergencyDepartmentLabel">
+                    Department
+                </label>
+
+                <select id="emergencyDepartment">
+
+                    <option value="Cardiology">
+                        Cardiology
+                    </option>
+
+                    <option value="Neurology">
+                        Neurology
+                    </option>
+
+                </select>
+
+
+                <button onclick="registerEmergency()"
+                        class="emergency-button"
+                        id="emergencyButton">
+
+                    Register Emergency
+
+                </button>
+
+
+                <div id="emergencyResult"
+                     class="emergency-result">
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+
+    <!-- ================= JAVASCRIPT ================= -->
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
