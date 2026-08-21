@@ -7,483 +7,1177 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
 
-    <title>SmartQueue - Hospital Queue Management</title>
+    <meta name="theme-color" content="#5d3140">
+
+    <title>SmartQueue - Smart Hospital Queue Management</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Idiqlat&family=Inter:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet">
 
     <link rel="stylesheet" href="style.css">
 </head>
 
+
 <body>
 
-    <!-- ================= HEADER ================= -->
+<!-- =====================================================
+     HEADER
+===================================================== -->
 
-    <header class="header">
+<header class="header">
 
-        <div class="logo-section">
+    <div class="logo-section">
 
-            <div class="logo">
-                🏥
+        <div class="logo">
+            🏥
+        </div>
+
+        <div class="brand-text">
+
+            <h1>SmartQueue</h1>
+
+            <p data-i18n="subtitle">
+                AI-Powered Hospital Queue Management
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- LANGUAGE -->
+
+    <div class="language-wrapper">
+
+        <span class="language-icon">🌐</span>
+
+        <select id="languageSelect"
+                onchange="changeLanguage(this.value)">
+
+            <option value="en">English</option>
+            <option value="hi">हिन्दी</option>
+            <option value="mr">मराठी</option>
+            <option value="od">ଓଡ଼ିଆ</option>
+            <option value="ta">தமிழ்</option>
+            <option value="te">తెలుగు</option>
+            <option value="kn">ಕನ್ನಡ</option>
+            <option value="gu">ગુજરાતી</option>
+            <option value="pa">ਪੰਜਾਬੀ</option>
+            <option value="ur">اردو</option>
+            <option value="fa">فارسی</option>
+            <option value="fr">Français</option>
+            <option value="es">Español</option>
+            <option value="de">Deutsch</option>
+
+        </select>
+
+    </div>
+
+</header>
+
+
+<!-- =====================================================
+     NAVIGATION
+===================================================== -->
+
+<nav class="navbar">
+
+    <div class="nav-inner">
+
+        <button class="nav-button active"
+                onclick="showPage('home', this)"
+                data-i18n="home">
+
+            🏠 Home
+
+        </button>
+
+
+        <button class="nav-button"
+                onclick="showPage('booking', this)"
+                data-i18n="booking">
+
+            📅 Book Appointment
+
+        </button>
+
+
+        <button class="nav-button"
+                onclick="showPage('token', this)"
+                data-i18n="myToken">
+
+            🎫 My Token
+
+        </button>
+
+
+        <button class="nav-button"
+                onclick="showPage('staff', this)"
+                data-i18n="staff">
+
+            📊 Staff Dashboard
+
+        </button>
+
+
+        <button class="nav-button emergency-nav"
+                onclick="showPage('emergency', this)"
+                data-i18n="emergency">
+
+            🚑 Emergency
+
+        </button>
+
+    </div>
+
+</nav>
+
+
+<main>
+
+
+<!-- =====================================================
+     HOME PAGE
+===================================================== -->
+
+<section id="home" class="page active">
+
+
+    <!-- HERO -->
+
+    <div class="hero-section">
+
+        <div class="hero-content">
+
+            <div class="hero-badge">
+                <span>✨</span>
+                <span data-i18n="smartHealthcare">
+                    Smart Healthcare • Less Waiting
+                </span>
+            </div>
+
+
+            <h2 data-i18n="welcome">
+                Healthcare that puts you first.
+            </h2>
+
+
+            <p data-i18n="heroDescription">
+                Book appointments, find the right doctor,
+                and manage your hospital visit with ease.
+            </p>
+
+
+            <button class="hero-button"
+                    onclick="openBooking('normal')"
+                    data-i18n="startBooking">
+
+                Book an Appointment
+                <span>→</span>
+
+            </button>
+
+        </div>
+
+
+        <div class="hero-visual">
+
+            <div class="hero-circle"></div>
+
+            <div class="floating-card card-one">
+
+                <span>⏱️</span>
+
+                <div>
+                    <strong>10 min</strong>
+                    <small>Avg. Waiting</small>
+                </div>
+
+            </div>
+
+
+            <div class="floating-card card-two">
+
+                <span>🤖</span>
+
+                <div>
+                    <strong>AI</strong>
+                    <small>Smart Recommendation</small>
+                </div>
+
+            </div>
+
+
+            <div class="doctor-illustration">
+                👩‍⚕️
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- SERVICE TITLE -->
+
+    <div class="section-title home-services-title">
+
+        <span data-i18n="servicesLabel">
+            OUR SERVICES
+        </span>
+
+        <h2 data-i18n="howCanWeHelp">
+            How can we help you?
+        </h2>
+
+        <p data-i18n="serviceDescription">
+            Choose the service that best fits your needs.
+        </p>
+
+    </div>
+
+
+    <!-- SERVICE CARDS -->
+
+    <div class="service-grid">
+
+
+        <!-- NORMAL -->
+
+        <div class="service-card normal-service"
+             onclick="openBooking('normal')">
+
+            <div class="service-icon">
+                👤
+            </div>
+
+            <div class="service-content">
+
+                <span class="service-label"
+                      data-i18n="regularCare">
+                    REGULAR CARE
+                </span>
+
+                <h3 data-i18n="normalPatient">
+                    Normal Patient
+                </h3>
+
+                <p data-i18n="normalDescription">
+                    Book a regular consultation with
+                    a doctor of your choice.
+                </p>
+
+                <span class="service-link">
+                    <span data-i18n="bookNow">Book Now</span>
+                    →
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- SPECIAL -->
+
+        <div class="service-card special-service"
+             onclick="openBooking('special')">
+
+            <div class="service-icon">
+                ♿
+            </div>
+
+            <div class="service-content">
+
+                <span class="service-label"
+                      data-i18n="priorityCare">
+                    PRIORITY CARE
+                </span>
+
+                <h3 data-i18n="specialPatient">
+                    Specially-Abled Patient
+                </h3>
+
+                <p data-i18n="specialDescription">
+                    Receive priority assistance and
+                    suitable doctor recommendations.
+                </p>
+
+                <span class="service-link">
+                    <span data-i18n="getPriority">
+                        Get Priority
+                    </span>
+                    →
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- EMERGENCY -->
+
+        <div class="service-card emergency-service"
+             onclick="showPage('emergency')">
+
+            <div class="service-icon">
+                🚑
+            </div>
+
+            <div class="service-content">
+
+                <span class="service-label"
+                      data-i18n="urgentCare">
+                    URGENT CARE
+                </span>
+
+                <h3 data-i18n="emergency">
+                    Emergency
+                </h3>
+
+                <p data-i18n="emergencyDescription">
+                    Quickly register an emergency
+                    patient for immediate attention.
+                </p>
+
+                <span class="service-link">
+                    <span data-i18n="registerNow">
+                        Register Now
+                    </span>
+                    →
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- FEATURES -->
+
+    <div class="feature-strip">
+
+        <div class="feature-item">
+            <span>🔒</span>
+            <div>
+                <strong data-i18n="secure">Secure</strong>
+                <small data-i18n="secureText">
+                    Your information stays protected
+                </small>
+            </div>
+        </div>
+
+
+        <div class="feature-item">
+            <span>🤖</span>
+            <div>
+                <strong data-i18n="aiPowered">AI Powered</strong>
+                <small data-i18n="aiText">
+                    Smarter doctor recommendations
+                </small>
+            </div>
+        </div>
+
+
+        <div class="feature-item">
+            <span>⏱️</span>
+            <div>
+                <strong data-i18n="lessWaiting">Less Waiting</strong>
+                <small data-i18n="waitingText">
+                    Know your estimated waiting time
+                </small>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     BOOKING PAGE
+===================================================== -->
+
+<section id="booking" class="page">
+
+
+    <div class="booking-header">
+
+        <div>
+
+            <span class="page-eyebrow"
+                  data-i18n="appointment">
+                APPOINTMENT
+            </span>
+
+            <h2 data-i18n="bookAppointment">
+                Book Your Appointment
+            </h2>
+
+            <p data-i18n="bookingDescription">
+                Tell us what you need and we'll help
+                you find the right doctor.
+            </p>
+
+        </div>
+
+
+        <div class="booking-step">
+
+            <span>1</span>
+            <span data-i18n="simpleFast">
+                Simple & Fast
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <!-- PATIENT TYPE -->
+
+    <div class="booking-section">
+
+        <div class="booking-section-heading">
+
+            <div class="step-number">
+                01
             </div>
 
             <div>
-                <h1 id="websiteName">SmartQueue</h1>
 
-                <p id="subtitle">
-                    AI-Powered Hospital Queue Management
+                <h3 data-i18n="choosePatientType">
+                    Choose Patient Type
+                </h3>
+
+                <p data-i18n="patientTypeDescription">
+                    Select the option that best describes
+                    your visit.
                 </p>
+
             </div>
 
         </div>
 
 
-        <!-- LANGUAGE BUTTONS -->
+        <div class="choice-grid">
 
-        <div class="language-buttons">
 
-            <button onclick="changeLanguage('en')">
-                English
-            </button>
+            <div id="normalChoice"
+                 class="choice-card selected"
+                 onclick="selectPatientType('normal')">
 
-            <button onclick="changeLanguage('hi')">
-                हिन्दी
+                <div class="choice-icon">
+                    👤
+                </div>
+
+                <div class="choice-info">
+
+                    <h4 data-i18n="normalPatient">
+                        Normal Patient
+                    </h4>
+
+                    <p data-i18n="normalChoiceText">
+                        Standard medical consultation
+                    </p>
+
+                </div>
+
+                <div class="choice-check">
+                    ✓
+                </div>
+
+            </div>
+
+
+            <div id="specialChoice"
+                 class="choice-card"
+                 onclick="selectPatientType('special')">
+
+                <div class="choice-icon">
+                    ♿
+                </div>
+
+                <div class="choice-info">
+
+                    <h4 data-i18n="specialPatient">
+                        Specially-Abled Patient
+                    </h4>
+
+                    <p data-i18n="specialChoiceText">
+                        Priority assistance and support
+                    </p>
+
+                </div>
+
+                <div class="choice-check">
+                    ✓
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <input type="hidden"
+               id="patientType"
+               value="normal">
+
+    </div>
+
+
+
+    <!-- DEPARTMENT -->
+
+    <div class="booking-section">
+
+        <div class="booking-section-heading">
+
+            <div class="step-number">
+                02
+            </div>
+
+            <div>
+
+                <h3 data-i18n="chooseDepartment">
+                    Choose Department
+                </h3>
+
+                <p data-i18n="departmentDescription">
+                    Select a department to see available doctors.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div id="departmentGrid"
+             class="department-grid">
+
+            <!-- Generated by JS -->
+
+        </div>
+
+
+        <input type="hidden"
+               id="department">
+
+    </div>
+
+
+
+    <!-- DOCTORS -->
+
+    <div class="booking-section">
+
+        <div class="booking-section-heading">
+
+            <div class="step-number">
+                03
+            </div>
+
+            <div>
+
+                <h3 data-i18n="chooseDoctor">
+                    Choose Your Doctor
+                </h3>
+
+                <p data-i18n="doctorDescription">
+                    Compare doctors and choose the one
+                    that suits you best.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- AI -->
+
+        <div class="ai-recommendation">
+
+            <div class="ai-icon">
+                🤖
+            </div>
+
+            <div class="ai-content">
+
+                <div class="ai-heading">
+
+                    <h3 data-i18n="aiRecommendation">
+                        SmartQueue AI Recommendation
+                    </h3>
+
+                    <span data-i18n="smartPick">
+                        SMART PICK
+                    </span>
+
+                </div>
+
+                <p id="aiMessage"
+                   data-i18n="selectDepartment">
+                    Select a department to see doctor
+                    waiting times.
+                </p>
+
+            </div>
+
+            <button class="ai-button"
+                    type="button"
+                    onclick="getAIRecommendation()"
+                    data-i18n="findBestDoctor">
+
+                Find Best Doctor
+
             </button>
 
         </div>
 
-    </header>
 
+        <div id="doctorGrid"
+             class="doctor-grid">
 
+            <div class="empty-doctors">
 
-    <!-- ================= NAVIGATION ================= -->
+                <div>👨‍⚕️</div>
 
-    <nav class="navbar">
+                <h3 data-i18n="selectDepartmentFirst">
+                    Select a department first
+                </h3>
 
-        <button onclick="showPage('home')" id="navHome">
-            Home
-        </button>
-
-        <button onclick="showPage('booking')" id="navBooking">
-            Book Appointment
-        </button>
-
-        <button onclick="showPage('token')" id="navToken">
-            My Token
-        </button>
-
-        <button onclick="showPage('staff')" id="navStaff">
-            Staff Dashboard
-        </button>
-
-        <button onclick="showPage('emergency')" id="navEmergency">
-            Emergency
-        </button>
-
-    </nav>
-
-
-
-    <!-- ================= HOME ================= -->
-
-    <main>
-
-        <section id="home" class="page active">
-
-            <div class="hero">
-
-                <h2 id="homeTitle">
-                    Welcome to SmartQueue
-                </h2>
-
-                <p id="homeDescription">
-                    A smart hospital queue management system
-                    designed to reduce waiting time.
-                </p>
-
-                <button class="primary-button"
-                        onclick="showPage('booking')"
-                        id="startButton">
-                    Book an Appointment
-                </button>
-
-            </div>
-
-
-            <!-- FEATURES -->
-
-            <div class="cards">
-
-                <div class="card">
-
-                    <div class="card-icon">
-                        👤
-                    </div>
-
-                    <h3 id="normalTitle">
-                        Normal Patient
-                    </h3>
-
-                    <p id="normalDescription">
-                        Book your appointment and receive a token.
-                    </p>
-
-                </div>
-
-
-                <div class="card">
-
-                    <div class="card-icon">
-                        ♿
-                    </div>
-
-                    <h3 id="specialTitle">
-                        Specially-Abled Patient
-                    </h3>
-
-                    <p id="specialDescription">
-                        Get priority assistance and a suitable doctor.
-                    </p>
-
-                </div>
-
-
-                <div class="card emergency-card">
-
-                    <div class="card-icon">
-                        🚑
-                    </div>
-
-                    <h3 id="emergencyTitle">
-                        Emergency
-                    </h3>
-
-                    <p id="emergencyDescription">
-                        Quickly register an emergency patient.
-                    </p>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-
-        <!-- ================= BOOKING PAGE ================= -->
-
-        <section id="booking" class="page">
-
-            <div class="section-heading">
-
-                <h2 id="bookingTitle">
-                    Book Appointment
-                </h2>
-
-                <p id="bookingDescription">
-                    Select your patient type and enter your details.
+                <p data-i18n="selectDepartmentText">
+                    Available doctors will appear here.
                 </p>
 
             </div>
 
-
-            <div class="form-container">
-
-                <!-- PATIENT TYPE -->
-
-                <label id="patientTypeLabel">
-                    Patient Type
-                </label>
-
-                <select id="patientType"
-                        onchange="patientTypeChanged()">
-
-                    <option value="normal" id="normalOption">
-                        Normal Patient
-                    </option>
-
-                    <option value="special"
-                            id="specialOption">
-                        Specially-Abled Patient
-                    </option>
-
-                </select>
+        </div>
 
 
-                <!-- PATIENT NAME -->
+        <input type="hidden"
+               id="doctor">
 
-                <label id="nameLabel">
+    </div>
+
+
+
+    <!-- PATIENT DETAILS -->
+
+    <div class="booking-section">
+
+        <div class="booking-section-heading">
+
+            <div class="step-number">
+                04
+            </div>
+
+            <div>
+
+                <h3 data-i18n="patientDetails">
+                    Patient Details
+                </h3>
+
+                <p data-i18n="detailsDescription">
+                    Enter the patient's basic information.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="patient-form">
+
+            <div class="form-group">
+
+                <label data-i18n="patientName">
                     Patient Name
                 </label>
 
                 <input type="text"
                        id="patientName"
-                       placeholder="Enter patient name">
+                       placeholder="Enter patient name"
+                       data-placeholder="patientNamePlaceholder">
+
+            </div>
 
 
-                <!-- AGE -->
+            <div class="form-group">
 
-                <label id="ageLabel">
+                <label data-i18n="age">
                     Age
                 </label>
 
                 <input type="number"
                        id="patientAge"
-                       placeholder="Enter age">
+                       min="1"
+                       max="120"
+                       placeholder="Enter age"
+                       data-placeholder="agePlaceholder">
+
+            </div>
+
+        </div>
+
+    </div>
 
 
-                <!-- DEPARTMENT -->
 
-                <label for="department">Department</label>
+    <!-- FINAL BOOK -->
 
-<select id="department" onchange="loadDoctors()">
+    <div class="booking-footer">
 
-    <option value="">Select Department</option>
+        <div class="booking-summary">
 
-    <option value="General Medicine">
-        General Medicine
-    </option>
+            <span>✓</span>
 
-    <option value="Orthopedics">
-        Orthopedics
-    </option>
+            <div>
 
-</select>
+                <strong data-i18n="ready">
+                    Ready to book?
+                </strong>
 
+                <small data-i18n="reviewDetails">
+                    Review your details before confirming.
+                </small>
 
-                <!-- DOCTOR -->
+            </div>
 
-                <label for="doctor">Doctor</label>
-
-<select id="doctor">
-
-    <option value="">Select Doctor</option>
-
-</select>
-                <!-- AI RECOMMENDATION -->
-
-                <div class="ai-recommendation">
-
-    <h3>🤖 AI Recommendation</h3>
-
-    <p id="aiMessage">
-        Select a department to see waiting times.
-    </p>
-
-    <button
-        type="button"
-        onclick="getAIRecommendation()">
-
-        Find Doctor With Less Waiting
-
-    </button>
-
-</div>
+        </div>
 
 
-                <!-- BOOK BUTTON -->
+        <button class="book-button"
+                onclick="bookAppointment()">
 
-                <button onclick="bookAppointment()"
-                        class="primary-button"
-                        id="bookButton">
+            <span data-i18n="confirmAppointment">
+                Confirm Appointment
+            </span>
 
-                    Book Appointment
+            <span>→</span>
 
+        </button>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     TOKEN PAGE
+===================================================== -->
+
+<section id="token" class="page">
+
+    <div class="token-page">
+
+        <div class="page-eyebrow"
+             data-i18n="yourAppointment">
+            YOUR APPOINTMENT
+        </div>
+
+        <h2 data-i18n="appointmentToken">
+            Appointment Token
+        </h2>
+
+        <p data-i18n="tokenDescription">
+            Your appointment details will appear here.
+        </p>
+
+
+        <div id="tokenResult"
+             class="token-card">
+
+            <div class="empty-token">
+
+                <div class="empty-icon">
+                    🎫
+                </div>
+
+                <h3 data-i18n="noAppointment">
+                    No appointment booked yet
+                </h3>
+
+                <p data-i18n="bookToGetToken">
+                    Book an appointment to receive your token.
+                </p>
+
+                <button class="small-primary"
+                        onclick="openBooking('normal')"
+                        data-i18n="bookNow">
+                    Book Now
                 </button>
 
             </div>
 
-        </section>
+        </div>
+
+    </div>
+
+</section>
 
 
 
-        <!-- ================= TOKEN PAGE ================= -->
+<!-- =====================================================
+     STAFF DASHBOARD
+===================================================== -->
 
-        <section id="token" class="page">
+<section id="staff" class="page">
 
-            <div class="section-heading">
+    <div class="dashboard-header">
 
-                <h2 id="tokenTitle">
-                    Your Appointment Token
-                </h2>
+        <div>
 
-                <p id="tokenDescription">
-                    Your appointment details will appear here.
-                </p>
+            <span class="page-eyebrow"
+                  data-i18n="staffDashboard">
+                STAFF DASHBOARD
+            </span>
+
+            <h2 data-i18n="queueOverview">
+                Queue Overview
+            </h2>
+
+            <p data-i18n="staffDescription">
+                Monitor patients, doctors and hospital capacity.
+            </p>
+
+        </div>
+
+        <div class="live-status">
+            <span></span>
+            <span data-i18n="live">
+                Live
+            </span>
+        </div>
+
+    </div>
+
+
+    <!-- STATS -->
+
+    <div class="stats-grid">
+
+        <div class="stat-card">
+
+            <div class="stat-icon purple">
+                👥
+            </div>
+
+            <div>
+
+                <span data-i18n="totalPatients">
+                    Total Patients
+                </span>
+
+                <strong id="totalPatients">
+                    0
+                </strong>
 
             </div>
 
+        </div>
 
-            <div id="tokenResult"
-                 class="token-card">
 
-                <h3 id="noToken">
-                    No appointment booked yet.
+        <div class="stat-card">
+
+            <div class="stat-icon pink">
+                ⏱️
+            </div>
+
+            <div>
+
+                <span data-i18n="waiting">
+                    Waiting
+                </span>
+
+                <strong id="waitingPatients">
+                    0
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon green">
+                ✓
+            </div>
+
+            <div>
+
+                <span data-i18n="completed">
+                    Completed
+                </span>
+
+                <strong id="completedPatients">
+                    0
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon orange">
+                🛏️
+            </div>
+
+            <div>
+
+                <span data-i18n="availableBeds">
+                    Available Beds
+                </span>
+
+                <strong id="dashboardAvailableBeds">
+                    15
+                </strong>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- QUEUE -->
+
+    <div class="dashboard-panel">
+
+        <div class="panel-heading">
+
+            <div>
+
+                <h3 data-i18n="patientQueue">
+                    Patient Queue
                 </h3>
 
-            </div>
-
-        </section>
-
-
-
-        <!-- ================= STAFF DASHBOARD ================= -->
-
-        <section id="staff" class="page">
-
-            <div class="section-heading">
-
-                <h2 id="staffTitle">
-                    Staff Dashboard
-                </h2>
-
-                <p id="staffDescription">
-                    Monitor patients and queue status.
+                <p data-i18n="queueDescription">
+                    Current appointments and their status.
                 </p>
 
             </div>
 
+            <span class="queue-count"
+                  id="queueCount">
+                0 Patients
+            </span>
 
-            <!-- QUEUE TABLE -->
-
-            <div class="table-container">
-
-                <table>
-
-                    <thead>
-
-                        <tr>
-
-                            <th id="thToken">
-                                Token
-                            </th>
-
-                            <th id="thName">
-                                Patient
-                            </th>
-
-                            <th id="thDoctor">
-                                Doctor
-                            </th>
-
-                            <th id="thType">
-                                Type
-                            </th>
-
-                            <th id="thWaiting">
-                                Waiting Time
-                            </th>
-
-                            <th id="thStatus">
-                                Status
-                            </th>
-
-                            <th id="thAction">
-                                Action
-                            </th>
-
-                        </tr>
-
-                    </thead>
+        </div>
 
 
-                    <tbody id="queueTable">
+        <div class="table-container">
 
-                    </tbody>
+            <table>
 
-                </table>
+                <thead>
 
-            </div>
+                    <tr>
+
+                        <th data-i18n="token">
+                            Token
+                        </th>
+
+                        <th data-i18n="patient">
+                            Patient
+                        </th>
+
+                        <th data-i18n="doctor">
+                            Doctor
+                        </th>
+
+                        <th data-i18n="type">
+                            Type
+                        </th>
+
+                        <th data-i18n="waitingTime">
+                            Waiting
+                        </th>
+
+                        <th data-i18n="status">
+                            Status
+                        </th>
+
+                        <th data-i18n="action">
+                            Action
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody id="queueTable">
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
 
 
+    <!-- BEDS -->
 
-            <!-- BED DASHBOARD -->
+    <div class="dashboard-panel bed-panel">
 
-            <div class="bed-dashboard">
+        <div class="panel-heading">
 
-                <h3 id="bedTitle">
+            <div>
+
+                <h3 data-i18n="bedStatus">
                     Emergency Bed Status
                 </h3>
 
-                <div class="bed-cards">
+                <p data-i18n="bedDescription">
+                    Current emergency department capacity.
+                </p>
 
-                    <div class="bed-card">
+            </div>
 
-                        <h4 id="totalBedsText">
-                            Total Beds
-                        </h4>
-
-                        <p id="totalBeds">
-                            20
-                        </p>
-
-                    </div>
+        </div>
 
 
-                    <div class="bed-card">
+        <div class="bed-cards">
 
-                        <h4 id="occupiedBedsText">
-                            Occupied
-                        </h4>
+            <div class="bed-card">
 
-                        <p id="occupiedBeds">
-                            5
-                        </p>
+                <span class="bed-icon">
+                    🛏️
+                </span>
 
-                    </div>
+                <div>
 
+                    <small data-i18n="totalBeds">
+                        Total Beds
+                    </small>
 
-                    <div class="bed-card">
-
-                        <h4 id="availableBedsText">
-                            Available
-                        </h4>
-
-                        <p id="availableBeds">
-                            15
-                        </p>
-
-                    </div>
+                    <strong id="totalBeds">
+                        20
+                    </strong>
 
                 </div>
 
             </div>
 
-        </section>
+
+            <div class="bed-card occupied">
+
+                <span class="bed-icon">
+                    🔴
+                </span>
+
+                <div>
+
+                    <small data-i18n="occupied">
+                        Occupied
+                    </small>
+
+                    <strong id="occupiedBeds">
+                        5
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="bed-card available">
+
+                <span class="bed-icon">
+                    🟢
+                </span>
+
+                <div>
+
+                    <small data-i18n="available">
+                        Available
+                    </small>
+
+                    <strong id="availableBeds">
+                        15
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
 
 
 
-        <!-- ================= EMERGENCY ================= -->
+<!-- =====================================================
+     EMERGENCY PAGE
+===================================================== -->
 
-        <section id="emergency" class="page">
+<section id="emergency" class="page">
 
-            <div class="section-heading">
+    <div class="emergency-page">
 
-                <h2 id="emergencyPageTitle">
+        <div class="emergency-header">
+
+            <div class="emergency-icon-large">
+                🚑
+            </div>
+
+            <div>
+
+                <span class="page-eyebrow">
+                    EMERGENCY
+                </span>
+
+                <h2 data-i18n="emergencyRegistration">
                     Emergency Registration
                 </h2>
 
-                <p id="emergencyPageDescription">
+                <p data-i18n="emergencyPageDescription">
                     Register an emergency patient immediately.
                 </p>
 
             </div>
 
-
-            <div class="emergency-container">
-
-                <div class="emergency-warning">
-
-                    <h3 id="emergencyWarningTitle">
-                        🚑 Emergency Patient
-                    </h3>
-
-                    <p id="emergencyWarning">
-                        Emergency patients receive priority
-                        in the hospital queue.
-                    </p>
-
-                </div>
+        </div>
 
 
-                <label id="emergencyNameLabel">
+        <div class="emergency-alert">
+
+            <div>
+                ⚠️
+            </div>
+
+            <div>
+
+                <strong data-i18n="emergencyPriority">
+                    Emergency patients receive priority.
+                </strong>
+
+                <p data-i18n="emergencyPriorityText">
+                    Please provide accurate information so
+                    hospital staff can respond quickly.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="emergency-form">
+
+            <div class="form-group">
+
+                <label data-i18n="patientName">
                     Patient Name
                 </label>
 
@@ -491,21 +1185,35 @@
                        id="emergencyName"
                        placeholder="Enter patient name">
 
+            </div>
 
-                <label id="emergencyAgeLabel">
+
+            <div class="form-group">
+
+                <label data-i18n="age">
                     Age
                 </label>
 
                 <input type="number"
                        id="emergencyAge"
+                       min="1"
+                       max="120"
                        placeholder="Enter age">
 
+            </div>
 
-                <label id="emergencyDepartmentLabel">
+
+            <div class="form-group">
+
+                <label data-i18n="department">
                     Department
                 </label>
 
                 <select id="emergencyDepartment">
+
+                    <option value="Emergency Care">
+                        Emergency Care
+                    </option>
 
                     <option value="Cardiology">
                         Cardiology
@@ -517,32 +1225,39 @@
 
                 </select>
 
-
-                <button onclick="registerEmergency()"
-                        class="emergency-button"
-                        id="emergencyButton">
-
-                    Register Emergency
-
-                </button>
+            </div>
 
 
-                <div id="emergencyResult"
-                     class="emergency-result">
+            <button class="emergency-button"
+                    onclick="registerEmergency()">
 
-                </div>
+                🚑
+                <span data-i18n="registerEmergency">
+                    Register Emergency Patient
+                </span>
+
+            </button>
+
+
+            <div id="emergencyResult"
+                 class="emergency-result">
 
             </div>
 
-        </section>
+        </div>
 
-    </main>
+    </div>
+
+</section>
+
+</main>
 
 
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
 
-    <!-- ================= JAVASCRIPT ================= -->
-
-    <script src="script.js"></script>
+<script src="script.js"></script>
 
 </body>
 

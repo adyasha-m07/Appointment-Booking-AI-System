@@ -1,557 +1,2529 @@
 /* =====================================================
-   SMARTQUEUE JAVASCRIPT
-   Beginner-friendly version
-   No i18next
-   No data-i18n
-   ===================================================== */
+   SMARTQUEUE
+   MODERN FRONTEND JAVASCRIPT
+
+   Beginner-friendly
+   No external JS libraries
+===================================================== */
 
 
 /* =====================================================
    1. LANGUAGE SYSTEM
-   ===================================================== */
+===================================================== */
 
 let currentLanguage = "en";
 
 
-function changeLanguage(language) {
+const translations = {
 
-    currentLanguage = language;
+    en: {
 
+        subtitle: "AI-Powered Hospital Queue Management",
 
-    if (language === "hi") {
+        home: "🏠 Home",
+        booking: "📅 Book Appointment",
+        myToken: "🎫 My Token",
+        staff: "📊 Staff Dashboard",
+        emergency: "🚑 Emergency",
 
-        /* HEADER */
+        smartHealthcare: "Smart Healthcare • Less Waiting",
 
-        document.getElementById("websiteName").textContent =
-            "स्मार्टक्यू";
+        welcome: "Healthcare that puts you first.",
 
-        document.getElementById("subtitle").textContent =
-            "AI-संचालित अस्पताल कतार प्रबंधन";
+        heroDescription:
+            "Book appointments, find the right doctor, and manage your hospital visit with ease.",
 
+        startBooking: "Book an Appointment",
 
-        /* NAVIGATION */
+        servicesLabel: "OUR SERVICES",
+        howCanWeHelp: "How can we help you?",
 
-        document.getElementById("navHome").textContent =
-            "होम";
+        serviceDescription:
+            "Choose the service that best fits your needs.",
 
-        document.getElementById("navBooking").textContent =
-            "अपॉइंटमेंट बुक करें";
+        regularCare: "REGULAR CARE",
 
-        document.getElementById("navToken").textContent =
-            "मेरा टोकन";
+        normalPatient: "Normal Patient",
 
-        document.getElementById("navStaff").textContent =
-            "स्टाफ डैशबोर्ड";
+        normalDescription:
+            "Book a regular consultation with a doctor of your choice.",
 
-        document.getElementById("navEmergency").textContent =
-            "आपातकाल";
+        bookNow: "Book Now",
 
+        priorityCare: "PRIORITY CARE",
 
-        /* HOME */
+        specialPatient: "Specially-Abled Patient",
 
-        document.getElementById("homeTitle").textContent =
-            "स्मार्टक्यू में आपका स्वागत है";
+        specialDescription:
+            "Receive priority assistance and suitable doctor recommendations.",
 
-        document.getElementById("homeDescription").textContent =
-            "प्रतीक्षा समय कम करने के लिए एक स्मार्ट अस्पताल कतार प्रबंधन प्रणाली।";
+        getPriority: "Get Priority",
 
-        document.getElementById("startButton").textContent =
-            "अपॉइंटमेंट बुक करें";
+        urgentCare: "URGENT CARE",
 
+        emergencyDescription:
+            "Quickly register an emergency patient for immediate attention.",
 
-        document.getElementById("normalTitle").textContent =
-            "सामान्य मरीज";
+        registerNow: "Register Now",
 
-        document.getElementById("normalDescription").textContent =
-            "अपना अपॉइंटमेंट बुक करें और टोकन प्राप्त करें.";
+        secure: "Secure",
+        secureText: "Your information stays protected",
 
-        document.getElementById("specialTitle").textContent =
-            "विशेष रूप से सक्षम मरीज";
+        aiPowered: "AI Powered",
+        aiText: "Smarter doctor recommendations",
 
-        document.getElementById("specialDescription").textContent =
-            "प्राथमिकता सहायता और उपयुक्त डॉक्टर प्राप्त करें.";
+        lessWaiting: "Less Waiting",
+        waitingText: "Know your estimated waiting time",
 
-        document.getElementById("emergencyTitle").textContent =
-            "आपातकाल";
+        appointment: "APPOINTMENT",
 
-        document.getElementById("emergencyDescription").textContent =
-            "आपातकालीन मरीज को तुरंत पंजीकृत करें.";
+        bookAppointment: "Book Your Appointment",
 
+        bookingDescription:
+            "Tell us what you need and we'll help you find the right doctor.",
 
-        /* BOOKING */
+        simpleFast: "Simple & Fast",
 
-        document.getElementById("bookingTitle").textContent =
-            "अपॉइंटमेंट बुक करें";
+        choosePatientType: "Choose Patient Type",
 
-        document.getElementById("bookingDescription").textContent =
-            "मरीज का प्रकार चुनें और अपनी जानकारी दर्ज करें.";
+        patientTypeDescription:
+            "Select the option that best describes your visit.",
 
-        document.getElementById("patientTypeLabel").textContent =
-            "मरीज का प्रकार";
+        normalChoiceText:
+            "Standard medical consultation",
 
-        document.getElementById("nameLabel").textContent =
-            "मरीज का नाम";
+        specialChoiceText:
+            "Priority assistance and support",
 
-        document.getElementById("ageLabel").textContent =
-            "उम्र";
+        chooseDepartment: "Choose Department",
 
-        document.getElementById("departmentLabel").textContent =
-            "विभाग";
+        departmentDescription:
+            "Select a department to see available doctors.",
 
-        document.getElementById("doctorLabel").textContent =
-            "डॉक्टर";
+        chooseDoctor: "Choose Your Doctor",
 
-        document.getElementById("aiTitle").textContent =
-            "🤖 AI सुझाव";
+        doctorDescription:
+            "Compare doctors and choose the one that suits you best.",
 
-        document.getElementById("aiButton").textContent =
-            "कम प्रतीक्षा वाले डॉक्टर को खोजें";
+        aiRecommendation:
+            "SmartQueue AI Recommendation",
 
-        document.getElementById("bookButton").textContent =
-            "अपॉइंटमेंट बुक करें";
+        smartPick: "SMART PICK",
 
+        selectDepartment:
+            "Select a department to see doctor waiting times.",
 
-        document.getElementById("normalOption").textContent =
-            "सामान्य मरीज";
+        findBestDoctor:
+            "Find Best Doctor",
 
-        document.getElementById("specialOption").textContent =
-            "विशेष रूप से सक्षम मरीज";
+        selectDepartmentFirst:
+            "Select a department first",
 
+        selectDepartmentText:
+            "Available doctors will appear here.",
 
-        /* TOKEN */
+        patientDetails:
+            "Patient Details",
 
-        document.getElementById("tokenTitle").textContent =
-            "आपका अपॉइंटमेंट टोकन";
+        detailsDescription:
+            "Enter the patient's basic information.",
 
-        document.getElementById("tokenDescription").textContent =
-            "आपके अपॉइंटमेंट की जानकारी यहां दिखाई देगी.";
+        patientName:
+            "Patient Name",
 
+        age:
+            "Age",
 
-        /* STAFF */
+        patientNamePlaceholder:
+            "Enter patient name",
 
-        document.getElementById("staffTitle").textContent =
-            "स्टाफ डैशबोर्ड";
+        agePlaceholder:
+            "Enter age",
 
-        document.getElementById("staffDescription").textContent =
-            "मरीजों और कतार की स्थिति देखें.";
+        ready:
+            "Ready to book?",
 
-        document.getElementById("thToken").textContent =
-            "टोकन";
+        reviewDetails:
+            "Review your details before confirming.",
 
-        document.getElementById("thName").textContent =
-            "मरीज";
+        confirmAppointment:
+            "Confirm Appointment",
 
-        document.getElementById("thDoctor").textContent =
-            "डॉक्टर";
+        yourAppointment:
+            "YOUR APPOINTMENT",
 
-        document.getElementById("thType").textContent =
-            "प्रकार";
+        appointmentToken:
+            "Appointment Token",
 
-        document.getElementById("thWaiting").textContent =
-            "प्रतीक्षा समय";
+        tokenDescription:
+            "Your appointment details will appear here.",
 
-        document.getElementById("thStatus").textContent =
-            "स्थिति";
+        noAppointment:
+            "No appointment booked yet",
 
-        document.getElementById("thAction").textContent =
-            "कार्य";
+        bookToGetToken:
+            "Book an appointment to receive your token.",
 
-        document.getElementById("bedTitle").textContent =
-            "आपातकालीन बेड की स्थिति";
+        staffDashboard:
+            "STAFF DASHBOARD",
 
-        document.getElementById("totalBedsText").textContent =
-            "कुल बेड";
+        queueOverview:
+            "Queue Overview",
 
-        document.getElementById("occupiedBedsText").textContent =
-            "भरे हुए";
+        staffDescription:
+            "Monitor patients, doctors and hospital capacity.",
 
-        document.getElementById("availableBedsText").textContent =
-            "उपलब्ध";
+        live:
+            "Live",
 
+        totalPatients:
+            "Total Patients",
 
-        /* EMERGENCY */
+        waiting:
+            "Waiting",
 
-        document.getElementById("emergencyPageTitle").textContent =
-            "आपातकालीन पंजीकरण";
+        completed:
+            "Completed",
 
-        document.getElementById("emergencyPageDescription").textContent =
-            "आपातकालीन मरीज को तुरंत पंजीकृत करें.";
+        availableBeds:
+            "Available Beds",
 
-        document.getElementById("emergencyWarningTitle").textContent =
-            "🚑 आपातकालीन मरीज";
+        patientQueue:
+            "Patient Queue",
 
-        document.getElementById("emergencyWarning").textContent =
-            "आपातकालीन मरीजों को अस्पताल की कतार में प्राथमिकता दी जाती है.";
+        queueDescription:
+            "Current appointments and their status.",
 
-        document.getElementById("emergencyNameLabel").textContent =
-            "मरीज का नाम";
+        token:
+            "Token",
 
-        document.getElementById("emergencyAgeLabel").textContent =
-            "उम्र";
+        patient:
+            "Patient",
 
-        document.getElementById("emergencyDepartmentLabel").textContent =
-            "विभाग";
+        doctor:
+            "Doctor",
 
-        document.getElementById("emergencyButton").textContent =
-            "आपातकालीन मरीज पंजीकृत करें";
+        type:
+            "Type",
+
+        waitingTime:
+            "Waiting",
+
+        status:
+            "Status",
+
+        action:
+            "Action",
+
+        bedStatus:
+            "Emergency Bed Status",
+
+        bedDescription:
+            "Current emergency department capacity.",
+
+        totalBeds:
+            "Total Beds",
+
+        occupied:
+            "Occupied",
+
+        available:
+            "Available",
+
+        emergencyRegistration:
+            "Emergency Registration",
+
+        emergencyPageDescription:
+            "Register an emergency patient immediately.",
+
+        emergencyPriority:
+            "Emergency patients receive priority.",
+
+        emergencyPriorityText:
+            "Please provide accurate information so hospital staff can respond quickly.",
+
+        department:
+            "Department",
+
+        registerEmergency:
+            "Register Emergency Patient"
+
+    },
+
+
+    hi: {
+
+        subtitle: "AI-संचालित अस्पताल कतार प्रबंधन",
+
+        home: "🏠 होम",
+        booking: "📅 अपॉइंटमेंट",
+        myToken: "🎫 मेरा टोकन",
+        staff: "📊 स्टाफ डैशबोर्ड",
+        emergency: "🚑 आपातकाल",
+
+        smartHealthcare: "स्मार्ट हेल्थकेयर • कम प्रतीक्षा",
+
+        welcome: "आपका स्वास्थ्य, हमारी प्राथमिकता।",
+
+        heroDescription:
+            "अपॉइंटमेंट बुक करें, सही डॉक्टर खोजें और अपनी अस्पताल यात्रा आसानी से प्रबंधित करें।",
+
+        startBooking: "अपॉइंटमेंट बुक करें",
+
+        servicesLabel: "हमारी सेवाएं",
+
+        howCanWeHelp:
+            "हम आपकी कैसे मदद कर सकते हैं?",
+
+        serviceDescription:
+            "अपनी आवश्यकता के अनुसार सेवा चुनें।",
+
+        regularCare:
+            "सामान्य देखभाल",
+
+        normalPatient:
+            "सामान्य मरीज",
+
+        normalDescription:
+            "अपनी पसंद के डॉक्टर से नियमित परामर्श बुक करें।",
+
+        bookNow:
+            "अभी बुक करें",
+
+        priorityCare:
+            "प्राथमिकता देखभाल",
+
+        specialPatient:
+            "विशेष रूप से सक्षम मरीज",
+
+        specialDescription:
+            "प्राथमिकता सहायता और उपयुक्त डॉक्टर की सलाह प्राप्त करें।",
+
+        getPriority:
+            "प्राथमिकता प्राप्त करें",
+
+        urgentCare:
+            "आपातकालीन देखभाल",
+
+        emergencyDescription:
+            "आपातकालीन मरीज को तुरंत पंजीकृत करें।",
+
+        registerNow:
+            "अभी पंजीकरण करें",
+
+        secure:
+            "सुरक्षित",
+
+        secureText:
+            "आपकी जानकारी सुरक्षित रहती है",
+
+        aiPowered:
+            "AI संचालित",
+
+        aiText:
+            "स्मार्ट डॉक्टर सुझाव",
+
+        lessWaiting:
+            "कम प्रतीक्षा",
+
+        waitingText:
+            "अनुमानित प्रतीक्षा समय जानें",
+
+        appointment:
+            "अपॉइंटमेंट",
+
+        bookAppointment:
+            "अपना अपॉइंटमेंट बुक करें",
+
+        bookingDescription:
+            "अपनी आवश्यकता बताएं और हम सही डॉक्टर खोजने में मदद करेंगे।",
+
+        simpleFast:
+            "आसान और तेज़",
+
+        choosePatientType:
+            "मरीज का प्रकार चुनें",
+
+        patientTypeDescription:
+            "अपनी यात्रा के अनुसार विकल्प चुनें।",
+
+        normalChoiceText:
+            "सामान्य चिकित्सा परामर्श",
+
+        specialChoiceText:
+            "प्राथमिकता सहायता",
+
+        chooseDepartment:
+            "विभाग चुनें",
+
+        departmentDescription:
+            "उपलब्ध डॉक्टर देखने के लिए विभाग चुनें।",
+
+        chooseDoctor:
+            "अपना डॉक्टर चुनें",
+
+        doctorDescription:
+            "डॉक्टरों की तुलना करें और अपनी पसंद चुनें।",
+
+        aiRecommendation:
+            "SmartQueue AI सुझाव",
+
+        smartPick:
+            "स्मार्ट चयन",
+
+        findBestDoctor:
+            "सर्वश्रेष्ठ डॉक्टर खोजें",
+
+        patientDetails:
+            "मरीज की जानकारी",
+
+        patientName:
+            "मरीज का नाम",
+
+        age:
+            "उम्र",
+
+        patientNamePlaceholder:
+            "मरीज का नाम दर्ज करें",
+
+        agePlaceholder:
+            "उम्र दर्ज करें",
+
+        ready:
+            "बुक करने के लिए तैयार?",
+
+        confirmAppointment:
+            "अपॉइंटमेंट की पुष्टि करें",
+
+        yourAppointment:
+            "आपका अपॉइंटमेंट",
+
+        appointmentToken:
+            "अपॉइंटमेंट टोकन",
+
+        noAppointment:
+            "अभी कोई अपॉइंटमेंट नहीं है",
+
+        staffDashboard:
+            "स्टाफ डैशबोर्ड",
+
+        queueOverview:
+            "कतार का विवरण",
+
+        totalPatients:
+            "कुल मरीज",
+
+        waiting:
+            "प्रतीक्षा",
+
+        completed:
+            "पूर्ण",
+
+        availableBeds:
+            "उपलब्ध बेड",
+
+        patientQueue:
+            "मरीजों की कतार",
+
+        token:
+            "टोकन",
+
+        patient:
+            "मरीज",
+
+        doctor:
+            "डॉक्टर",
+
+        type:
+            "प्रकार",
+
+        waitingTime:
+            "प्रतीक्षा",
+
+        status:
+            "स्थिति",
+
+        action:
+            "कार्य",
+
+        bedStatus:
+            "आपातकालीन बेड स्थिति",
+
+        totalBeds:
+            "कुल बेड",
+
+        occupied:
+            "भरे हुए",
+
+        available:
+            "उपलब्ध",
+
+        emergencyRegistration:
+            "आपातकालीन पंजीकरण",
+
+        emergencyPageDescription:
+            "आपातकालीन मरीज को तुरंत पंजीकृत करें।",
+
+        emergencyPriority:
+            "आपातकालीन मरीजों को प्राथमिकता दी जाती है।",
+
+        emergencyPriorityText:
+            "कृपया सही जानकारी दें ताकि अस्पताल कर्मचारी जल्दी सहायता कर सकें।",
+
+        department:
+            "विभाग",
+
+        registerEmergency:
+            "आपातकालीन मरीज पंजीकृत करें"
+
+    },
+
+
+    mr: {
+
+        subtitle: "AI-संचालित रुग्णालय रांग व्यवस्थापन",
+
+        home: "🏠 मुख्यपृष्ठ",
+        booking: "📅 अपॉइंटमेंट",
+        myToken: "🎫 माझे टोकन",
+        staff: "📊 कर्मचारी डॅशबोर्ड",
+        emergency: "🚑 आपत्कालीन",
+
+        smartHealthcare: "स्मार्ट हेल्थकेअर • कमी प्रतीक्षा",
+
+        welcome: "तुमचे आरोग्य, आमचे प्राधान्य.",
+
+        heroDescription:
+            "अपॉइंटमेंट बुक करा, योग्य डॉक्टर शोधा आणि रुग्णालयातील भेट सहज व्यवस्थापित करा.",
+
+        startBooking:
+            "अपॉइंटमेंट बुक करा",
+
+        servicesLabel:
+            "आमच्या सेवा",
+
+        howCanWeHelp:
+            "आम्ही तुमची कशी मदत करू शकतो?",
+
+        serviceDescription:
+            "तुमच्या गरजेनुसार सेवा निवडा.",
+
+        regularCare:
+            "सामान्य उपचार",
+
+        normalPatient:
+            "सामान्य रुग्ण",
+
+        normalDescription:
+            "तुमच्या पसंतीच्या डॉक्टरांसोबत नियमित सल्ला बुक करा.",
+
+        bookNow:
+            "आता बुक करा",
+
+        priorityCare:
+            "प्राधान्य उपचार",
+
+        specialPatient:
+            "विशेष सक्षम रुग्ण",
+
+        specialDescription:
+            "प्राधान्य सहाय्य आणि योग्य डॉक्टरांची शिफारस मिळवा.",
+
+        getPriority:
+            "प्राधान्य मिळवा",
+
+        urgentCare:
+            "आपत्कालीन उपचार",
+
+        emergencyDescription:
+            "आपत्कालीन रुग्णाची त्वरित नोंदणी करा.",
+
+        registerNow:
+            "आता नोंदणी करा",
+
+        choosePatientType:
+            "रुग्णाचा प्रकार निवडा",
+
+        chooseDepartment:
+            "विभाग निवडा",
+
+        chooseDoctor:
+            "डॉक्टर निवडा",
+
+        patientDetails:
+            "रुग्णाची माहिती",
+
+        patientName:
+            "रुग्णाचे नाव",
+
+        age:
+            "वय",
+
+        confirmAppointment:
+            "अपॉइंटमेंट निश्चित करा",
+
+        appointmentToken:
+            "अपॉइंटमेंट टोकन",
+
+        staffDashboard:
+            "कर्मचारी डॅशबोर्ड",
+
+        queueOverview:
+            "रांगेचा आढावा",
+
+        totalPatients:
+            "एकूण रुग्ण",
+
+        waiting:
+            "प्रतीक्षेत",
+
+        completed:
+            "पूर्ण",
+
+        availableBeds:
+            "उपलब्ध बेड",
+
+        patientQueue:
+            "रुग्णांची रांग",
+
+        token:
+            "टोकन",
+
+        patient:
+            "रुग्ण",
+
+        doctor:
+            "डॉक्टर",
+
+        type:
+            "प्रकार",
+
+        waitingTime:
+            "प्रतीक्षा",
+
+        status:
+            "स्थिती",
+
+        action:
+            "कृती",
+
+        totalBeds:
+            "एकूण बेड",
+
+        occupied:
+            "वापरात",
+
+        available:
+            "उपलब्ध",
+
+        emergencyRegistration:
+            "आपत्कालीन नोंदणी",
+
+        department:
+            "विभाग",
+
+        registerEmergency:
+            "आपत्कालीन रुग्णाची नोंदणी करा"
+
+    },
+
+
+    od: {
+
+        subtitle:
+            "AI ଚାଳିତ ହସ୍ପିଟାଲ୍ କ୍ୟୁ ପରିଚାଳନା",
+
+        home:
+            "🏠 ମୁଖ୍ୟ ପୃଷ୍ଠା",
+
+        booking:
+            "📅 ଆପଏଣ୍ଟମେଣ୍ଟ",
+
+        myToken:
+            "🎫 ମୋ ଟୋକେନ୍",
+
+        staff:
+            "📊 ଷ୍ଟାଫ୍ ଡ୍ୟାସବୋର୍ଡ",
+
+        emergency:
+            "🚑 ଜରୁରୀକାଳୀନ",
+
+        smartHealthcare:
+            "ସ୍ମାର୍ଟ ହେଲଥକେୟାର • କମ୍ ଅପେକ୍ଷା",
+
+        welcome:
+            "ଆପଣଙ୍କ ସ୍ୱାସ୍ଥ୍ୟ, ଆମର ପ୍ରାଥମିକତା।",
+
+        startBooking:
+            "ଆପଏଣ୍ଟମେଣ୍ଟ ବୁକ୍ କରନ୍ତୁ",
+
+        normalPatient:
+            "ସାଧାରଣ ରୋଗୀ",
+
+        specialPatient:
+            "ବିଶେଷ ସକ୍ଷମ ରୋଗୀ",
+
+        emergency:
+            "🚑 ଜରୁରୀକାଳୀନ",
+
+        bookNow:
+            "ବର୍ତ୍ତମାନ ବୁକ୍ କରନ୍ତୁ",
+
+        choosePatientType:
+            "ରୋଗୀ ପ୍ରକାର ବାଛନ୍ତୁ",
+
+        chooseDepartment:
+            "ବିଭାଗ ବାଛନ୍ତୁ",
+
+        chooseDoctor:
+            "ଡାକ୍ତର ବାଛନ୍ତୁ",
+
+        patientDetails:
+            "ରୋଗୀ ସୂଚନା",
+
+        patientName:
+            "ରୋଗୀଙ୍କ ନାମ",
+
+        age:
+            "ବୟସ",
+
+        confirmAppointment:
+            "ଆପଏଣ୍ଟମେଣ୍ଟ ନିଶ୍ଚିତ କରନ୍ତୁ",
+
+        appointmentToken:
+            "ଆପଏଣ୍ଟମେଣ୍ଟ ଟୋକେନ୍",
+
+        staffDashboard:
+            "ଷ୍ଟାଫ୍ ଡ୍ୟାସବୋର୍ଡ",
+
+        queueOverview:
+            "କ୍ୟୁ ସମୀକ୍ଷା",
+
+        totalPatients:
+            "ମୋଟ ରୋଗୀ",
+
+        waiting:
+            "ଅପେକ୍ଷାରତ",
+
+        completed:
+            "ସମାପ୍ତ",
+
+        availableBeds:
+            "ଉପଲବ୍ଧ ବେଡ୍",
+
+        patientQueue:
+            "ରୋଗୀ କ୍ୟୁ",
+
+        token:
+            "ଟୋକେନ୍",
+
+        patient:
+            "ରୋଗୀ",
+
+        doctor:
+            "ଡାକ୍ତର",
+
+        type:
+            "ପ୍ରକାର",
+
+        waitingTime:
+            "ଅପେକ୍ଷା",
+
+        status:
+            "ସ୍ଥିତି",
+
+        action:
+            "କାର୍ଯ୍ୟ",
+
+        totalBeds:
+            "ମୋଟ ବେଡ୍",
+
+        occupied:
+            "ବ୍ୟବହୃତ",
+
+        available:
+            "ଉପଲବ୍ଧ",
+
+        emergencyRegistration:
+            "ଜରୁରୀକାଳୀନ ପଞ୍ଜୀକରଣ",
+
+        department:
+            "ବିଭାଗ",
+
+        registerEmergency:
+            "ଜରୁରୀକାଳୀନ ରୋଗୀ ପଞ୍ଜୀକରଣ କରନ୍ତୁ"
+
+    },
+
+
+    ta: {
+
+        home: "🏠 முகப்பு",
+        booking: "📅 சந்திப்பு பதிவு",
+        myToken: "🎫 எனது டோக்கன்",
+        staff: "📊 பணியாளர் டாஷ்போர்டு",
+        emergency: "🚑 அவசரம்",
+
+        normalPatient:
+            "சாதாரண நோயாளி",
+
+        specialPatient:
+            "மாற்றுத்திறனாளி நோயாளி",
+
+        emergency:
+            "🚑 அவசரம்",
+
+        bookNow:
+            "இப்போது பதிவு செய்க",
+
+        choosePatientType:
+            "நோயாளி வகையைத் தேர்வு செய்யவும்",
+
+        chooseDepartment:
+            "துறையைத் தேர்வு செய்யவும்",
+
+        chooseDoctor:
+            "மருத்துவரைத் தேர்வு செய்யவும்",
+
+        patientDetails:
+            "நோயாளி விவரங்கள்",
+
+        patientName:
+            "நோயாளியின் பெயர்",
+
+        age:
+            "வயது",
+
+        confirmAppointment:
+            "சந்திப்பை உறுதி செய்க",
+
+        appointmentToken:
+            "சந்திப்பு டோக்கன்",
+
+        staffDashboard:
+            "பணியாளர் டாஷ்போர்டு",
+
+        totalPatients:
+            "மொத்த நோயாளிகள்",
+
+        waiting:
+            "காத்திருக்கின்றனர்",
+
+        completed:
+            "முடிந்தது",
+
+        availableBeds:
+            "கிடைக்கும் படுக்கைகள்",
+
+        patientQueue:
+            "நோயாளி வரிசை",
+
+        token:
+            "டோக்கன்",
+
+        patient:
+            "நோயாளி",
+
+        doctor:
+            "மருத்துவர்",
+
+        type:
+            "வகை",
+
+        waitingTime:
+            "காத்திருப்பு",
+
+        status:
+            "நிலை",
+
+        action:
+            "செயல்",
+
+        totalBeds:
+            "மொத்த படுக்கைகள்",
+
+        occupied:
+            "நிரம்பியுள்ளது",
+
+        available:
+            "கிடைக்கும்",
+
+        emergencyRegistration:
+            "அவசர பதிவு",
+
+        department:
+            "துறை",
+
+        registerEmergency:
+            "அவசர நோயாளியை பதிவு செய்க"
+
+    },
+
+
+    te: {
+
+        home: "🏠 హోమ్",
+        booking: "📅 అపాయింట్మెంట్",
+        myToken: "🎫 నా టోకెన్",
+        staff: "📊 స్టాఫ్ డ్యాష్‌బోర్డ్",
+        emergency: "🚑 అత్యవసరం",
+
+        normalPatient:
+            "సాధారణ రోగి",
+
+        specialPatient:
+            "ప్రత్యేక అవసరాల రోగి",
+
+        bookNow:
+            "ఇప్పుడే బుక్ చేయండి",
+
+        choosePatientType:
+            "రోగి రకాన్ని ఎంచుకోండి",
+
+        chooseDepartment:
+            "విభాగాన్ని ఎంచుకోండి",
+
+        chooseDoctor:
+            "డాక్టర్‌ను ఎంచుకోండి",
+
+        patientDetails:
+            "రోగి వివరాలు",
+
+        patientName:
+            "రోగి పేరు",
+
+        age:
+            "వయస్సు",
+
+        confirmAppointment:
+            "అపాయింట్మెంట్ నిర్ధారించండి",
+
+        appointmentToken:
+            "అపాయింట్మెంట్ టోకెన్",
+
+        staffDashboard:
+            "స్టాఫ్ డ్యాష్‌బోర్డ్",
+
+        totalPatients:
+            "మొత్తం రోగులు",
+
+        waiting:
+            "వేచి ఉన్నారు",
+
+        completed:
+            "పూర్తయింది",
+
+        availableBeds:
+            "అందుబాటులో ఉన్న బెడ్లు",
+
+        patientQueue:
+            "రోగుల క్యూ",
+
+        token:
+            "టోకెన్",
+
+        patient:
+            "రోగి",
+
+        doctor:
+            "డాక్టర్",
+
+        type:
+            "రకం",
+
+        waitingTime:
+            "వేచి ఉండే సమయం",
+
+        status:
+            "స్థితి",
+
+        action:
+            "చర్య",
+
+        totalBeds:
+            "మొత్తం బెడ్లు",
+
+        occupied:
+            "ఆక్యుపైడ్",
+
+        available:
+            "అందుబాటులో",
+
+        emergencyRegistration:
+            "అత్యవసర నమోదు",
+
+        department:
+            "విభాగం",
+
+        registerEmergency:
+            "అత్యవసర రోగిని నమోదు చేయండి"
+
+    },
+
+
+    kn: {
+
+        home: "🏠 ಮುಖಪುಟ",
+        booking: "📅 ಅಪಾಯಿಂಟ್ಮೆಂಟ್",
+        myToken: "🎫 ನನ್ನ ಟೋಕನ್",
+        staff: "📊 ಸಿಬ್ಬಂದಿ ಡ್ಯಾಶ್‌ಬೋರ್ಡ್",
+        emergency: "🚑 ತುರ್ತು",
+
+        normalPatient:
+            "ಸಾಮಾನ್ಯ ರೋಗಿ",
+
+        specialPatient:
+            "ವಿಶೇಷ ಅಗತ್ಯದ ರೋಗಿ",
+
+        bookNow:
+            "ಈಗ ಬುಕ್ ಮಾಡಿ",
+
+        choosePatientType:
+            "ರೋಗಿಯ ಪ್ರಕಾರ ಆಯ್ಕೆಮಾಡಿ",
+
+        chooseDepartment:
+            "ವಿಭಾಗ ಆಯ್ಕೆಮಾಡಿ",
+
+        chooseDoctor:
+            "ವೈದ್ಯರನ್ನು ಆಯ್ಕೆಮಾಡಿ",
+
+        patientDetails:
+            "ರೋಗಿಯ ವಿವರಗಳು",
+
+        patientName:
+            "ರೋಗಿಯ ಹೆಸರು",
+
+        age:
+            "ವಯಸ್ಸು",
+
+        confirmAppointment:
+            "ಅಪಾಯಿಂಟ್ಮೆಂಟ್ ಖಚಿತಪಡಿಸಿ",
+
+        appointmentToken:
+            "ಅಪಾಯಿಂಟ್ಮೆಂಟ್ ಟೋಕನ್",
+
+        staffDashboard:
+            "ಸಿಬ್ಬಂದಿ ಡ್ಯಾಶ್‌ಬೋರ್ಡ್",
+
+        totalPatients:
+            "ಒಟ್ಟು ರೋಗಿಗಳು",
+
+        waiting:
+            "ಕಾಯುತ್ತಿದ್ದಾರೆ",
+
+        completed:
+            "ಪೂರ್ಣಗೊಂಡಿದೆ",
+
+        availableBeds:
+            "ಲಭ್ಯವಿರುವ ಹಾಸಿಗೆಗಳು",
+
+        patientQueue:
+            "ರೋಗಿಗಳ ಸರದಿ",
+
+        token:
+            "ಟೋಕನ್",
+
+        patient:
+            "ರೋಗಿ",
+
+        doctor:
+            "ವೈದ್ಯರು",
+
+        type:
+            "ಪ್ರಕಾರ",
+
+        waitingTime:
+            "ಕಾಯುವ ಸಮಯ",
+
+        status:
+            "ಸ್ಥಿತಿ",
+
+        action:
+            "ಕ್ರಿಯೆ",
+
+        totalBeds:
+            "ಒಟ್ಟು ಹಾಸಿಗೆಗಳು",
+
+        occupied:
+            "ಬಳಕೆಯಲ್ಲಿದೆ",
+
+        available:
+            "ಲಭ್ಯ",
+
+        emergencyRegistration:
+            "ತುರ್ತು ನೋಂದಣಿ",
+
+        department:
+            "ವಿಭಾಗ",
+
+        registerEmergency:
+            "ತುರ್ತು ರೋಗಿಯನ್ನು ನೋಂದಾಯಿಸಿ"
+
+    },
+
+
+    gu: {
+
+        home: "🏠 હોમ",
+        booking: "📅 એપોઇન્ટમેન્ટ",
+        myToken: "🎫 મારું ટોકન",
+        staff: "📊 સ્ટાફ ડેશબોર્ડ",
+        emergency: "🚑 ઇમરજન્સી",
+
+        normalPatient:
+            "સામાન્ય દર્દી",
+
+        specialPatient:
+            "વિશેષ જરૂરિયાત ધરાવતા દર્દી",
+
+        bookNow:
+            "હવે બુક કરો",
+
+        choosePatientType:
+            "દર્દીનો પ્રકાર પસંદ કરો",
+
+        chooseDepartment:
+            "વિભાગ પસંદ કરો",
+
+        chooseDoctor:
+            "ડોક્ટર પસંદ કરો",
+
+        patientDetails:
+            "દર્દીની વિગતો",
+
+        patientName:
+            "દર્દીનું નામ",
+
+        age:
+            "ઉંમર",
+
+        confirmAppointment:
+            "એપોઇન્ટમેન્ટની પુષ્ટિ કરો",
+
+        appointmentToken:
+            "એપોઇન્ટમેન્ટ ટોકન",
+
+        staffDashboard:
+            "સ્ટાફ ડેશબોર્ડ",
+
+        totalPatients:
+            "કુલ દર્દીઓ",
+
+        waiting:
+            "રાહ જોઈ રહ્યા છે",
+
+        completed:
+            "પૂર્ણ",
+
+        availableBeds:
+            "ઉપલબ્ધ બેડ",
+
+        patientQueue:
+            "દર્દીઓની કતાર",
+
+        token:
+            "ટોકન",
+
+        patient:
+            "દર્દી",
+
+        doctor:
+            "ડોક્ટર",
+
+        type:
+            "પ્રકાર",
+
+        waitingTime:
+            "રાહ સમય",
+
+        status:
+            "સ્થિતિ",
+
+        action:
+            "કાર્ય",
+
+        totalBeds:
+            "કુલ બેડ",
+
+        occupied:
+            "ભરેલા",
+
+        available:
+            "ઉપલબ્ધ",
+
+        emergencyRegistration:
+            "ઇમરજન્સી નોંધણી",
+
+        department:
+            "વિભાગ",
+
+        registerEmergency:
+            "ઇમરજન્સી દર્દીની નોંધણી કરો"
+
+    },
+
+
+    pa: {
+
+        home: "🏠 ਹੋਮ",
+        booking: "📅 ਅਪਾਇੰਟਮੈਂਟ",
+        myToken: "🎫 ਮੇਰਾ ਟੋਕਨ",
+        staff: "📊 ਸਟਾਫ ਡੈਸ਼ਬੋਰਡ",
+        emergency: "🚑 ਐਮਰਜੈਂਸੀ",
+
+        normalPatient:
+            "ਆਮ ਮਰੀਜ਼",
+
+        specialPatient:
+            "ਵਿਸ਼ੇਸ਼ ਲੋੜਾਂ ਵਾਲਾ ਮਰੀਜ਼",
+
+        bookNow:
+            "ਹੁਣੇ ਬੁੱਕ ਕਰੋ",
+
+        choosePatientType:
+            "ਮਰੀਜ਼ ਦੀ ਕਿਸਮ ਚੁਣੋ",
+
+        chooseDepartment:
+            "ਵਿਭਾਗ ਚੁਣੋ",
+
+        chooseDoctor:
+            "ਡਾਕਟਰ ਚੁਣੋ",
+
+        patientDetails:
+            "ਮਰੀਜ਼ ਦੇ ਵੇਰਵੇ",
+
+        patientName:
+            "ਮਰੀਜ਼ ਦਾ ਨਾਮ",
+
+        age:
+            "ਉਮਰ",
+
+        confirmAppointment:
+            "ਅਪਾਇੰਟਮੈਂਟ ਦੀ ਪੁਸ਼ਟੀ ਕਰੋ",
+
+        appointmentToken:
+            "ਅਪਾਇੰਟਮੈਂਟ ਟੋਕਨ",
+
+        staffDashboard:
+            "ਸਟਾਫ ਡੈਸ਼ਬੋਰਡ",
+
+        totalPatients:
+            "ਕੁੱਲ ਮਰੀਜ਼",
+
+        waiting:
+            "ਉਡੀਕ ਵਿੱਚ",
+
+        completed:
+            "ਪੂਰਾ",
+
+        availableBeds:
+            "ਉਪਲਬਧ ਬੈੱਡ",
+
+        patientQueue:
+            "ਮਰੀਜ਼ਾਂ ਦੀ ਕਤਾਰ",
+
+        token:
+            "ਟੋਕਨ",
+
+        patient:
+            "ਮਰੀਜ਼",
+
+        doctor:
+            "ਡਾਕਟਰ",
+
+        type:
+            "ਕਿਸਮ",
+
+        waitingTime:
+            "ਉਡੀਕ ਸਮਾਂ",
+
+        status:
+            "ਸਥਿਤੀ",
+
+        action:
+            "ਕਾਰਵਾਈ",
+
+        totalBeds:
+            "ਕੁੱਲ ਬੈੱਡ",
+
+        occupied:
+            "ਭਰੇ ਹੋਏ",
+
+        available:
+            "ਉਪਲਬਧ",
+
+        emergencyRegistration:
+            "ਐਮਰਜੈਂਸੀ ਰਜਿਸਟ੍ਰੇਸ਼ਨ",
+
+        department:
+            "ਵਿਭਾਗ",
+
+        registerEmergency:
+            "ਐਮਰਜੈਂਸੀ ਮਰੀਜ਼ ਰਜਿਸਟਰ ਕਰੋ"
+
+    },
+
+
+    ur: {
+
+        home: "🏠 ہوم",
+        booking: "📅 اپائنٹمنٹ",
+        myToken: "🎫 میرا ٹوکن",
+        staff: "📊 اسٹاف ڈیش بورڈ",
+        emergency: "🚑 ایمرجنسی",
+
+        normalPatient:
+            "عام مریض",
+
+        specialPatient:
+            "خصوصی ضروریات والا مریض",
+
+        bookNow:
+            "ابھی بک کریں",
+
+        choosePatientType:
+            "مریض کی قسم منتخب کریں",
+
+        chooseDepartment:
+            "شعبہ منتخب کریں",
+
+        chooseDoctor:
+            "ڈاکٹر منتخب کریں",
+
+        patientDetails:
+            "مریض کی معلومات",
+
+        patientName:
+            "مریض کا نام",
+
+        age:
+            "عمر",
+
+        confirmAppointment:
+            "اپائنٹمنٹ کی تصدیق کریں",
+
+        appointmentToken:
+            "اپائنٹمنٹ ٹوکن",
+
+        staffDashboard:
+            "اسٹاف ڈیش بورڈ",
+
+        totalPatients:
+            "کل مریض",
+
+        waiting:
+            "انتظار",
+
+        completed:
+            "مکمل",
+
+        availableBeds:
+            "دستیاب بیڈ",
+
+        patientQueue:
+            "مریضوں کی قطار",
+
+        token:
+            "ٹوکن",
+
+        patient:
+            "مریض",
+
+        doctor:
+            "ڈاکٹر",
+
+        type:
+            "قسم",
+
+        waitingTime:
+            "انتظار کا وقت",
+
+        status:
+            "حالت",
+
+        action:
+            "کارروائی",
+
+        totalBeds:
+            "کل بیڈ",
+
+        occupied:
+            "مصروف",
+
+        available:
+            "دستیاب",
+
+        emergencyRegistration:
+            "ایمرجنسی رجسٹریشن",
+
+        department:
+            "شعبہ",
+
+        registerEmergency:
+            "ایمرجنسی مریض رجسٹر کریں"
+
+    },
+
+
+    fa: {
+
+        home: "🏠 خانه",
+        booking: "📅 رزرو نوبت",
+        myToken: "🎫 نوبت من",
+        staff: "📊 داشبورد کارکنان",
+        emergency: "🚑 اورژانس",
+
+        normalPatient:
+            "بیمار عادی",
+
+        specialPatient:
+            "بیمار دارای نیاز ویژه",
+
+        bookNow:
+            "اکنون رزرو کنید",
+
+        choosePatientType:
+            "نوع بیمار را انتخاب کنید",
+
+        chooseDepartment:
+            "بخش را انتخاب کنید",
+
+        chooseDoctor:
+            "پزشک را انتخاب کنید",
+
+        patientDetails:
+            "اطلاعات بیمار",
+
+        patientName:
+            "نام بیمار",
+
+        age:
+            "سن",
+
+        confirmAppointment:
+            "تأیید نوبت",
+
+        appointmentToken:
+            "کد نوبت",
+
+        staffDashboard:
+            "داشبورد کارکنان",
+
+        totalPatients:
+            "کل بیماران",
+
+        waiting:
+            "در انتظار",
+
+        completed:
+            "تکمیل شده",
+
+        availableBeds:
+            "تخت‌های موجود",
+
+        patientQueue:
+            "صف بیماران",
+
+        token:
+            "توکن",
+
+        patient:
+            "بیمار",
+
+        doctor:
+            "پزشک",
+
+        type:
+            "نوع",
+
+        waitingTime:
+            "زمان انتظار",
+
+        status:
+            "وضعیت",
+
+        action:
+            "عملیات",
+
+        totalBeds:
+            "کل تخت‌ها",
+
+        occupied:
+            "اشغال",
+
+        available:
+            "موجود",
+
+        emergencyRegistration:
+            "ثبت اورژانسی",
+
+        department:
+            "بخش",
+
+        registerEmergency:
+            "ثبت بیمار اورژانسی"
+
+    },
+
+
+    fr: {
+
+        home: "🏠 Accueil",
+        booking: "📅 Rendez-vous",
+        myToken: "🎫 Mon ticket",
+        staff: "📊 Tableau du personnel",
+        emergency: "🚑 Urgence",
+
+        normalPatient:
+            "Patient normal",
+
+        specialPatient:
+            "Patient à besoins spéciaux",
+
+        bookNow:
+            "Réserver maintenant",
+
+        choosePatientType:
+            "Choisir le type de patient",
+
+        chooseDepartment:
+            "Choisir le service",
+
+        chooseDoctor:
+            "Choisir votre médecin",
+
+        patientDetails:
+            "Informations du patient",
+
+        patientName:
+            "Nom du patient",
+
+        age:
+            "Âge",
+
+        confirmAppointment:
+            "Confirmer le rendez-vous",
+
+        appointmentToken:
+            "Ticket de rendez-vous",
+
+        staffDashboard:
+            "Tableau du personnel",
+
+        totalPatients:
+            "Total des patients",
+
+        waiting:
+            "En attente",
+
+        completed:
+            "Terminé",
+
+        availableBeds:
+            "Lits disponibles",
+
+        patientQueue:
+            "File des patients",
+
+        token:
+            "Ticket",
+
+        patient:
+            "Patient",
+
+        doctor:
+            "Médecin",
+
+        type:
+            "Type",
+
+        waitingTime:
+            "Attente",
+
+        status:
+            "Statut",
+
+        action:
+            "Action",
+
+        totalBeds:
+            "Lits totaux",
+
+        occupied:
+            "Occupés",
+
+        available:
+            "Disponibles",
+
+        emergencyRegistration:
+            "Inscription d'urgence",
+
+        department:
+            "Service",
+
+        registerEmergency:
+            "Inscrire le patient en urgence"
+
+    },
+
+
+    es: {
+
+        home: "🏠 Inicio",
+        booking: "📅 Cita",
+        myToken: "🎫 Mi turno",
+        staff: "📊 Panel del personal",
+        emergency: "🚑 Emergencia",
+
+        normalPatient:
+            "Paciente normal",
+
+        specialPatient:
+            "Paciente con necesidades especiales",
+
+        bookNow:
+            "Reservar ahora",
+
+        choosePatientType:
+            "Elegir tipo de paciente",
+
+        chooseDepartment:
+            "Elegir departamento",
+
+        chooseDoctor:
+            "Elegir médico",
+
+        patientDetails:
+            "Datos del paciente",
+
+        patientName:
+            "Nombre del paciente",
+
+        age:
+            "Edad",
+
+        confirmAppointment:
+            "Confirmar cita",
+
+        appointmentToken:
+            "Turno de cita",
+
+        staffDashboard:
+            "Panel del personal",
+
+        totalPatients:
+            "Total de pacientes",
+
+        waiting:
+            "Esperando",
+
+        completed:
+            "Completados",
+
+        availableBeds:
+            "Camas disponibles",
+
+        patientQueue:
+            "Cola de pacientes",
+
+        token:
+            "Turno",
+
+        patient:
+            "Paciente",
+
+        doctor:
+            "Médico",
+
+        type:
+            "Tipo",
+
+        waitingTime:
+            "Espera",
+
+        status:
+            "Estado",
+
+        action:
+            "Acción",
+
+        totalBeds:
+            "Camas totales",
+
+        occupied:
+            "Ocupadas",
+
+        available:
+            "Disponibles",
+
+        emergencyRegistration:
+            "Registro de emergencia",
+
+        department:
+            "Departamento",
+
+        registerEmergency:
+            "Registrar paciente de emergencia"
+
+    },
+
+
+    de: {
+
+        home: "🏠 Startseite",
+        booking: "📅 Termin buchen",
+        myToken: "🎫 Mein Ticket",
+        staff: "📊 Mitarbeiter-Dashboard",
+        emergency: "🚑 Notfall",
+
+        normalPatient:
+            "Normaler Patient",
+
+        specialPatient:
+            "Patient mit besonderen Bedürfnissen",
+
+        bookNow:
+            "Jetzt buchen",
+
+        choosePatientType:
+            "Patiententyp auswählen",
+
+        chooseDepartment:
+            "Abteilung auswählen",
+
+        chooseDoctor:
+            "Arzt auswählen",
+
+        patientDetails:
+            "Patientendaten",
+
+        patientName:
+            "Patientenname",
+
+        age:
+            "Alter",
+
+        confirmAppointment:
+            "Termin bestätigen",
+
+        appointmentToken:
+            "Termin-Ticket",
+
+        staffDashboard:
+            "Mitarbeiter-Dashboard",
+
+        totalPatients:
+            "Patienten insgesamt",
+
+        waiting:
+            "Wartend",
+
+        completed:
+            "Abgeschlossen",
+
+        availableBeds:
+            "Verfügbare Betten",
+
+        patientQueue:
+            "Patientenwarteschlange",
+
+        token:
+            "Ticket",
+
+        patient:
+            "Patient",
+
+        doctor:
+            "Arzt",
+
+        type:
+            "Typ",
+
+        waitingTime:
+            "Wartezeit",
+
+        status:
+            "Status",
+
+        action:
+            "Aktion",
+
+        totalBeds:
+            "Betten insgesamt",
+
+        occupied:
+            "Belegt",
+
+        available:
+            "Verfügbar",
+
+        emergencyRegistration:
+            "Notfallregistrierung",
+
+        department:
+            "Abteilung",
+
+        registerEmergency:
+            "Notfallpatient registrieren"
 
     }
 
-    else {
-
-        /* ENGLISH */
-
-        document.getElementById("websiteName").textContent =
-            "SmartQueue";
-
-        document.getElementById("subtitle").textContent =
-            "AI-Powered Hospital Queue Management";
-
-
-        /* NAVIGATION */
-
-        document.getElementById("navHome").textContent =
-            "Home";
-
-        document.getElementById("navBooking").textContent =
-            "Book Appointment";
-
-        document.getElementById("navToken").textContent =
-            "My Token";
-
-        document.getElementById("navStaff").textContent =
-            "Staff Dashboard";
-
-        document.getElementById("navEmergency").textContent =
-            "Emergency";
-
-
-        /* HOME */
-
-        document.getElementById("homeTitle").textContent =
-            "Welcome to SmartQueue";
-
-        document.getElementById("homeDescription").textContent =
-            "A smart hospital queue management system designed to reduce waiting time.";
-
-        document.getElementById("startButton").textContent =
-            "Book an Appointment";
-
-
-        document.getElementById("normalTitle").textContent =
-            "Normal Patient";
-
-        document.getElementById("normalDescription").textContent =
-            "Book your appointment and receive a token.";
-
-        document.getElementById("specialTitle").textContent =
-            "Specially-Abled Patient";
-
-        document.getElementById("specialDescription").textContent =
-            "Get priority assistance and a suitable doctor.";
-
-        document.getElementById("emergencyTitle").textContent =
-            "Emergency";
-
-        document.getElementById("emergencyDescription").textContent =
-            "Quickly register an emergency patient.";
-
-
-        /* BOOKING */
-
-        document.getElementById("bookingTitle").textContent =
-            "Book Appointment";
-
-        document.getElementById("bookingDescription").textContent =
-            "Select your patient type and enter your details.";
-
-        document.getElementById("patientTypeLabel").textContent =
-            "Patient Type";
-
-        document.getElementById("nameLabel").textContent =
-            "Patient Name";
-
-        document.getElementById("ageLabel").textContent =
-            "Age";
-
-        document.getElementById("departmentLabel").textContent =
-            "Department";
-
-        document.getElementById("doctorLabel").textContent =
-            "Doctor";
-
-        document.getElementById("aiTitle").textContent =
-            "🤖 AI Recommendation";
-
-        document.getElementById("aiButton").textContent =
-            "Find Doctor With Less Waiting";
-
-        document.getElementById("bookButton").textContent =
-            "Book Appointment";
-
-
-        document.getElementById("normalOption").textContent =
-            "Normal Patient";
-
-        document.getElementById("specialOption").textContent =
-            "Specially-Abled Patient";
-
-
-        /* TOKEN */
-
-        document.getElementById("tokenTitle").textContent =
-            "Your Appointment Token";
-
-        document.getElementById("tokenDescription").textContent =
-            "Your appointment details will appear here.";
-
-
-        /* STAFF */
-
-        document.getElementById("staffTitle").textContent =
-            "Staff Dashboard";
-
-        document.getElementById("staffDescription").textContent =
-            "Monitor patients and queue status.";
-
-        document.getElementById("thToken").textContent =
-            "Token";
-
-        document.getElementById("thName").textContent =
-            "Patient";
-
-        document.getElementById("thDoctor").textContent =
-            "Doctor";
-
-        document.getElementById("thType").textContent =
-            "Type";
-
-        document.getElementById("thWaiting").textContent =
-            "Waiting Time";
-
-        document.getElementById("thStatus").textContent =
-            "Status";
-
-        document.getElementById("thAction").textContent =
-            "Action";
-
-        document.getElementById("bedTitle").textContent =
-            "Emergency Bed Status";
-
-        document.getElementById("totalBedsText").textContent =
-            "Total Beds";
-
-        document.getElementById("occupiedBedsText").textContent =
-            "Occupied";
-
-        document.getElementById("availableBedsText").textContent =
-            "Available";
-
-
-        /* EMERGENCY */
-
-        document.getElementById("emergencyPageTitle").textContent =
-            "Emergency Registration";
-
-        document.getElementById("emergencyPageDescription").textContent =
-            "Register an emergency patient immediately.";
-
-        document.getElementById("emergencyWarningTitle").textContent =
-            "🚑 Emergency Patient";
-
-        document.getElementById("emergencyWarning").textContent =
-            "Emergency patients receive priority in the hospital queue.";
-
-        document.getElementById("emergencyNameLabel").textContent =
-            "Patient Name";
-
-        document.getElementById("emergencyAgeLabel").textContent =
-            "Age";
-
-        document.getElementById("emergencyDepartmentLabel").textContent =
-            "Department";
-
-        document.getElementById("emergencyButton").textContent =
-            "Register Emergency";
-    }
-}
-
+};
 
 
 /* =====================================================
-   2. PAGE NAVIGATION
-   ===================================================== */
-
-function showPage(pageName) {
-
-    let pages = document.querySelectorAll(".page");
-
-
-    for (let i = 0; i < pages.length; i++) {
-
-        pages[i].classList.remove("active");
-
-    }
-
-
-    document.getElementById(pageName)
-        .classList.add("active");
-}
-
-
-
-/* =====================================================
-   3. DOCTOR DATA
-   ===================================================== */
+   2. DOCTOR DATA
+===================================================== */
 
 const doctors = {
 
     "General Medicine": [
+
         {
-            name: "Doctor A"
+            name: "Dr. Ananya Sharma",
+            specialty: "General Medicine",
+            experience: "12 years",
+            rating: "4.9",
+            waiting: 10,
+            available: true,
+            image: "https://i.pravatar.cc/400?img=47"
         },
+
         {
-            name: "Doctor B"
+            name: "Dr. Rahul Mehta",
+            specialty: "General Medicine",
+            experience: "9 years",
+            rating: "4.8",
+            waiting: 20,
+            available: true,
+            image: "https://i.pravatar.cc/400?img=12"
+        },
+
+        {
+            name: "Dr. Priya Nair",
+            specialty: "General Medicine",
+            experience: "7 years",
+            rating: "4.7",
+            waiting: 30,
+            available: true,
+            image: "https://i.pravatar.cc/400?img=32"
         }
+
     ],
 
+
     "Orthopedics": [
+
         {
-            name: "Doctor X"
+            name: "Dr. Arjun Kapoor",
+            specialty: "Orthopedic Specialist",
+            experience: "15 years",
+            rating: "4.9",
+            waiting: 15,
+            available: true,
+            image: "https://i.pravatar.cc/400?img=11"
         },
+
         {
-            name: "Doctor Y"
+            name: "Dr. Neha Verma",
+            specialty: "Orthopedic Specialist",
+            experience: "10 years",
+            rating: "4.8",
+            waiting: 25,
+            available: true,
+            image: "https://i.pravatar.cc/400?img=44"
+        },
+
+        {
+            name: "Dr. Vikram Singh",
+            specialty: "Orthopedic Specialist",
+            experience: "8 years",
+            rating: "4.6",
+            waiting: 35,
+            available: true,
+            image: "https://i.pravatar.cc/400?img=68"
         }
+
+    ],
+
+
+    "Cardiology": [
+
+        {
+            name: "Dr. Rohan Desai",
+            specialty: "Cardiologist",
+            experience: "16 years",
+            rating: "4.9",
+            waiting: 20,
+            available: true,
+            image: "https://i.pravatar.cc/400?img=13"
+        },
+
+        {
+            name: "Dr. Meera Joshi",
+            specialty: "Cardiologist",
+            experience: "13 years",
+            rating: "4.8",
+            waiting: 30,
+            available: true,
+            image: "https://i.pravatar.cc/400?img=49"
+        }
+
+    ],
+
+
+    "Neurology": [
+
+        {
+            name: "Dr. Karan Malhotra",
+            specialty: "Neurologist",
+            experience: "14 years",
+            rating: "4.9",
+            waiting: 15,
+            available: true,
+            image: "https://i.pravatar.cc/400?img=60"
+        },
+
+        {
+            name: "Dr. Sneha Rao",
+            specialty: "Neurologist",
+            experience: "11 years",
+            rating: "4.8",
+            waiting: 25,
+            available: true,
+            image: "https://i.pravatar.cc/400?img=45"
+        }
+
     ]
 
 };
 
 
+/* =====================================================
+   3. DEPARTMENT DATA
+===================================================== */
+
+const departments = [
+
+    {
+        name: "General Medicine",
+        icon: "🩺",
+        description: "General health & consultation"
+    },
+
+    {
+        name: "Orthopedics",
+        icon: "🦴",
+        description: "Bones, joints & muscles"
+    },
+
+    {
+        name: "Cardiology",
+        icon: "❤️",
+        description: "Heart & cardiovascular care"
+    },
+
+    {
+        name: "Neurology",
+        icon: "🧠",
+        description: "Brain & nervous system"
+    }
+
+];
+
 
 /* =====================================================
-   4. QUEUE DATA
-   ===================================================== */
+   4. QUEUE
+===================================================== */
 
 let queue = [];
-let currentPateint= null;
+
+let currentPatient = null;
 
 let tokenNumber = 1;
-let totalBeds=20;
-let occupiedBeds=5;
-function updateBedStatus() {
 
-    occupiedBeds++;
+let totalBeds = 20;
 
-    let availableBeds = totalBeds - occupiedBeds;
-
-    document.getElementById("occupiedBeds").textContent = occupiedBeds;
-    document.getElementById("availableBeds").textContent = availableBeds;
-}
-
-
-/* Each patient is assumed to take 10 minutes */
+let occupiedBeds = 5;
 
 const consultationTime = 10;
 
 
+/* =====================================================
+   5. LANGUAGE
+===================================================== */
+
+function changeLanguage(language) {
+
+    currentLanguage = language;
+
+    const languageData =
+        translations[language] || translations.en;
+
+
+    /* Change regular text */
+
+    document
+        .querySelectorAll("[data-i18n]")
+        .forEach(function(element) {
+
+            const key =
+                element.getAttribute("data-i18n");
+
+            if (languageData[key]) {
+
+                element.textContent =
+                    languageData[key];
+
+            }
+
+        });
+
+
+    /* Change placeholders */
+
+    document
+        .querySelectorAll("[data-placeholder]")
+        .forEach(function(element) {
+
+            const key =
+                element.getAttribute("data-placeholder");
+
+            if (languageData[key]) {
+
+                element.placeholder =
+                    languageData[key];
+
+            }
+
+        });
+
+
+    document.documentElement.lang =
+        language;
+
+
+    /* Urdu / Persian direction */
+
+    if (
+        language === "ur" ||
+        language === "fa"
+    ) {
+
+        document.body.dir = "rtl";
+
+    } else {
+
+        document.body.dir = "ltr";
+
+    }
+
+}
+
 
 /* =====================================================
-   5. LOAD DOCTORS
-   ===================================================== */
+   6. NAVIGATION
+===================================================== */
 
-function loadDoctors() {
+function showPage(pageName, clickedButton = null) {
 
-    // Get the selected department
-    const department =
-        document.getElementById("department").value;
-
-    // Get the doctor dropdown
-    const doctorSelect =
-        document.getElementById("doctor");
+    const pages =
+        document.querySelectorAll(".page");
 
 
-    // Remove the previous doctors
-    doctorSelect.innerHTML =
-        '<option value="">Select Doctor</option>';
+    pages.forEach(function(page) {
+
+        page.classList.remove("active");
+
+    });
 
 
-    // If no department is selected, stop here
-    if (department === "") {
-        return;
+    const target =
+        document.getElementById(pageName);
+
+
+    if (target) {
+
+        target.classList.add("active");
+
     }
 
 
-    // Get doctors belonging to this department
+    const buttons =
+        document.querySelectorAll(".nav-button");
+
+
+    buttons.forEach(function(button) {
+
+        button.classList.remove("active");
+
+    });
+
+
+    if (clickedButton) {
+
+        clickedButton.classList.add("active");
+
+    } else {
+
+        buttons.forEach(function(button) {
+
+            const onclick =
+                button.getAttribute("onclick") || "";
+
+            if (
+                onclick.includes(
+                    "showPage('" + pageName
+                )
+            ) {
+
+                button.classList.add("active");
+
+            }
+
+        });
+
+    }
+
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+
+}
+
+
+/* =====================================================
+   7. OPEN BOOKING
+===================================================== */
+
+function openBooking(type) {
+
+    showPage("booking");
+
+
+    selectPatientType(type);
+
+
+    const bookingButton =
+        document.querySelector(
+            '[onclick*="showPage(\'booking\'"]'
+        );
+
+
+    if (bookingButton) {
+
+        document
+            .querySelectorAll(".nav-button")
+            .forEach(function(button) {
+
+                button.classList.remove("active");
+
+            });
+
+        bookingButton.classList.add("active");
+
+    }
+
+}
+
+
+/* =====================================================
+   8. PATIENT TYPE
+===================================================== */
+
+function selectPatientType(type) {
+
+    document.getElementById("patientType").value =
+        type;
+
+
+    const normalCard =
+        document.getElementById("normalChoice");
+
+    const specialCard =
+        document.getElementById("specialChoice");
+
+
+    normalCard.classList.remove("selected");
+
+    specialCard.classList.remove("selected");
+
+
+    if (type === "normal") {
+
+        normalCard.classList.add("selected");
+
+    } else {
+
+        specialCard.classList.add("selected");
+
+    }
+
+}
+
+
+/* =====================================================
+   9. RENDER DEPARTMENTS
+===================================================== */
+
+function renderDepartments() {
+
+    const grid =
+        document.getElementById("departmentGrid");
+
+
+    grid.innerHTML = "";
+
+
+    departments.forEach(function(department) {
+
+        const card =
+            document.createElement("div");
+
+
+        card.className =
+            "department-card";
+
+
+        card.onclick =
+            function() {
+
+                selectDepartment(
+                    department.name,
+                    card
+                );
+
+            };
+
+
+        card.innerHTML = `
+
+            <div class="department-icon">
+                ${department.icon}
+            </div>
+
+            <h4>
+                ${department.name}
+            </h4>
+
+            <p>
+                ${department.description}
+            </p>
+
+        `;
+
+
+        grid.appendChild(card);
+
+    });
+
+}
+
+
+/* =====================================================
+   10. SELECT DEPARTMENT
+===================================================== */
+
+function selectDepartment(
+    departmentName,
+    selectedCard
+) {
+
+    document.getElementById("department").value =
+        departmentName;
+
+
+    document
+        .querySelectorAll(".department-card")
+        .forEach(function(card) {
+
+            card.classList.remove("selected");
+
+        });
+
+
+    selectedCard.classList.add("selected");
+
+
+    renderDoctors(departmentName);
+
+    updateAIMessage();
+
+}
+
+
+/* =====================================================
+   11. RENDER DOCTORS
+===================================================== */
+
+function renderDoctors(departmentName) {
+
+    const grid =
+        document.getElementById("doctorGrid");
+
+
+    grid.innerHTML = "";
+
+
     const departmentDoctors =
-        doctors[department];
+        doctors[departmentName] || [];
 
 
-    // Add each doctor to the dropdown
-    departmentDoctors.forEach(function(doctor) {
+    if (departmentDoctors.length === 0) {
 
-        const option =
-            document.createElement("option");
+        grid.innerHTML = `
 
-        option.value =
-            doctor.name;
+            <div class="empty-doctors">
 
-        option.textContent =
-            doctor.name;
+                <div>👨‍⚕️</div>
 
-        doctorSelect.appendChild(option);
+                <h3>
+                    No doctors available
+                </h3>
 
-    });
-updateAIMessage();
+                <p>
+                    Please select another department.
+                </p>
 
-}
-/* =====================================================
-   6. PATIENT TYPE
-   ===================================================== */
+            </div>
 
-function patientTypeChanged() {
+        `;
 
-    let type =
-        document.getElementById("patientType").value;
-
-
-    if (type === "special") {
-
-        document.getElementById("aiMessage").textContent =
-            "Specially-abled patients receive priority assistance.";
+        return;
 
     }
 
-    else {
 
-        updateAIMessage();
+    departmentDoctors.forEach(function(
+        doctor,
+        index
+    ) {
 
-    }
-}
+        const card =
+            document.createElement("div");
 
 
+        card.className =
+            "doctor-card";
 
-/* =====================================================
-   7. AI WAITING-TIME CALCULATION
-   ===================================================== */
 
-function calculateWaitingTime(doctorName, currentIndex = -1) {
+        card.setAttribute(
+            "data-doctor",
+            doctor.name
+        );
 
-    let patientsWaiting = queue.filter(function(patient, index) {
 
-        return patient.doctor === doctorName &&
-               patient.status !== "Completed" &&
-               (currentIndex === -1 || index < currentIndex);
+        card.onclick =
+            function() {
+
+                selectDoctor(
+                    doctor.name,
+                    card
+                );
+
+            };
+
+
+        const recommended =
+            index === 0;
+
+
+        card.innerHTML = `
+
+            ${
+                recommended
+                ?
+                `<div class="recommended-badge">
+                    ✨ AI Recommended
+                 </div>`
+                :
+                ""
+            }
+
+            <div class="doctor-photo">
+
+                <img
+                    src="${doctor.image}"
+                    alt="${doctor.name}"
+                    onerror="this.src='https://i.pravatar.cc/400?img=1'"
+                >
+
+            </div>
+
+
+            <div class="doctor-details">
+
+                <div class="doctor-name">
+                    ${doctor.name}
+                </div>
+
+                <div class="doctor-specialty">
+                    ${doctor.specialty}
+                </div>
+
+
+                <div class="doctor-meta">
+
+                    <span class="doctor-wait">
+                        ⏱ ${doctor.waiting} min
+                    </span>
+
+                    <span class="doctor-rating">
+                        ⭐ ${doctor.rating}
+                    </span>
+
+                </div>
+
+
+                <div class="doctor-meta">
+
+                    <span class="available">
+                        ● Available
+                    </span>
+
+                    <span>
+                        ${doctor.experience}
+                    </span>
+
+                </div>
+
+
+                <button
+                    class="select-doctor-button"
+                    type="button">
+
+                    Select Doctor
+
+                </button>
+
+            </div>
+
+        `;
+
+
+        grid.appendChild(card);
 
     });
 
-    return patientsWaiting.length * consultationTime;
 }
 
 
+/* =====================================================
+   12. SELECT DOCTOR
+===================================================== */
+
+function selectDoctor(
+    doctorName,
+    selectedCard
+) {
+
+    document.getElementById("doctor").value =
+        doctorName;
+
+
+    document
+        .querySelectorAll(".doctor-card")
+        .forEach(function(card) {
+
+            card.classList.remove("selected");
+
+
+            const button =
+                card.querySelector(
+                    ".select-doctor-button"
+                );
+
+
+            if (button) {
+
+                button.textContent =
+                    "Select Doctor";
+
+            }
+
+        });
+
+
+    selectedCard.classList.add("selected");
+
+
+    const selectedButton =
+        selectedCard.querySelector(
+            ".select-doctor-button"
+        );
+
+
+    if (selectedButton) {
+
+        selectedButton.textContent =
+            "✓ Doctor Selected";
+
+    }
+
+}
+
 
 /* =====================================================
-   8. AI DOCTOR RECOMMENDATION
-   ===================================================== */
+   13. WAITING TIME
+===================================================== */
+
+function calculateWaitingTime(
+    doctorName,
+    currentIndex = -1
+) {
+
+    const patientsWaiting =
+        queue.filter(function(
+            patient,
+            index
+        ) {
+
+            return (
+
+                patient.doctor === doctorName &&
+
+                patient.status !== "Completed" &&
+
+                (
+                    currentIndex === -1 ||
+                    index < currentIndex
+                )
+
+            );
+
+        });
+
+
+    const baseDoctor =
+        Object.values(doctors)
+            .flat()
+            .find(function(doctor) {
+
+                return doctor.name === doctorName;
+
+            });
+
+
+    const baseWait =
+        baseDoctor
+        ? baseDoctor.waiting
+        : 0;
+
+
+    return baseWait +
+        (
+            patientsWaiting.length *
+            consultationTime
+        );
+
+}
+
+
+/* =====================================================
+   14. AI RECOMMENDATION
+===================================================== */
 
 function getAIRecommendation() {
 
@@ -559,183 +2531,253 @@ function getAIRecommendation() {
         document.getElementById("department").value;
 
 
-    if (department === "") {
+    if (!department) {
 
-        alert("Please select a department first.");
+        alert(
+            "Please select a department first."
+        );
 
         return;
+
     }
 
 
-    // Get doctors for the selected department
     const departmentDoctors =
-        doctors[department];
+        doctors[department] || [];
 
 
-    const doctor1 =
-        departmentDoctors[0].name;
+    if (departmentDoctors.length === 0) {
 
-    const doctor2 =
-        departmentDoctors[1].name;
-
-
-    // Calculate waiting times
-    const wait1 =
-        calculateWaitingTime(doctor1);
-
-    const wait2 =
-        calculateWaitingTime(doctor2);
-
-
-    // Find the doctor with less waiting
-    let recommendedDoctor;
-
-    let recommendedWait;
-
-
-    if (wait1 <= wait2) {
-
-        recommendedDoctor = doctor1;
-        recommendedWait = wait1;
-
-    } else {
-
-        recommendedDoctor = doctor2;
-        recommendedWait = wait2;
+        return;
 
     }
 
 
-    // Select the recommended doctor
+    let bestDoctor =
+        departmentDoctors[0];
+
+
+    let bestWaiting =
+        calculateWaitingTime(
+            bestDoctor.name
+        );
+
+
+    departmentDoctors.forEach(function(
+        doctor
+    ) {
+
+        const wait =
+            calculateWaitingTime(
+                doctor.name
+            );
+
+
+        if (wait < bestWaiting) {
+
+            bestDoctor =
+                doctor;
+
+            bestWaiting =
+                wait;
+
+        }
+
+    });
+
+
     document.getElementById("doctor").value =
-        recommendedDoctor;
+        bestDoctor.name;
 
 
-    // Show AI recommendation
-    document.getElementById("aiMessage").textContent =
-        "AI recommends " +
-        recommendedDoctor +
-        " — estimated waiting time: " +
-        recommendedWait +
-        " min.";
+    document
+        .querySelectorAll(".doctor-card")
+        .forEach(function(card) {
+
+            card.classList.remove("selected");
+
+            const button =
+                card.querySelector(
+                    ".select-doctor-button"
+                );
+
+            if (button) {
+
+                button.textContent =
+                    "Select Doctor";
+
+            }
+
+            if (
+                card.getAttribute(
+                    "data-doctor"
+                ) === bestDoctor.name
+            ) {
+
+                card.classList.add(
+                    "selected"
+                );
+
+                if (button) {
+
+                    button.textContent =
+                        "✓ AI Recommended";
+
+                }
+
+            }
+
+        });
+
+
+    document.getElementById(
+        "aiMessage"
+    ).innerHTML = `
+
+        <strong>
+            ✨ ${bestDoctor.name}
+        </strong>
+
+        is recommended because they have the
+        shortest estimated waiting time of
+
+        <strong>
+            ${bestWaiting} minutes
+        </strong>.
+
+    `;
+
 }
 
 
-
 /* =====================================================
-   9. UPDATE AI MESSAGE
-   ===================================================== */
+   15. AI MESSAGE
+===================================================== */
 
 function updateAIMessage() {
 
     const department =
         document.getElementById("department").value;
 
-    const aiMessage =
+
+    const message =
         document.getElementById("aiMessage");
 
 
-    // No department selected
-    if (department === "") {
+    if (!department) {
 
-        aiMessage.textContent =
-            "Select a department to see waiting times.";
+        message.textContent =
+            translations[currentLanguage]
+                ?.selectDepartment ||
+            translations.en.selectDepartment;
 
         return;
+
     }
 
 
-    // Get the two doctors of this department
     const departmentDoctors =
-        doctors[department];
+        doctors[department] || [];
 
 
-    const doctor1 =
-        departmentDoctors[0].name;
-
-    const doctor2 =
-        departmentDoctors[1].name;
+    let text = "";
 
 
-    // Calculate their individual waiting times
-    const wait1 =
-        calculateWaitingTime(doctor1);
+    departmentDoctors.forEach(function(
+        doctor
+    ) {
 
-    const wait2 =
-        calculateWaitingTime(doctor2);
+        const wait =
+            calculateWaitingTime(
+                doctor.name
+            );
 
 
-    // Display the waiting times
-    aiMessage.innerHTML =
-    "<strong>" + doctor1 + ":</strong> " + wait1 + " min<br>" +
-    "<strong>" + doctor2 + ":</strong> " + wait2 + " min";
+        text +=
+            `${doctor.name}: ${wait} min<br>`;
+
+    });
+
+
+    message.innerHTML =
+        text;
+
 }
 
 
-
 /* =====================================================
-   10. BOOK APPOINTMENT
-   ===================================================== */
+   16. BOOK APPOINTMENT
+===================================================== */
 
 function bookAppointment() {
 
-    let name =
-        document.getElementById("patientName").value;
-
-    let age =
-        document.getElementById("patientAge").value;
-
-    let type =
-        document.getElementById("patientType").value;
-
-    let department =
-        document.getElementById("department").value;
-
-    let doctor =
-        document.getElementById("doctor").value;
+    const name =
+        document.getElementById(
+            "patientName"
+        ).value.trim();
 
 
-    if (name === "" ||
-        age === "" ||
-        department === "" ||
-        doctor === "") {
+    const age =
+        document.getElementById(
+            "patientAge"
+        ).value;
+
+
+    const type =
+        document.getElementById(
+            "patientType"
+        ).value;
+
+
+    const department =
+        document.getElementById(
+            "department"
+        ).value;
+
+
+    const doctor =
+        document.getElementById(
+            "doctor"
+        ).value;
+
+
+    if (
+        !name ||
+        !age ||
+        !department ||
+        !doctor
+    ) {
 
         alert(
-            "Please fill all the required fields."
+            "Please complete all required fields."
         );
 
         return;
-    }
-
-
-    let waitingTime =
-        calculateWaitingTime(doctor);
-
-
-    let tokenPrefix;
-
-
-    if (type === "special") {
-
-        tokenPrefix = "S";
-
-    }
-
-    else {
-
-        tokenPrefix = "N";
 
     }
 
 
-    let token =
-        tokenPrefix + tokenNumber;
+    const waitingTime =
+        calculateWaitingTime(
+            doctor
+        );
+
+
+    const tokenPrefix =
+        type === "special"
+        ? "S"
+        : "N";
+
+
+    const token =
+        tokenPrefix +
+        tokenNumber;
 
 
     tokenNumber++;
 
 
-    let patient = {
+    const patient = {
 
         token: token,
 
@@ -757,60 +2799,58 @@ function bookAppointment() {
 
 
     queue.push(patient);
-    currentPatient=patient;
+
+    currentPatient =
+        patient;
 
 
     displayToken(patient);
 
-
     updateQueueTable();
 
+    updateDashboardStats();
 
     updateAIMessage();
 
 
+    document.getElementById(
+        "patientName"
+    ).value = "";
+
+
+    document.getElementById(
+        "patientAge"
+    ).value = "";
+
+
     showPage("token");
 
-
-    /* Clear form */
-
-    document.getElementById("patientName").value =
-        "";
-
-    document.getElementById("patientAge").value =
-        "";
 }
+
+
 /* =====================================================
-   11. DISPLAY TOKEN
-   ===================================================== */
+   17. TOKEN
+===================================================== */
 
 function displayToken(patient) {
 
-    let tokenResult =
-        document.getElementById("tokenResult");
+    const tokenResult =
+        document.getElementById(
+            "tokenResult"
+        );
 
 
-    let typeText;
-
-
-    if (patient.type === "special") {
-
-        typeText =
-            "Specially-Abled Patient";
-
-    }
-
-    else {
-
-        typeText =
-            "Normal Patient";
-
-    }
+    const typeText =
+        patient.type === "special"
+        ? "Specially-Abled Patient"
+        : "Normal Patient";
 
 
     tokenResult.innerHTML = `
 
-        <h3>Appointment Confirmed</h3>
+        <div class="confirmed-title">
+            ✓ Appointment Confirmed
+        </div>
 
         <div class="token-number">
             ${patient.token}
@@ -821,6 +2861,11 @@ function displayToken(patient) {
             <p>
                 <strong>Patient:</strong>
                 ${patient.name}
+            </p>
+
+            <p>
+                <strong>Age:</strong>
+                ${patient.age}
             </p>
 
             <p>
@@ -839,7 +2884,7 @@ function displayToken(patient) {
             </p>
 
             <p>
-                <strong>Estimated Waiting Time:</strong>
+                <strong>Estimated Waiting:</strong>
                 ${patient.waiting} minutes
             </p>
 
@@ -851,157 +2896,309 @@ function displayToken(patient) {
         </div>
 
     `;
+
 }
 
 
-
 /* =====================================================
-   12. STAFF QUEUE TABLE
-   ===================================================== */
+   18. UPDATE QUEUE TABLE
+===================================================== */
 
 function updateQueueTable() {
 
-    let table =
-        document.getElementById("queueTable");
+    const table =
+        document.getElementById(
+            "queueTable"
+        );
 
 
     table.innerHTML = "";
 
 
-    for (let i = 0;
-         i < queue.length;
-         i++) {
+    if (queue.length === 0) {
+
+        table.innerHTML = `
+
+            <tr>
+
+                <td colspan="7">
+
+                    No patients in the queue.
+
+                </td>
+
+            </tr>
+
+        `;
+
+        updateDashboardStats();
+
+        return;
+
+    }
 
 
-        let patient =
-            queue[i];
+    queue.forEach(function(
+        patient,
+        index
+    ) {
 
-
-        let row =
+        const row =
             document.createElement("tr");
 
 
-        let actionButton =
-            `<button
-                class="status-button"
-                onclick="completePatient(${i})">
-                Complete
-             </button>`;
+        let action;
+
+
+        if (
+            patient.status ===
+            "Completed"
+        ) {
+
+            action = `
+
+                <span class="status-completed">
+                    ✓ Completed
+                </span>
+
+            `;
+
+        } else {
+
+            action = `
+
+                <button
+                    class="status-button"
+                    onclick="completePatient(${index})">
+
+                    Complete
+
+                </button>
+
+            `;
+
+        }
 
 
         row.innerHTML = `
 
-            <td>${patient.token}</td>
+            <td>
+                ${patient.token}
+            </td>
 
-            <td>${patient.name}</td>
+            <td>
+                ${patient.name}
+            </td>
 
-            <td>${patient.doctor}</td>
+            <td>
+                ${patient.doctor}
+            </td>
 
-            <td>${patient.type}</td>
+            <td>
+                ${patient.type}
+            </td>
 
-            <td>${patient.waiting} min</td>
+            <td>
+                ${patient.waiting} min
+            </td>
 
-            <td>${patient.status}</td>
+            <td>
+                ${patient.status}
+            </td>
 
-            <td>${actionButton}</td>
+            <td>
+                ${action}
+            </td>
 
         `;
 
 
         table.appendChild(row);
 
-    }
+    });
+
+
+    updateDashboardStats();
+
 }
 
 
-
 /* =====================================================
-   13. COMPLETE PATIENT
-   ===================================================== */
+   19. COMPLETE PATIENT
+===================================================== */
 
 function completePatient(index) {
+
+    if (!queue[index]) {
+
+        return;
+
+    }
+
 
     queue[index].status =
         "Completed";
 
 
-    updateQueueTable();
-
-
-    /*
-       Recalculate waiting times
-       for remaining patients.
-    */
-
     recalculateWaitingTimes();
-    if (currentPatient) displayToken(currentPatient);
 
 
     updateQueueTable();
 
 
     updateAIMessage();
+
+
+    if (
+        currentPatient &&
+        currentPatient.token ===
+        queue[index].token
+    ) {
+
+        displayToken(
+            queue[index]
+        );
+
+    }
+
 }
 
 
-
 /* =====================================================
-   14. RECALCULATE WAITING TIMES
-   ===================================================== */
+   20. RECALCULATE WAITING
+===================================================== */
 
 function recalculateWaitingTimes() {
 
-    for (let i = 0;
-         i < queue.length;
-         i++) {
+    for (
+        let i = 0;
+        i < queue.length;
+        i++
+    ) {
 
-        if (queue[i].status !== "Completed") {
+        if (
+            queue[i].status !==
+            "Completed"
+        ) {
 
             queue[i].waiting =
                 calculateWaitingTime(
-                    queue[i].doctor, i
+                    queue[i].doctor,
+                    i
                 );
 
         }
+
     }
+
 }
 
 
+/* =====================================================
+   21. BED STATUS
+===================================================== */
+
+function updateBedStatus() {
+
+    if (
+        occupiedBeds >=
+        totalBeds
+    ) {
+
+        alert(
+            "No emergency beds are currently available."
+        );
+
+        return false;
+
+    }
+
+
+    occupiedBeds++;
+
+
+    const availableBeds =
+        totalBeds -
+        occupiedBeds;
+
+
+    document.getElementById(
+        "occupiedBeds"
+    ).textContent =
+        occupiedBeds;
+
+
+    document.getElementById(
+        "availableBeds"
+    ).textContent =
+        availableBeds;
+
+
+    document.getElementById(
+        "dashboardAvailableBeds"
+    ).textContent =
+        availableBeds;
+
+
+    return true;
+
+}
+
 
 /* =====================================================
-   15. EMERGENCY REGISTRATION
-   ===================================================== */
+   22. EMERGENCY REGISTRATION
+===================================================== */
 
 function registerEmergency() {
 
-    let name =
-        document.getElementById("emergencyName").value;
-
-    let age =
-        document.getElementById("emergencyAge").value;
-
-    let department =
-        document.getElementById("emergencyDepartment").value;
+    const name =
+        document.getElementById(
+            "emergencyName"
+        ).value.trim();
 
 
-    if (name === "" || age === "") {
+    const age =
+        document.getElementById(
+            "emergencyAge"
+        ).value;
+
+
+    const department =
+        document.getElementById(
+            "emergencyDepartment"
+        ).value;
+
+
+    if (
+        !name ||
+        !age
+    ) {
 
         alert(
             "Please enter the emergency patient's name and age."
         );
 
         return;
+
     }
 
 
-    let token =
-        "E" + tokenNumber;
+    if (!updateBedStatus()) {
+
+        return;
+
+    }
+
+
+    const token =
+        "E" +
+        tokenNumber;
 
 
     tokenNumber++;
 
 
-    let emergencyPatient = {
+    const emergencyPatient = {
 
         token: token,
 
@@ -1022,61 +3219,179 @@ function registerEmergency() {
     };
 
 
-    /*
-       Emergency patients are added
-       with priority.
-    */
+    /* Emergency gets priority */
 
-    queue.unshift(emergencyPatient);
-    updateBedStatus();
+    queue.unshift(
+        emergencyPatient
+    );
+
 
     document.getElementById(
         "emergencyResult"
     ).innerHTML = `
 
-        <h3>Emergency Patient Registered</h3>
+        <strong>
+            ✓ Emergency Patient Registered
+        </strong>
 
-        <p>
-            Token:
-            <strong>${token}</strong>
-        </p>
+        <br><br>
 
-        <p>
-            Patient:
-            ${name}
-        </p>
+        Token:
+        <strong>${token}</strong>
 
-        <p>
-            Priority:
-            Emergency
-        </p>
+        <br>
 
-        <p>
-            Waiting Time:
-            0 minutes
-        </p>
+        Patient:
+        ${name}
+
+        <br>
+
+        Priority:
+        Emergency
+
+        <br>
+
+        Waiting Time:
+        0 minutes
 
     `;
+
+
+    document.getElementById(
+        "emergencyName"
+    ).value = "";
+
+
+    document.getElementById(
+        "emergencyAge"
+    ).value = "";
 
 
     updateQueueTable();
 
 
-    document.getElementById("emergencyName").value =
-        "";
-
-    document.getElementById("emergencyAge").value =
-        "";
+    updateDashboardStats();
 
 
     showPage("emergency");
+
 }
 
 
+/* =====================================================
+   23. DASHBOARD STATS
+===================================================== */
+
+function updateDashboardStats() {
+
+    const total =
+        queue.length;
+
+
+    const waiting =
+        queue.filter(function(
+            patient
+        ) {
+
+            return (
+                patient.status !==
+                "Completed"
+            );
+
+        }).length;
+
+
+    const completed =
+        queue.filter(function(
+            patient
+        ) {
+
+            return (
+                patient.status ===
+                "Completed"
+            );
+
+        }).length;
+
+
+    const totalPatients =
+        document.getElementById(
+            "totalPatients"
+        );
+
+
+    const waitingPatients =
+        document.getElementById(
+            "waitingPatients"
+        );
+
+
+    const completedPatients =
+        document.getElementById(
+            "completedPatients"
+        );
+
+
+    const queueCount =
+        document.getElementById(
+            "queueCount"
+        );
+
+
+    if (totalPatients) {
+
+        totalPatients.textContent =
+            total;
+
+    }
+
+
+    if (waitingPatients) {
+
+        waitingPatients.textContent =
+            waiting;
+
+    }
+
+
+    if (completedPatients) {
+
+        completedPatients.textContent =
+            completed;
+
+    }
+
+
+    if (queueCount) {
+
+        queueCount.textContent =
+            total +
+            (total === 1
+                ? " Patient"
+                : " Patients");
+
+    }
+
+}
+
 
 /* =====================================================
-   16. INITIAL PAGE
-   ===================================================== */
+   24. INITIALIZE
+===================================================== */
 
-showPage("home");
+document.addEventListener(
+    "DOMContentLoaded",
+    function() {
 
+        renderDepartments();
+
+        updateQueueTable();
+
+        updateDashboardStats();
+
+        changeLanguage("en");
+
+        showPage("home");
+
+    }
+);
