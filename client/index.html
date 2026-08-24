@@ -2,27 +2,39 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
 
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
 
-    <meta name="theme-color" content="#5d3140">
+    <meta name="theme-color"
+          content="#5d3140">
 
     <title>SmartQueue - Smart Hospital Queue Management</title>
 
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- ================= FONTS ================= -->
 
-    <link href="https://fonts.googleapis.com/css2?family=Idiqlat&family=Inter:wght@400;500;600;700;800&display=swap"
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
           rel="stylesheet">
 
-    <link rel="stylesheet" href="style.css">
+    <!-- ================= CSS ================= -->
+
+    <link rel="stylesheet"
+          href="style.css">
+
 </head>
 
 
 <body>
+
 
 <!-- =====================================================
      HEADER
@@ -38,9 +50,11 @@
 
         <div class="brand-text">
 
-            <h1>SmartQueue</h1>
+            <h1>
+                SmartQueue
+            </h1>
 
-            <p data-i18n="subtitle">
+            <p>
                 AI-Powered Hospital Queue Management
             </p>
 
@@ -49,35 +63,34 @@
     </div>
 
 
-    <!-- LANGUAGE -->
-
     <div class="language-wrapper">
 
-        <span class="language-icon">🌐</span>
+        <span class="language-icon">
+            🌐
+        </span>
 
         <select id="languageSelect"
                 onchange="changeLanguage(this.value)">
 
             <option value="en">English</option>
             <option value="hi">हिन्दी</option>
-            <option value="mr">मराठी</option>
             <option value="od">ଓଡ଼ିଆ</option>
+            <option value="mr">मराठी</option>
             <option value="ta">தமிழ்</option>
             <option value="te">తెలుగు</option>
             <option value="kn">ಕನ್ನಡ</option>
             <option value="gu">ગુજરાતી</option>
             <option value="pa">ਪੰਜਾਬੀ</option>
             <option value="ur">اردو</option>
-            <option value="fa">فارسی</option>
             <option value="fr">Français</option>
             <option value="es">Español</option>
-            <option value="de">Deutsch</option>
 
         </select>
 
     </div>
 
 </header>
+
 
 
 <!-- =====================================================
@@ -89,46 +102,46 @@
     <div class="nav-inner">
 
         <button class="nav-button active"
-                onclick="showPage('home', this)"
-                data-i18n="home">
+                onclick="showPage('home', this)">
 
-            🏠 Home
-
-        </button>
-
-
-        <button class="nav-button"
-                onclick="showPage('booking', this)"
-                data-i18n="booking">
-
-            📅 Book Appointment
+            🏠
+            <span>Home</span>
 
         </button>
 
 
         <button class="nav-button"
-                onclick="showPage('token', this)"
-                data-i18n="myToken">
+                onclick="showPage('booking', this)">
 
-            🎫 My Token
+            📅
+            <span>Book Appointment</span>
 
         </button>
 
 
         <button class="nav-button"
-                onclick="showPage('staff', this)"
-                data-i18n="staff">
+                onclick="showPage('token', this)">
 
-            📊 Staff Dashboard
+            🎫
+            <span>My Token</span>
+
+        </button>
+
+
+        <button class="nav-button"
+                onclick="showPage('staff', this)">
+
+            📊
+            <span>Staff Dashboard</span>
 
         </button>
 
 
         <button class="nav-button emergency-nav"
-                onclick="showPage('emergency', this)"
-                data-i18n="emergency">
+                onclick="showPage('emergency', this)">
 
-            🚑 Emergency
+            🚑
+            <span>Emergency</span>
 
         </button>
 
@@ -137,44 +150,37 @@
 </nav>
 
 
+
 <main>
 
 
 <!-- =====================================================
-     HOME PAGE
+     HOME
 ===================================================== -->
 
-<section id="home" class="page active">
+<section id="home"
+         class="page active">
 
-
-    <!-- HERO -->
 
     <div class="hero-section">
 
         <div class="hero-content">
 
             <div class="hero-badge">
-                <span>✨</span>
-                <span data-i18n="smartHealthcare">
-                    Smart Healthcare • Less Waiting
-                </span>
+                ✨ Smart Healthcare • Less Waiting
             </div>
 
-
-            <h2 data-i18n="welcome">
+            <h2>
                 Healthcare that puts you first.
             </h2>
 
-
-            <p data-i18n="heroDescription">
+            <p>
                 Book appointments, find the right doctor,
                 and manage your hospital visit with ease.
             </p>
 
-
             <button class="hero-button"
-                    onclick="openBooking('normal')"
-                    data-i18n="startBooking">
+                    onclick="openBooking('normal')">
 
                 Book an Appointment
                 <span>→</span>
@@ -193,8 +199,15 @@
                 <span>⏱️</span>
 
                 <div>
-                    <strong>10 min</strong>
-                    <small>Avg. Waiting</small>
+
+                    <strong>
+                        10 min
+                    </strong>
+
+                    <small>
+                        Avg. Waiting
+                    </small>
+
                 </div>
 
             </div>
@@ -205,8 +218,15 @@
                 <span>🤖</span>
 
                 <div>
-                    <strong>AI</strong>
-                    <small>Smart Recommendation</small>
+
+                    <strong>
+                        AI
+                    </strong>
+
+                    <small>
+                        Smart Recommendation
+                    </small>
+
                 </div>
 
             </div>
@@ -221,31 +241,27 @@
     </div>
 
 
-    <!-- SERVICE TITLE -->
 
-    <div class="section-title home-services-title">
+    <div class="section-title">
 
-        <span data-i18n="servicesLabel">
+        <span>
             OUR SERVICES
         </span>
 
-        <h2 data-i18n="howCanWeHelp">
+        <h2>
             How can we help you?
         </h2>
 
-        <p data-i18n="serviceDescription">
+        <p>
             Choose the service that best fits your needs.
         </p>
 
     </div>
 
 
-    <!-- SERVICE CARDS -->
 
     <div class="service-grid">
 
-
-        <!-- NORMAL -->
 
         <div class="service-card normal-service"
              onclick="openBooking('normal')">
@@ -256,23 +272,21 @@
 
             <div class="service-content">
 
-                <span class="service-label"
-                      data-i18n="regularCare">
+                <span class="service-label">
                     REGULAR CARE
                 </span>
 
-                <h3 data-i18n="normalPatient">
+                <h3>
                     Normal Patient
                 </h3>
 
-                <p data-i18n="normalDescription">
+                <p>
                     Book a regular consultation with
                     a doctor of your choice.
                 </p>
 
                 <span class="service-link">
-                    <span data-i18n="bookNow">Book Now</span>
-                    →
+                    Book Now →
                 </span>
 
             </div>
@@ -280,7 +294,6 @@
         </div>
 
 
-        <!-- SPECIAL -->
 
         <div class="service-card special-service"
              onclick="openBooking('special')">
@@ -291,25 +304,21 @@
 
             <div class="service-content">
 
-                <span class="service-label"
-                      data-i18n="priorityCare">
+                <span class="service-label">
                     PRIORITY CARE
                 </span>
 
-                <h3 data-i18n="specialPatient">
+                <h3>
                     Specially-Abled Patient
                 </h3>
 
-                <p data-i18n="specialDescription">
+                <p>
                     Receive priority assistance and
                     suitable doctor recommendations.
                 </p>
 
                 <span class="service-link">
-                    <span data-i18n="getPriority">
-                        Get Priority
-                    </span>
-                    →
+                    Get Priority →
                 </span>
 
             </div>
@@ -317,7 +326,6 @@
         </div>
 
 
-        <!-- EMERGENCY -->
 
         <div class="service-card emergency-service"
              onclick="showPage('emergency')">
@@ -328,25 +336,21 @@
 
             <div class="service-content">
 
-                <span class="service-label"
-                      data-i18n="urgentCare">
+                <span class="service-label">
                     URGENT CARE
                 </span>
 
-                <h3 data-i18n="emergency">
+                <h3>
                     Emergency
                 </h3>
 
-                <p data-i18n="emergencyDescription">
+                <p>
                     Quickly register an emergency
                     patient for immediate attention.
                 </p>
 
                 <span class="service-link">
-                    <span data-i18n="registerNow">
-                        Register Now
-                    </span>
-                    →
+                    Register Now →
                 </span>
 
             </div>
@@ -356,40 +360,63 @@
     </div>
 
 
-    <!-- FEATURES -->
 
     <div class="feature-strip">
 
         <div class="feature-item">
+
             <span>🔒</span>
+
             <div>
-                <strong data-i18n="secure">Secure</strong>
-                <small data-i18n="secureText">
+
+                <strong>
+                    Secure
+                </strong>
+
+                <small>
                     Your information stays protected
                 </small>
+
             </div>
+
         </div>
 
 
         <div class="feature-item">
+
             <span>🤖</span>
+
             <div>
-                <strong data-i18n="aiPowered">AI Powered</strong>
-                <small data-i18n="aiText">
+
+                <strong>
+                    AI Powered
+                </strong>
+
+                <small>
                     Smarter doctor recommendations
                 </small>
+
             </div>
+
         </div>
 
 
         <div class="feature-item">
+
             <span>⏱️</span>
+
             <div>
-                <strong data-i18n="lessWaiting">Less Waiting</strong>
-                <small data-i18n="waitingText">
+
+                <strong>
+                    Less Waiting
+                </strong>
+
+                <small>
                     Know your estimated waiting time
                 </small>
+
             </div>
+
         </div>
 
     </div>
@@ -399,28 +426,27 @@
 
 
 <!-- =====================================================
-     BOOKING PAGE
+     BOOKING
 ===================================================== -->
 
-<section id="booking" class="page">
+<section id="booking"
+         class="page">
 
 
     <div class="booking-header">
 
         <div>
 
-            <span class="page-eyebrow"
-                  data-i18n="appointment">
+            <span class="page-eyebrow">
                 APPOINTMENT
             </span>
 
-            <h2 data-i18n="bookAppointment">
+            <h2>
                 Book Your Appointment
             </h2>
 
-            <p data-i18n="bookingDescription">
-                Tell us what you need and we'll help
-                you find the right doctor.
+            <p>
+                Complete the steps below to book your visit.
             </p>
 
         </div>
@@ -428,17 +454,78 @@
 
         <div class="booking-step">
 
-            <span>1</span>
-            <span data-i18n="simpleFast">
-                Simple & Fast
-            </span>
+            <span>✓</span>
+            Simple & Fast
 
         </div>
 
     </div>
 
 
-    <!-- PATIENT TYPE -->
+
+    <!-- PROGRESS -->
+
+    <div class="booking-progress">
+
+        <div class="progress-item active">
+
+            <span>1</span>
+
+            <small>
+                Patient
+            </small>
+
+        </div>
+
+
+        <div class="progress-line"></div>
+
+
+        <div class="progress-item">
+
+            <span>2</span>
+
+            <small>
+                Department
+            </small>
+
+        </div>
+
+
+        <div class="progress-line"></div>
+
+
+        <div class="progress-item">
+
+            <span>3</span>
+
+            <small>
+                Doctor
+            </small>
+
+        </div>
+
+
+        <div class="progress-line"></div>
+
+
+        <div class="progress-item">
+
+            <span>4</span>
+
+            <small>
+                Details
+            </small>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =================================================
+         STEP 01
+    ================================================== -->
 
     <div class="booking-section">
 
@@ -450,13 +537,12 @@
 
             <div>
 
-                <h3 data-i18n="choosePatientType">
-                    Choose Patient Type
+                <h3>
+                    Patient Type
                 </h3>
 
-                <p data-i18n="patientTypeDescription">
-                    Select the option that best describes
-                    your visit.
+                <p>
+                    Who are you booking the appointment for?
                 </p>
 
             </div>
@@ -467,9 +553,10 @@
         <div class="choice-grid">
 
 
-            <div id="normalChoice"
-                 class="choice-card selected"
-                 onclick="selectPatientType('normal')">
+            <button type="button"
+                    id="normalChoice"
+                    class="choice-card selected"
+                    onclick="selectPatientType('normal')">
 
                 <div class="choice-icon">
                     👤
@@ -477,11 +564,11 @@
 
                 <div class="choice-info">
 
-                    <h4 data-i18n="normalPatient">
+                    <h4>
                         Normal Patient
                     </h4>
 
-                    <p data-i18n="normalChoiceText">
+                    <p>
                         Standard medical consultation
                     </p>
 
@@ -491,12 +578,14 @@
                     ✓
                 </div>
 
-            </div>
+            </button>
 
 
-            <div id="specialChoice"
-                 class="choice-card"
-                 onclick="selectPatientType('special')">
+
+            <button type="button"
+                    id="specialChoice"
+                    class="choice-card"
+                    onclick="selectPatientType('special')">
 
                 <div class="choice-icon">
                     ♿
@@ -504,11 +593,11 @@
 
                 <div class="choice-info">
 
-                    <h4 data-i18n="specialPatient">
+                    <h4>
                         Specially-Abled Patient
                     </h4>
 
-                    <p data-i18n="specialChoiceText">
+                    <p>
                         Priority assistance and support
                     </p>
 
@@ -518,7 +607,7 @@
                     ✓
                 </div>
 
-            </div>
+            </button>
 
         </div>
 
@@ -531,7 +620,9 @@
 
 
 
-    <!-- DEPARTMENT -->
+    <!-- =================================================
+         STEP 02 DEPARTMENT
+    ================================================== -->
 
     <div class="booking-section">
 
@@ -543,12 +634,12 @@
 
             <div>
 
-                <h3 data-i18n="chooseDepartment">
-                    Choose Department
+                <h3>
+                    Department
                 </h3>
 
-                <p data-i18n="departmentDescription">
-                    Select a department to see available doctors.
+                <p>
+                    Choose the medical department you need.
                 </p>
 
             </div>
@@ -556,10 +647,164 @@
         </div>
 
 
+
+        <!-- MOBILE / DESKTOP DROPDOWN -->
+
+        <div class="mobile-select-wrapper">
+
+            <label for="departmentDropdown">
+                Select Department
+            </label>
+
+            <select id="departmentDropdown"
+                    onchange="selectDepartment(this.value)">
+
+                <option value="">
+                    -- Select Department --
+                </option>
+
+                <option value="General Medicine">
+                    🩺 General Medicine
+                </option>
+
+                <option value="Orthopedics">
+                    🦴 Orthopedics
+                </option>
+
+                <option value="Cardiology">
+                    ❤️ Cardiology
+                </option>
+
+                <option value="Neurology">
+                    🧠 Neurology
+                </option>
+
+            </select>
+
+        </div>
+
+
+
+        <!-- CLICKABLE DEPARTMENT CARDS -->
+
         <div id="departmentGrid"
              class="department-grid">
 
-            <!-- Generated by JS -->
+
+            <button type="button"
+                    class="department-card"
+                    data-department="General Medicine"
+                    onclick="selectDepartment('General Medicine')">
+
+                <span class="department-icon">
+                    🩺
+                </span>
+
+                <div>
+
+                    <h4>
+                        General Medicine
+                    </h4>
+
+                    <p>
+                        General health & consultation
+                    </p>
+
+                </div>
+
+                <span class="department-check">
+                    ✓
+                </span>
+
+            </button>
+
+
+
+            <button type="button"
+                    class="department-card"
+                    data-department="Orthopedics"
+                    onclick="selectDepartment('Orthopedics')">
+
+                <span class="department-icon">
+                    🦴
+                </span>
+
+                <div>
+
+                    <h4>
+                        Orthopedics
+                    </h4>
+
+                    <p>
+                        Bones, joints & muscles
+                    </p>
+
+                </div>
+
+                <span class="department-check">
+                    ✓
+                </span>
+
+            </button>
+
+
+
+            <button type="button"
+                    class="department-card"
+                    data-department="Cardiology"
+                    onclick="selectDepartment('Cardiology')">
+
+                <span class="department-icon">
+                    ❤️
+                </span>
+
+                <div>
+
+                    <h4>
+                        Cardiology
+                    </h4>
+
+                    <p>
+                        Heart & cardiovascular care
+                    </p>
+
+                </div>
+
+                <span class="department-check">
+                    ✓
+                </span>
+
+            </button>
+
+
+
+            <button type="button"
+                    class="department-card"
+                    data-department="Neurology"
+                    onclick="selectDepartment('Neurology')">
+
+                <span class="department-icon">
+                    🧠
+                </span>
+
+                <div>
+
+                    <h4>
+                        Neurology
+                    </h4>
+
+                    <p>
+                        Brain & nervous system
+                    </p>
+
+                </div>
+
+                <span class="department-check">
+                    ✓
+                </span>
+
+            </button>
+
 
         </div>
 
@@ -571,7 +816,9 @@
 
 
 
-    <!-- DOCTORS -->
+    <!-- =================================================
+         STEP 03 DOCTOR
+    ================================================== -->
 
     <div class="booking-section">
 
@@ -583,13 +830,12 @@
 
             <div>
 
-                <h3 data-i18n="chooseDoctor">
+                <h3>
                     Choose Your Doctor
                 </h3>
 
-                <p data-i18n="doctorDescription">
-                    Compare doctors and choose the one
-                    that suits you best.
+                <p>
+                    Compare doctors and waiting times.
                 </p>
 
             </div>
@@ -597,7 +843,6 @@
         </div>
 
 
-        <!-- AI -->
 
         <div class="ai-recommendation">
 
@@ -609,34 +854,34 @@
 
                 <div class="ai-heading">
 
-                    <h3 data-i18n="aiRecommendation">
-                        SmartQueue AI Recommendation
+                    <h3>
+                        SmartQueue AI
                     </h3>
 
-                    <span data-i18n="smartPick">
+                    <span>
                         SMART PICK
                     </span>
 
                 </div>
 
-                <p id="aiMessage"
-                   data-i18n="selectDepartment">
-                    Select a department to see doctor
-                    waiting times.
+                <p id="aiMessage">
+                    Select a department to see
+                    doctor recommendations.
                 </p>
 
             </div>
 
+
             <button class="ai-button"
                     type="button"
-                    onclick="getAIRecommendation()"
-                    data-i18n="findBestDoctor">
+                    onclick="getAIRecommendation()">
 
-                Find Best Doctor
+                🤖 Find Best Doctor
 
             </button>
 
         </div>
+
 
 
         <div id="doctorGrid"
@@ -644,13 +889,15 @@
 
             <div class="empty-doctors">
 
-                <div>👨‍⚕️</div>
+                <div>
+                    👨‍⚕️
+                </div>
 
-                <h3 data-i18n="selectDepartmentFirst">
+                <h3>
                     Select a department first
                 </h3>
 
-                <p data-i18n="selectDepartmentText">
+                <p>
                     Available doctors will appear here.
                 </p>
 
@@ -666,7 +913,9 @@
 
 
 
-    <!-- PATIENT DETAILS -->
+    <!-- =================================================
+         STEP 04 PATIENT DETAILS
+    ================================================== -->
 
     <div class="booking-section">
 
@@ -678,12 +927,13 @@
 
             <div>
 
-                <h3 data-i18n="patientDetails">
+                <h3>
                     Patient Details
                 </h3>
 
-                <p data-i18n="detailsDescription">
-                    Enter the patient's basic information.
+                <p>
+                    Provide information to help the doctor
+                    prepare for the consultation.
                 </p>
 
             </div>
@@ -691,58 +941,632 @@
         </div>
 
 
-        <div class="patient-form">
 
-            <div class="form-group">
+        <!-- =================================================
+             BASIC INFORMATION
+        ================================================== -->
 
-                <label data-i18n="patientName">
-                    Patient Name
-                </label>
+        <details class="form-collapse"
+                 open>
 
-                <input type="text"
-                       id="patientName"
-                       placeholder="Enter patient name"
-                       data-placeholder="patientNamePlaceholder">
+            <summary>
+
+                <div class="collapse-title">
+
+                    <span class="collapse-icon">
+                        👤
+                    </span>
+
+                    <div>
+
+                        <strong>
+                            Basic Information
+                        </strong>
+
+                        <small>
+                            Name, age, gender & contact
+                        </small>
+
+                    </div>
+
+                </div>
+
+                <span class="collapse-arrow">
+                    ▼
+                </span>
+
+            </summary>
+
+
+
+            <div class="collapse-content">
+
+                <div class="patient-form">
+
+
+                    <!-- NAME -->
+
+                    <div class="form-group">
+
+                        <label for="patientName">
+                            Patient Name *
+                        </label>
+
+                        <input type="text"
+                               id="patientName"
+                               placeholder="Enter full name"
+                               autocomplete="name">
+
+                    </div>
+
+
+
+                    <!-- AGE -->
+
+                    <div class="form-group">
+
+                        <label for="patientAge">
+                            Age *
+                        </label>
+
+                        <input type="number"
+                               id="patientAge"
+                               min="1"
+                               max="120"
+                               placeholder="Age">
+
+                    </div>
+
+
+
+                    <!-- GENDER -->
+
+                    <div class="form-group full-width">
+
+                        <label>
+                            Gender *
+                        </label>
+
+
+                        <div class="gender-selector">
+
+
+                            <button type="button"
+                                    class="gender-option selected"
+                                    onclick="selectGender(this, 'Male')">
+
+                                <span class="gender-icon">
+                                    👨
+                                </span>
+
+                                <span class="gender-text">
+                                    Male
+                                </span>
+
+                                <span class="gender-radio">
+                                    ✓
+                                </span>
+
+                            </button>
+
+
+
+                            <button type="button"
+                                    class="gender-option"
+                                    onclick="selectGender(this, 'Female')">
+
+                                <span class="gender-icon">
+                                    👩
+                                </span>
+
+                                <span class="gender-text">
+                                    Female
+                                </span>
+
+                                <span class="gender-radio">
+                                    ✓
+                                </span>
+
+                            </button>
+
+
+
+                            <button type="button"
+                                    class="gender-option"
+                                    onclick="selectGender(this, 'Other')">
+
+                                <span class="gender-icon">
+                                    🧑
+                                </span>
+
+                                <span class="gender-text">
+                                    Other
+                                </span>
+
+                                <span class="gender-radio">
+                                    ✓
+                                </span>
+
+                            </button>
+
+
+                        </div>
+
+
+                        <input type="hidden"
+                               id="patientGender"
+                               value="Male">
+
+                    </div>
+
+
+
+                    <!-- MOBILE -->
+
+                    <div class="form-group">
+
+                        <label for="patientMobile">
+                            📱 Mobile Number *
+                        </label>
+
+                        <input type="tel"
+                               id="patientMobile"
+                               inputmode="numeric"
+                               maxlength="10"
+                               placeholder="10-digit mobile number">
+
+                    </div>
+
+
+
+                    <!-- EMAIL -->
+
+                    <div class="form-group">
+
+                        <label for="patientEmail">
+
+                            📧 Email
+
+                            <span class="optional">
+                                Optional
+                            </span>
+
+                        </label>
+
+                        <input type="email"
+                               id="patientEmail"
+                               placeholder="example@email.com"
+                               autocomplete="email">
+
+                    </div>
+
+
+                </div>
 
             </div>
 
+        </details>
 
-            <div class="form-group">
 
-                <label data-i18n="age">
-                    Age
-                </label>
 
-                <input type="number"
-                       id="patientAge"
-                       min="1"
-                       max="120"
-                       placeholder="Enter age"
-                       data-placeholder="agePlaceholder">
+        <!-- =================================================
+             REASON FOR VISIT
+        ================================================== -->
+
+        <details class="form-collapse"
+                 open>
+
+            <summary>
+
+                <div class="collapse-title">
+
+                    <span class="collapse-icon">
+                        🩺
+                    </span>
+
+                    <div>
+
+                        <strong>
+                            Reason for Visit
+                        </strong>
+
+                        <small>
+                            Symptoms and reason for consultation
+                        </small>
+
+                    </div>
+
+                </div>
+
+                <span class="collapse-arrow">
+                    ▼
+                </span>
+
+            </summary>
+
+
+
+            <div class="collapse-content">
+
+
+                <!-- PROBLEM DROPDOWN -->
+
+                <div class="form-group full-width">
+
+                    <label for="problemDropdown">
+                        Select Main Problem
+                    </label>
+
+
+                    <select id="problemDropdown"
+                            onchange="selectProblemDropdown(this.value)">
+
+                        <option value="">
+                            Select the main problem
+                        </option>
+
+                        <option value="Fever / Infection">
+                            🤒 Fever / Infection
+                        </option>
+
+                        <option value="Pain / Injury">
+                            🤕 Pain / Injury
+                        </option>
+
+                        <option value="Breathing Problem">
+                            🫁 Breathing Problem
+                        </option>
+
+                        <option value="Heart Related">
+                            ❤️ Heart Related
+                        </option>
+
+                        <option value="Bone / Joint Problem">
+                            🦴 Bone / Joint
+                        </option>
+
+                        <option value="Cold / Cough">
+                            🤧 Cold / Cough
+                        </option>
+
+                        <option value="Stomach / Digestive">
+                            🤢 Stomach / Digestive
+                        </option>
+
+                        <option value="Neurological">
+                            🧠 Neurological
+                        </option>
+
+                        <option value="Eye Problem">
+                            👁️ Eye Problem
+                        </option>
+
+                        <option value="Dental">
+                            🦷 Dental
+                        </option>
+
+                        <option value="Other">
+                            🩺 Other
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <input type="hidden"
+                       id="patientProblemCategory">
+
+
+
+                <!-- DESCRIPTION -->
+
+                <div class="form-group full-width">
+
+                    <label for="patientProblem">
+                        Describe the Problem *
+                    </label>
+
+                    <textarea id="patientProblem"
+                              rows="4"
+                              maxlength="500"
+                              placeholder="Describe symptoms or reason for visiting..."></textarea>
+
+                    <small class="input-help">
+
+                        Please briefly describe the patient's
+                        symptoms or reason for the visit.
+
+                    </small>
+
+                </div>
+
+
+
+                <!-- DURATION -->
+
+                <div class="form-group full-width">
+
+                    <label class="field-label">
+                        How long has the patient had this problem?
+                    </label>
+
+
+                    <div class="duration-grid">
+
+
+                        <button type="button"
+                                class="duration-card selected"
+                                onclick="selectDuration(this, 'Today')">
+
+                            Today
+
+                        </button>
+
+
+                        <button type="button"
+                                class="duration-card"
+                                onclick="selectDuration(this, '2–3 Days')">
+
+                            2–3 Days
+
+                        </button>
+
+
+                        <button type="button"
+                                class="duration-card"
+                                onclick="selectDuration(this, 'About a Week')">
+
+                            About a Week
+
+                        </button>
+
+
+                        <button type="button"
+                                class="duration-card"
+                                onclick="selectDuration(this, 'More than a Week')">
+
+                            More than a Week
+
+                        </button>
+
+
+                    </div>
+
+
+                    <input type="hidden"
+                           id="problemDuration"
+                           value="Today">
+
+                </div>
+
 
             </div>
 
-        </div>
+        </details>
+
+
+
+        <!-- =================================================
+             MEDICAL INFORMATION
+        ================================================== -->
+
+        <details class="form-collapse">
+
+            <summary>
+
+                <div class="collapse-title">
+
+                    <span class="collapse-icon">
+                        💊
+                    </span>
+
+                    <div>
+
+                        <strong>
+                            Medical Information
+                        </strong>
+
+                        <small>
+                            Conditions, allergies & medications
+                        </small>
+
+                    </div>
+
+                </div>
+
+                <span class="collapse-arrow">
+                    ▼
+                </span>
+
+            </summary>
+
+
+
+            <div class="collapse-content">
+
+
+                <!-- CONDITIONS -->
+
+                <div class="form-group full-width">
+
+                    <label class="field-label">
+                        Existing Medical Conditions
+                    </label>
+
+
+                    <div class="condition-grid">
+
+
+                        <button type="button"
+                                class="condition-card selected"
+                                onclick="toggleCondition(this, 'None')">
+
+                            ✓ None
+
+                        </button>
+
+
+                        <button type="button"
+                                class="condition-card"
+                                onclick="toggleCondition(this, 'Diabetes')">
+
+                            Diabetes
+
+                        </button>
+
+
+                        <button type="button"
+                                class="condition-card"
+                                onclick="toggleCondition(this, 'Hypertension')">
+
+                            Hypertension
+
+                        </button>
+
+
+                        <button type="button"
+                                class="condition-card"
+                                onclick="toggleCondition(this, 'Asthma')">
+
+                            Asthma
+
+                        </button>
+
+
+                        <button type="button"
+                                class="condition-card"
+                                onclick="toggleCondition(this, 'Heart Disease')">
+
+                            Heart Disease
+
+                        </button>
+
+
+                        <button type="button"
+                                class="condition-card"
+                                onclick="toggleCondition(this, 'Other')">
+
+                            Other
+
+                        </button>
+
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- OTHER CONDITION -->
+
+                <div class="form-group full-width">
+
+                    <label for="otherCondition">
+
+                        Other Medical Condition
+
+                        <span class="optional">
+                            Optional
+                        </span>
+
+                    </label>
+
+                    <input type="text"
+                           id="otherCondition"
+                           placeholder="Enter other condition">
+
+                </div>
+
+
+
+                <!-- ALLERGIES -->
+
+                <div class="form-group full-width">
+
+                    <label for="patientAllergies">
+                        ⚠️ Allergies
+                    </label>
+
+
+                    <select id="patientAllergies">
+
+                        <option value="No Known Allergies">
+                            No Known Allergies
+                        </option>
+
+                        <option value="Medicine Allergy">
+                            Medicine Allergy
+                        </option>
+
+                        <option value="Food Allergy">
+                            Food Allergy
+                        </option>
+
+                        <option value="Environmental Allergy">
+                            Environmental Allergy
+                        </option>
+
+                        <option value="Other Allergy">
+                            Other Allergy
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+
+                <!-- MEDICATIONS -->
+
+                <div class="form-group full-width">
+
+                    <label for="currentMedications">
+
+                        💊 Current Medications
+
+                        <span class="optional">
+                            Optional
+                        </span>
+
+                    </label>
+
+
+                    <textarea id="currentMedications"
+                              rows="3"
+                              placeholder="List medicines currently being taken..."></textarea>
+
+                </div>
+
+
+            </div>
+
+        </details>
+
 
     </div>
 
 
 
-    <!-- FINAL BOOK -->
+    <!-- =================================================
+         CONFIRM
+    ================================================== -->
 
     <div class="booking-footer">
 
         <div class="booking-summary">
 
-            <span>✓</span>
+            <span>
+                ✓
+            </span>
 
             <div>
 
-                <strong data-i18n="ready">
+                <strong>
                     Ready to book?
                 </strong>
 
-                <small data-i18n="reviewDetails">
+                <small>
                     Review your details before confirming.
                 </small>
 
@@ -754,38 +1578,42 @@
         <button class="book-button"
                 onclick="bookAppointment()">
 
-            <span data-i18n="confirmAppointment">
+            <span>
                 Confirm Appointment
             </span>
 
-            <span>→</span>
+            <span>
+                →
+            </span>
 
         </button>
 
     </div>
+
 
 </section>
 
 
 
 <!-- =====================================================
-     TOKEN PAGE
+     TOKEN
 ===================================================== -->
 
-<section id="token" class="page">
+<section id="token"
+         class="page">
+
 
     <div class="token-page">
 
-        <div class="page-eyebrow"
-             data-i18n="yourAppointment">
+        <div class="page-eyebrow">
             YOUR APPOINTMENT
         </div>
 
-        <h2 data-i18n="appointmentToken">
+        <h2>
             Appointment Token
         </h2>
 
-        <p data-i18n="tokenDescription">
+        <p>
             Your appointment details will appear here.
         </p>
 
@@ -799,18 +1627,19 @@
                     🎫
                 </div>
 
-                <h3 data-i18n="noAppointment">
+                <h3>
                     No appointment booked yet
                 </h3>
 
-                <p data-i18n="bookToGetToken">
+                <p>
                     Book an appointment to receive your token.
                 </p>
 
                 <button class="small-primary"
-                        onclick="openBooking('normal')"
-                        data-i18n="bookNow">
+                        onclick="openBooking('normal')">
+
                     Book Now
+
                 </button>
 
             </div>
@@ -824,43 +1653,46 @@
 
 
 <!-- =====================================================
-     STAFF DASHBOARD
+     STAFF
 ===================================================== -->
 
-<section id="staff" class="page">
+<section id="staff"
+         class="page">
+
 
     <div class="dashboard-header">
 
         <div>
 
-            <span class="page-eyebrow"
-                  data-i18n="staffDashboard">
+            <span class="page-eyebrow">
                 STAFF DASHBOARD
             </span>
 
-            <h2 data-i18n="queueOverview">
+            <h2>
                 Queue Overview
             </h2>
 
-            <p data-i18n="staffDescription">
+            <p>
                 Monitor patients, doctors and hospital capacity.
             </p>
 
         </div>
 
+
         <div class="live-status">
+
             <span></span>
-            <span data-i18n="live">
-                Live
-            </span>
+
+            Live
+
         </div>
 
     </div>
 
 
-    <!-- STATS -->
 
     <div class="stats-grid">
+
 
         <div class="stat-card">
 
@@ -870,7 +1702,7 @@
 
             <div>
 
-                <span data-i18n="totalPatients">
+                <span>
                     Total Patients
                 </span>
 
@@ -883,6 +1715,7 @@
         </div>
 
 
+
         <div class="stat-card">
 
             <div class="stat-icon pink">
@@ -891,7 +1724,7 @@
 
             <div>
 
-                <span data-i18n="waiting">
+                <span>
                     Waiting
                 </span>
 
@@ -904,6 +1737,7 @@
         </div>
 
 
+
         <div class="stat-card">
 
             <div class="stat-icon green">
@@ -912,7 +1746,7 @@
 
             <div>
 
-                <span data-i18n="completed">
+                <span>
                     Completed
                 </span>
 
@@ -925,6 +1759,7 @@
         </div>
 
 
+
         <div class="stat-card">
 
             <div class="stat-icon orange">
@@ -933,7 +1768,7 @@
 
             <div>
 
-                <span data-i18n="availableBeds">
+                <span>
                     Available Beds
                 </span>
 
@@ -945,10 +1780,10 @@
 
         </div>
 
+
     </div>
 
 
-    <!-- QUEUE -->
 
     <div class="dashboard-panel">
 
@@ -956,22 +1791,26 @@
 
             <div>
 
-                <h3 data-i18n="patientQueue">
+                <h3>
                     Patient Queue
                 </h3>
 
-                <p data-i18n="queueDescription">
+                <p>
                     Current appointments and their status.
                 </p>
 
             </div>
 
+
             <span class="queue-count"
                   id="queueCount">
+
                 0 Patients
+
             </span>
 
         </div>
+
 
 
         <div class="table-container">
@@ -982,40 +1821,22 @@
 
                     <tr>
 
-                        <th data-i18n="token">
-                            Token
-                        </th>
-
-                        <th data-i18n="patient">
-                            Patient
-                        </th>
-
-                        <th data-i18n="doctor">
-                            Doctor
-                        </th>
-
-                        <th data-i18n="type">
-                            Type
-                        </th>
-
-                        <th data-i18n="waitingTime">
-                            Waiting
-                        </th>
-
-                        <th data-i18n="status">
-                            Status
-                        </th>
-
-                        <th data-i18n="action">
-                            Action
-                        </th>
+                        <th>Token</th>
+                        <th>Patient</th>
+                        <th>Contact</th>
+                        <th>Problem</th>
+                        <th>Doctor</th>
+                        <th>Type</th>
+                        <th>Waiting</th>
+                        <th>Status</th>
+                        <th>Action</th>
 
                     </tr>
 
                 </thead>
 
-                <tbody id="queueTable">
 
+                <tbody id="queueTable">
                 </tbody>
 
             </table>
@@ -1025,7 +1846,6 @@
     </div>
 
 
-    <!-- BEDS -->
 
     <div class="dashboard-panel bed-panel">
 
@@ -1033,11 +1853,11 @@
 
             <div>
 
-                <h3 data-i18n="bedStatus">
+                <h3>
                     Emergency Bed Status
                 </h3>
 
-                <p data-i18n="bedDescription">
+                <p>
                     Current emergency department capacity.
                 </p>
 
@@ -1046,7 +1866,9 @@
         </div>
 
 
+
         <div class="bed-cards">
+
 
             <div class="bed-card">
 
@@ -1056,7 +1878,7 @@
 
                 <div>
 
-                    <small data-i18n="totalBeds">
+                    <small>
                         Total Beds
                     </small>
 
@@ -1069,6 +1891,7 @@
             </div>
 
 
+
             <div class="bed-card occupied">
 
                 <span class="bed-icon">
@@ -1077,7 +1900,7 @@
 
                 <div>
 
-                    <small data-i18n="occupied">
+                    <small>
                         Occupied
                     </small>
 
@@ -1090,6 +1913,7 @@
             </div>
 
 
+
             <div class="bed-card available">
 
                 <span class="bed-icon">
@@ -1098,7 +1922,7 @@
 
                 <div>
 
-                    <small data-i18n="available">
+                    <small>
                         Available
                     </small>
 
@@ -1110,6 +1934,7 @@
 
             </div>
 
+
         </div>
 
     </div>
@@ -1119,12 +1944,15 @@
 
 
 <!-- =====================================================
-     EMERGENCY PAGE
+     EMERGENCY
 ===================================================== -->
 
-<section id="emergency" class="page">
+<section id="emergency"
+         class="page">
+
 
     <div class="emergency-page">
+
 
         <div class="emergency-header">
 
@@ -1138,17 +1966,18 @@
                     EMERGENCY
                 </span>
 
-                <h2 data-i18n="emergencyRegistration">
+                <h2>
                     Emergency Registration
                 </h2>
 
-                <p data-i18n="emergencyPageDescription">
+                <p>
                     Register an emergency patient immediately.
                 </p>
 
             </div>
 
         </div>
+
 
 
         <div class="emergency-alert">
@@ -1159,11 +1988,11 @@
 
             <div>
 
-                <strong data-i18n="emergencyPriority">
+                <strong>
                     Emergency patients receive priority.
                 </strong>
 
-                <p data-i18n="emergencyPriorityText">
+                <p>
                     Please provide accurate information so
                     hospital staff can respond quickly.
                 </p>
@@ -1173,11 +2002,13 @@
         </div>
 
 
+
         <div class="emergency-form">
+
 
             <div class="form-group">
 
-                <label data-i18n="patientName">
+                <label for="emergencyName">
                     Patient Name
                 </label>
 
@@ -1188,9 +2019,10 @@
             </div>
 
 
+
             <div class="form-group">
 
-                <label data-i18n="age">
+                <label for="emergencyAge">
                     Age
                 </label>
 
@@ -1198,14 +2030,44 @@
                        id="emergencyAge"
                        min="1"
                        max="120"
-                       placeholder="Enter age">
+                       placeholder="Age">
 
             </div>
 
 
+
             <div class="form-group">
 
-                <label data-i18n="department">
+                <label for="emergencyMobile">
+                    📱 Mobile Number
+                </label>
+
+                <input type="tel"
+                       id="emergencyMobile"
+                       maxlength="10"
+                       placeholder="10-digit mobile number">
+
+            </div>
+
+
+
+            <div class="form-group">
+
+                <label for="emergencyProblem">
+                    🩺 Emergency Problem
+                </label>
+
+                <textarea id="emergencyProblem"
+                          rows="4"
+                          placeholder="Describe the emergency..."></textarea>
+
+            </div>
+
+
+
+            <div class="form-group">
+
+                <label for="emergencyDepartment">
                     Department
                 </label>
 
@@ -1223,26 +2085,32 @@
                         Neurology
                     </option>
 
+                    <option value="Orthopedics">
+                        Orthopedics
+                    </option>
+
+                    <option value="General Medicine">
+                        General Medicine
+                    </option>
+
                 </select>
 
             </div>
 
 
+
             <button class="emergency-button"
                     onclick="registerEmergency()">
 
-                🚑
-                <span data-i18n="registerEmergency">
-                    Register Emergency Patient
-                </span>
+                🚑 Register Emergency Patient
 
             </button>
 
 
             <div id="emergencyResult"
                  class="emergency-result">
-
             </div>
+
 
         </div>
 
@@ -1250,14 +2118,309 @@
 
 </section>
 
+
 </main>
 
 
+
 <!-- =====================================================
-     JAVASCRIPT
+     EXISTING JAVASCRIPT
 ===================================================== -->
 
 <script src="script.js"></script>
+
+
+
+<!-- =====================================================
+     SMARTQUEUE UI FIXES
+===================================================== -->
+
+<script>
+
+
+/* =====================================================
+   DEPARTMENT SELECTION
+   IMPORTANT: THIS IS THE FIX
+===================================================== */
+
+window.selectDepartment = function(value) {
+
+    if (!value) {
+        return;
+    }
+
+
+    console.log("Department selected:", value);
+
+
+    /* -----------------------------------------------
+       1. Update hidden department field
+    ------------------------------------------------ */
+
+    const departmentInput =
+        document.getElementById("department");
+
+    if (departmentInput) {
+
+        departmentInput.value = value;
+
+    }
+
+
+
+    /* -----------------------------------------------
+       2. Update dropdown
+    ------------------------------------------------ */
+
+    const dropdown =
+        document.getElementById("departmentDropdown");
+
+    if (dropdown) {
+
+        dropdown.value = value;
+
+    }
+
+
+
+    /* -----------------------------------------------
+       3. Highlight selected card
+    ------------------------------------------------ */
+
+    document
+        .querySelectorAll(".department-card")
+        .forEach(card => {
+
+            card.classList.remove("selected");
+
+        });
+
+
+    document
+        .querySelectorAll(".department-card")
+        .forEach(card => {
+
+            const cardDepartment =
+                card.dataset.department ||
+                card.getAttribute("data-department");
+
+            if (cardDepartment === value) {
+
+                card.classList.add("selected");
+
+            }
+
+        });
+
+
+
+    /* -----------------------------------------------
+       4. Load doctors
+    ------------------------------------------------ */
+
+    if (typeof window.loadDoctors === "function") {
+
+        window.loadDoctors(value);
+
+    }
+
+
+
+    /* -----------------------------------------------
+       5. Update AI message
+    ------------------------------------------------ */
+
+    const aiMessage =
+        document.getElementById("aiMessage");
+
+    if (aiMessage) {
+
+        aiMessage.innerText =
+            `Doctors available in ${value}. Click "Find Best Doctor" for an AI recommendation.`;
+
+    }
+
+};
+
+
+
+/* =====================================================
+   DEPARTMENT CARD CLICK FALLBACK
+===================================================== */
+
+document.addEventListener("click", function(event) {
+
+    const card =
+        event.target.closest(".department-card");
+
+
+    if (!card) {
+        return;
+    }
+
+
+    event.preventDefault();
+
+
+    const value =
+        card.dataset.department ||
+        card.getAttribute("data-department");
+
+
+    if (value) {
+
+        window.selectDepartment(value);
+
+    }
+
+});
+
+
+
+/* =====================================================
+   PROBLEM DROPDOWN
+===================================================== */
+
+window.selectProblemDropdown = function(value) {
+
+    const hiddenInput =
+        document.getElementById("patientProblemCategory");
+
+
+    if (hiddenInput) {
+
+        hiddenInput.value = value;
+
+    }
+
+};
+
+
+
+/* =====================================================
+   GENDER
+===================================================== */
+
+window.selectGender = function(button, gender) {
+
+
+    document
+        .querySelectorAll(".gender-option")
+        .forEach(option => {
+
+            option.classList.remove("selected");
+
+        });
+
+
+    button.classList.add("selected");
+
+
+    const genderInput =
+        document.getElementById("patientGender");
+
+
+    if (genderInput) {
+
+        genderInput.value = gender;
+
+    }
+
+};
+
+
+
+/* =====================================================
+   DURATION
+===================================================== */
+
+window.selectDuration = function(button, duration) {
+
+
+    document
+        .querySelectorAll(".duration-card")
+        .forEach(option => {
+
+            option.classList.remove("selected");
+
+        });
+
+
+    button.classList.add("selected");
+
+
+    const durationInput =
+        document.getElementById("problemDuration");
+
+
+    if (durationInput) {
+
+        durationInput.value = duration;
+
+    }
+
+};
+
+
+
+/* =====================================================
+   DEPARTMENT CARD KEYBOARD SUPPORT
+===================================================== */
+
+document.addEventListener("keydown", function(event) {
+
+    const card =
+        event.target.closest(".department-card");
+
+
+    if (!card) {
+        return;
+    }
+
+
+    if (event.key === "Enter" ||
+        event.key === " ") {
+
+        event.preventDefault();
+
+        const value =
+            card.dataset.department;
+
+        if (value) {
+
+            window.selectDepartment(value);
+
+        }
+
+    }
+
+});
+
+
+
+/* =====================================================
+   MOBILE NUMBER CLEANUP
+===================================================== */
+
+document.addEventListener("input", function(event) {
+
+    if (
+        event.target.id === "patientMobile" ||
+        event.target.id === "emergencyMobile"
+    ) {
+
+        event.target.value =
+            event.target.value
+                .replace(/\D/g, "")
+                .slice(0, 10);
+
+    }
+
+});
+
+
+</script>
+
 
 </body>
 
