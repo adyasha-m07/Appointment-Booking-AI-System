@@ -99,27 +99,53 @@ function saveQueueState() {
        Refreshing Edge starts a fresh queue/dashboard. */
 }
 
-function showWaitingNotification(patient, oldWaiting, newWaiting) {
-    if (!patient || oldWaiting === newWaiting) return;
+function showWaitingNotification(
+    patient,
+    oldWaiting,
+    newWaiting
+) {
+    if (
+        !patient ||
+        oldWaiting === undefined ||
+        newWaiting >= oldWaiting
+    ) {
+        return;
+    }
 
-    const message = newWaiting < oldWaiting
-        ? `⏱️ Your waiting time has decreased from ${oldWaiting} min to ${newWaiting} min for token ${patient.token}.`
-        : `⏱️ Your estimated waiting time is now ${newWaiting} min for token ${patient.token}.`;
+    const notification =
+        document.createElement("div");
 
-    const existing = document.getElementById("waitingNotification");
-    if (existing) existing.remove();
+    notification.className =
+        "waiting-notification";
 
-    const notification = document.createElement("div");
-    notification.id = "waitingNotification";
-    notification.className = "waiting-notification";
-    notification.innerHTML = `<span>${message}</span><button type="button" aria-label="Close" onclick="this.parentElement.remove()">×</button>`;
+    notification.innerHTML = `
+        <span>
+            ⏱️ Your waiting time has decreased
+            from ${oldWaiting} min to ${newWaiting} min
+            for token ${patient.token}.
+        </span>
+
+        <button type="button"
+                aria-label="Close"
+                onclick="this.parentElement.remove()">
+            ×
+        </button>
+    `;
+    const existingNotifications =
+    document.querySelectorAll(
+        ".waiting-notification"
+    );
+
+notification.style.top =
+    `${20 + existingNotifications.length * 75}px`;
     document.body.appendChild(notification);
 
-    window.setTimeout(() => {
-        if (notification.isConnected) notification.remove();
+    setTimeout(() => {
+        if (notification.isConnected) {
+            notification.remove();
+        }
     }, 6000);
 }
-
 function recalculateWaitingTimes(showNotifications = true) {
     const oldTimes = new Map(
         patients.map(patient => [patient.id, Number(patient.waiting) || 0])
@@ -1679,38 +1705,74 @@ function updateQueueTable() {
 ========================================================= */
 
 window.completePatient = function(id) {
-    const patient = patients.find(p => p.id === id);
+
+    const patient =
+        patients.find(p => p.id === id);
+
     if (!patient) return;
 
-    /* Remember all waiting times before removing this patient. */
     const oldTimes = new Map(
-        patients.map(p => [p.id, Number(p.waiting) || 0])
+        patients.map(p => [
+            p.id,
+            Number(p.waiting) || 0
+        ])
     );
 
+    /* Complete patient */
     patient.status = "Completed";
     patient.waiting = 0;
-    completedPatients = patients.filter(p => p.status === "Completed").length;
 
-    /* Patients behind the completed patient move forward immediately. */
+    completedPatients =
+        patients.filter(
+            p => p.status === "Completed"
+        ).length;
+
+    /* Recalculate remaining queue */
     recalculateWaitingTimes(false);
+    /* =========================================================
+   NOTIFY ALL PATIENTS WHOSE WAITING TIME DECREASED
+========================================================= */
 
-    /* Notify the patient whose currently displayed token moved forward. */
-    if (currentTokenPatientId != null) {
-        const currentPatient = patients.find(p => p.id === currentTokenPatientId);
-        if (currentPatient) {
-            const oldWaiting = oldTimes.get(currentPatient.id);
-            if (oldWaiting !== undefined && oldWaiting !== currentPatient.waiting) {
-                showToken(currentPatient);
-                showWaitingNotification(currentPatient, oldWaiting, currentPatient.waiting);
-            } else if (currentPatient.id === patient.id) {
-                showToken(currentPatient);
-            }
-        }
+const remainingQueue =
+    getDoctorQueue(patient.doctor);
+
+remainingQueue.forEach(nextPatient => {
+
+    const oldWaiting =
+        oldTimes.get(nextPatient.id);
+
+    const newWaiting =
+        nextPatient.waiting;
+
+    if (
+        oldWaiting !== undefined &&
+        newWaiting < oldWaiting
+    ) {
+        showWaitingNotification(
+            nextPatient,
+            oldWaiting,
+            newWaiting
+        );
     }
+});
 
-    updateDashboard();
+    /* Refresh doctor's cards */
+    if (
+        patient.department &&
+        typeof window.loadDoctors === "function"
+    ) {
+        window.loadDoctors(
+            patient.department
+        );
+    }
+/* =========================================================
+   NOTIFY ALL PATIENTS WHOSE WAITING TIME DECREASED
+========================================================= */
+
+
+/* Refresh dashboard */
+updateDashboard();
 };
-
 
 /* =========================================================
    EMERGENCY REGISTRATION
