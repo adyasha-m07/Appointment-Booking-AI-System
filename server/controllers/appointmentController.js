@@ -1,31 +1,15 @@
+const { predictWaitingTime } = require("../mlService");
+
 let appointments = [];
 
 let tokenNumber = 1;
-
-const CONSULTATION_TIME = 10;
-
-
-// =========================
-// CALCULATE WAITING TIME
-// =========================
-
-function calculateWaitingTime(doctor) {
-
-    const waitingPatients = appointments.filter(
-        (patient) =>
-            patient.doctor === doctor &&
-            patient.status !== "Completed"
-    );
-
-    return waitingPatients.length * CONSULTATION_TIME;
-}
 
 
 // =========================
 // CREATE APPOINTMENT
 // =========================
 
-exports.createAppointment = (req, res) => {
+exports.createAppointment = async (req, res) => {
 
     const {
         name,
@@ -36,6 +20,7 @@ exports.createAppointment = (req, res) => {
     } = req.body;
 
 
+    // Validate required fields
     if (
         !name ||
         !age ||
@@ -50,15 +35,146 @@ exports.createAppointment = (req, res) => {
     }
 
 
-    const waiting =
-        calculateWaitingTime(doctor);
+    // =========================
+    // QUEUE INFORMATION
+    // =========================
 
+    const doctorAppointments = appointments.filter(
+        (patient) =>
+            patient.doctor === doctor &&
+            patient.status !== "Completed"
+    );
+
+    const departmentAppointments = appointments.filter(
+        (patient) =>
+            patient.department === department &&
+            patient.status !== "Completed"
+    );
+
+
+    const patientsAhead =
+        doctorAppointments.length;
+
+    const activeQueueSize =
+        departmentAppointments.length;
+
+    const patientsBeingServed =
+        doctorAppointments.length > 0 ? 1 : 0;
+
+
+    // For now, your system does not have
+    // a separate emergency field.
+    const emergencyPatients = 0;
+
+
+    // =========================
+    // OTHER ML FEATURES
+    // =========================
+
+    const dailyBookingCount =
+        appointments.length + 1;
+
+    const departmentDailyCount =
+        appointments.filter(
+            (patient) =>
+                patient.department === department
+        ).length + 1;
+
+    const doctorDailyCount =
+        appointments.filter(
+            (patient) =>
+                patient.doctor === doctor
+        ).length + 1;
+
+    const completedAppointmentsToday =
+        appointments.filter(
+            (patient) =>
+                patient.status === "Completed"
+        ).length;
+
+    const availableSlotsToday = 12;
+
+    const cancellationsToday =
+        appointments.filter(
+            (patient) =>
+                patient.status === "Cancelled"
+        ).length;
+
+
+    // =========================
+    // SEND DATA TO ML MODEL
+    // =========================
+
+    let waiting = 0;
+
+    try {
+
+        const prediction =
+            await predictWaitingTime({
+
+                patients_ahead:
+                    patientsAhead,
+
+                active_queue_size:
+                    activeQueueSize,
+
+                patients_being_served:
+                    patientsBeingServed,
+
+                emergency_patients:
+                    emergencyPatients,
+
+                daily_booking_count:
+                    dailyBookingCount,
+
+                department_daily_count:
+                    departmentDailyCount,
+
+                doctor_daily_count:
+                    doctorDailyCount,
+
+                completed_appointments_today:
+                    completedAppointmentsToday,
+
+                available_slots_today:
+                    availableSlotsToday,
+
+                cancellations_today:
+                    cancellationsToday
+
+            });
+
+
+        waiting =
+            Math.round(
+                Number(prediction.waiting_time)
+            );
+
+
+    } catch (error) {
+
+    console.error("ML prediction failed:", error);
+
+    return res.status(500).json({
+        message: "ML prediction failed",
+        error: error.message
+    });
+}
+
+
+    // =========================
+    // TOKEN
+    // =========================
 
     const prefix =
         type === "special"
             ? "S"
             : "N";
 
+
+    // =========================
+    // CREATE APPOINTMENT
+    // =========================
 
     const appointment = {
 
@@ -86,6 +202,10 @@ exports.createAppointment = (req, res) => {
 
     appointments.push(appointment);
 
+
+    // =========================
+    // RESPONSE
+    // =========================
 
     res.status(201).json(appointment);
 

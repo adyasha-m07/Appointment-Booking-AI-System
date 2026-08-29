@@ -79,20 +79,45 @@ function getDoctorQueue(doctorName) {
 }
 
 function getDoctorQueueInfo(doctorName) {
+
     const queue = getDoctorQueue(doctorName);
+
+    const totalWaiting = queue.reduce(
+        (total, patient) => {
+            return total + (Number(patient.waiting) || 0);
+        },
+        0
+    );
 
     return {
         count: queue.length,
-        waiting: queue.length * WAITING_SLOT_MINUTES,
+        waiting: totalWaiting,
         queue
     };
 }
 function getPatientWaitingTime(patient) {
+
     if (!patient || patient.emergency) return 0;
+
     const queue = getDoctorQueue(patient.doctor);
-    const index = queue.findIndex(p => p.id === patient.id);
-    return index >= 0 ? index * WAITING_SLOT_MINUTES : 0;
+
+    const index = queue.findIndex(
+        p => p.id === patient.id
+    );
+
+    if (index < 0) return 0;
+
+    // Add the predicted waiting time of
+    // every patient ahead in the queue.
+    return queue
+        .slice(0, index)
+        .reduce(
+            (total, p) =>
+                total + (Number(p.waiting) || 0),
+            0
+        );
 }
+
 
 function saveQueueState() {
     /* Intentionally NOT stored in localStorage.
@@ -147,48 +172,95 @@ notification.style.top =
     }, 6000);
 }
 function recalculateWaitingTimes(showNotifications = true) {
+
     const oldTimes = new Map(
-        patients.map(patient => [patient.id, Number(patient.waiting) || 0])
+        patients.map(patient => [
+            patient.id,
+            Number(patient.waiting) || 0
+        ])
     );
+
 
     const doctorsWithQueues = [...new Set(
         patients
-            .filter(patient => !patient.emergency && patient.status !== "Completed")
+            .filter(patient =>
+                !patient.emergency &&
+                patient.status !== "Completed"
+            )
             .map(patient => patient.doctor)
     )];
 
-    doctorsWithQueues.forEach(doctorName => {
-        const queue = getDoctorQueue(doctorName);
-        queue.forEach((patient, index) => {
-            patient.waiting = index * WAITING_SLOT_MINUTES;
-        });
-    });
 
-    /* Completed patients always have zero remaining queue time. */
+    /*
+     * IMPORTANT:
+     * Waiting time is now provided by the ML model
+     * when the appointment is created.
+     *
+     * Do NOT calculate:
+     *
+     * patient.waiting = index * WAITING_SLOT_MINUTES;
+     *
+     * because that would overwrite the ML prediction.
+     */
+
+
+    /* Completed and emergency patients have zero remaining time. */
+
     patients
-        .filter(patient => patient.status === "Completed" || patient.emergency)
-        .forEach(patient => { patient.waiting = 0; });
+        .filter(patient =>
+            patient.status === "Completed" ||
+            patient.emergency
+        )
+        .forEach(patient => {
+            patient.waiting = 0;
+        });
 
-    const currentPatient = currentTokenPatientId == null
-        ? null
-        : patients.find(patient => patient.id === currentTokenPatientId);
+
+    const currentPatient =
+        currentTokenPatientId == null
+            ? null
+            : patients.find(
+                patient =>
+                    patient.id === currentTokenPatientId
+            );
+
 
     if (currentPatient && showNotifications) {
-        const oldWaiting = oldTimes.get(currentPatient.id);
-        if (oldWaiting !== undefined && oldWaiting !== currentPatient.waiting) {
-            showWaitingNotification(currentPatient, oldWaiting, currentPatient.waiting);
+
+        const oldWaiting =
+            oldTimes.get(currentPatient.id);
+
+        if (
+            oldWaiting !== undefined &&
+            oldWaiting !== currentPatient.waiting
+        ) {
+
+            showWaitingNotification(
+                currentPatient,
+                oldWaiting,
+                currentPatient.waiting
+            );
+
         }
+
     }
+
 
     saveQueueState();
 
-    if (selectedDepartment && typeof window.loadDoctors === "function") {
+
+    if (
+        selectedDepartment &&
+        typeof window.loadDoctors === "function"
+    ) {
+
         window.loadDoctors(selectedDepartment);
+
     }
+
 
     updateDashboard();
 }
-
 
 
 /* =========================================================
@@ -1032,7 +1104,7 @@ window.toggleCondition = function(button, condition) {
    MAIN FIX FOR DEPARTMENT ERROR
 ========================================================= */
 
-window.bookAppointment = function() {
+window.bookAppointment = async function() {
 
     /*
        IMPORTANT:
@@ -1271,18 +1343,62 @@ window.bookAppointment = function() {
 
     const token =
         `${prefix}${tokenCounter++}`;
+    // =====================================================
+// SEND APPOINTMENT TO NODE.JS BACKEND
+// =====================================================
 
+let backendAppointment;
 
-    /* First patient for a doctor gets 0 min; each patient behind
-       them gets another 10 minutes. */
-    const doctorQueueBeforeBooking =
-        doctorObject ? getDoctorQueue(doctorObject.name) : [];
+try {
 
-    const waiting =
-        doctorObject
-            ? doctorQueueBeforeBooking.length * WAITING_SLOT_MINUTES
-            : 0;
+    const response = await fetch(
+        "http://localhost:5000/api/appointments",
+        {
+            method: "POST",
 
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify({
+                name: patientName,
+                age: Number(patientAge),
+                type: patientType,
+                department: department,
+                doctor: doctor
+            })
+        }
+    );
+
+    if (!response.ok) {
+        throw new Error(
+            `Backend error: ${response.status}`
+        );
+    }
+
+    backendAppointment =
+        await response.json();
+
+    console.log(
+        "Appointment received from backend:",
+        backendAppointment
+    );
+
+} catch (error) {
+
+    console.error(
+        "Could not connect to backend:",
+        error
+    );
+
+    alert(
+        "Unable to connect to the hospital server. Please make sure the backend is running."
+    );
+
+    return;
+}
+
+    
 
     /* =====================================================
        CREATE PATIENT
@@ -1334,7 +1450,7 @@ window.bookAppointment = function() {
             medications,
 
         waiting:
-            waiting,
+            Number(backendAppointment.waiting) || 0,
 
         status:
             "Waiting",

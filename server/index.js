@@ -5,6 +5,9 @@ const dotenv = require("dotenv");
 const appointmentRoutes =
     require("./routes/appointmentRoutes");
 
+const {
+    predictWaitingTime
+} = require("./mlService");
 dotenv.config();
 
 const app = express();
@@ -27,6 +30,30 @@ app.use(
     "/api/appointments",
     appointmentRoutes
 );
+
+// =========================
+// ML WAITING TIME
+// =========================
+
+app.post("/api/predict-waiting-time", async (req, res) => {
+
+    try {
+
+        const result = await predictWaitingTime(req.body);
+
+        res.json(result);
+
+    } catch (error) {
+
+        console.error("ML prediction error:", error);
+
+        res.status(500).json({
+            error: "Unable to predict waiting time"
+        });
+
+    }
+
+});
 
 
 // =========================
