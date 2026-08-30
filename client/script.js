@@ -1352,7 +1352,7 @@ let backendAppointment;
 try {
 
     const response = await fetch(
-        "http://localhost:5000/api/appointments",
+    "http://localhost:5000/api/appointments",
         {
             method: "POST",
 
@@ -1406,7 +1406,7 @@ try {
 
     const patient = {
 
-        id: Date.now(),
+        id: backendAppointment.id,
 
         queueOrder: Date.now(),
 
@@ -1744,152 +1744,378 @@ function updateQueueTable() {
 
 
     table.innerHTML =
-        patients.map(patient => `
+    patients.map(patient => `
 
-            <tr>
+        <tr>
 
-                <td>
-                    <strong>
-                        ${patient.token}
-                    </strong>
-                </td>
+            <td>
+                <strong>
+                    ${patient.token}
+                </strong>
+            </td>
 
-                <td>
-                    ${patient.name}
-                </td>
+            <td>
+                ${patient.name}
+            </td>
 
-                <td>
-                    ${patient.mobile}
-                </td>
+            <td>
+                ${patient.mobile}
+            </td>
 
-                <td>
-                    ${patient.problem || "-"}
-                </td>
+            <td>
+                ${patient.problem || "-"}
+            </td>
 
-                <td>
-                    ${patient.doctor}
-                </td>
+            <td>
+                ${patient.doctor}
+            </td>
 
-                <td>
-                    ${patient.type === "special"
-                        ? "Priority"
-                        : "Regular"}
-                </td>
+            <td>
+                ${patient.type === "special"
+                    ? "Priority"
+                    : "Regular"}
+            </td>
 
-                <td>
-                    ${patient.waiting} min
-                </td>
+            <td>
+                ${Number(patient.waiting) || 0} min
+            </td>
 
-                <td>
+            <td>
 
-                    <span class="status-badge">
-                        ${patient.status}
-                    </span>
+                <span class="status-badge">
+                    ${patient.status}
+                </span>
 
-                </td>
+            </td>
 
-                <td>
+            <td>
 
-                    ${
-                        patient.status === "Waiting"
-                        ?
+                ${
+                    patient.status === "Waiting"
 
-                        `<button
-                            type="button"
-                            onclick="completePatient(${patient.id})">
+                    ?
 
-                            Complete
+                    `<button
+                        type="button"
+                        onclick="startProcessingPatient(${patient.id})">
 
-                        </button>`
+                        Start Processing
 
-                        :
+                    </button>`
 
-                        "✓ Done"
-                    }
+                    :
 
-                </td>
+                    patient.status === "Processing"
 
-            </tr>
+                    ?
 
-        `).join("");
+                    `<button
+                        type="button"
+                        onclick="completePatient(${patient.id})">
+
+                        Complete
+
+                    </button>`
+
+                    :
+
+                    "✓ Done"
+                }
+
+            </td>
+
+        </tr>
+
+    `).join("");
 
 }
 
+window.startProcessingPatient = async function(id) {
+
+    try {
+
+        const response = await fetch(
+            `http://localhost:5000/api/appointments/${id}/processing`,
+            {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            }
+        );
+
+        if (!response.ok) {
+            throw new Error(
+                `Backend error: ${response.status}`
+            );
+        }
+
+        const result = await response.json();
+
+        console.log(
+            "Processing result:",
+            result
+        );
+
+
+        // =========================================
+        // UPDATE PATIENTS WITH REDUCED WAITING TIMES
+        // =========================================
+
+        if (result.updatedPatients) {
+
+            result.updatedPatients.forEach(
+                updatedPatient => {
+
+                    const patient =
+                        patients.find(
+                            p =>
+                                String(p.id) ===
+                                String(updatedPatient.id)
+                        );
+
+                    if (!patient) return;
+
+
+                    const oldWaiting =
+                        Number(patient.waiting) || 0;
+
+                    const newWaiting =
+                        Number(updatedPatient.waiting) || 0;
+
+
+                    // Update waiting time
+                    patient.waiting =
+                        newWaiting;
+
+
+                    // Notify only when waiting decreases
+                    if (newWaiting < oldWaiting) {
+
+                        showWaitingNotification(
+                            patient,
+                            oldWaiting,
+                            newWaiting
+                        );
+
+                    }
+
+                }
+            );
+
+        }
+
+
+        // =========================================
+        // UPDATE PROCESSING PATIENT
+        // =========================================
+
+        const processingPatient =
+            patients.find(
+                p =>
+                    String(p.id) ===
+                    String(id)
+            );
+
+
+        if (processingPatient) {
+
+            processingPatient.status =
+                "Processing";
+
+            processingPatient.waiting =
+                0;
+
+        }
+
+
+        // =========================================
+        // SAVE QUEUE
+        // =========================================
+
+        saveQueueState();
+
+
+        // =========================================
+        // REFRESH DOCTOR CARDS
+        // =========================================
+
+        if (
+            processingPatient &&
+            processingPatient.department &&
+            typeof window.loadDoctors === "function"
+        ) {
+
+            window.loadDoctors(
+                processingPatient.department
+            );
+
+        }
+
+
+        // =========================================
+        // REFRESH DASHBOARD
+        // =========================================
+
+        updateDashboard();
+
+
+    } catch (error) {
+
+        console.error(
+            "Error starting processing:",
+            error
+        );
+
+        alert(
+            "Could not start processing the patient."
+        );
+
+    }
+
+};
 
 /* =========================================================
    COMPLETE PATIENT
 ========================================================= */
 
-window.completePatient = function(id) {
+window.completePatient = async function(id) {
 
-    const patient =
-        patients.find(p => p.id === id);
+    try {
 
-    if (!patient) return;
-
-    const oldTimes = new Map(
-        patients.map(p => [
-            p.id,
-            Number(p.waiting) || 0
-        ])
-    );
-
-    /* Complete patient */
-    patient.status = "Completed";
-    patient.waiting = 0;
-
-    completedPatients =
-        patients.filter(
-            p => p.status === "Completed"
-        ).length;
-
-    /* Recalculate remaining queue */
-    recalculateWaitingTimes(false);
-    /* =========================================================
-   NOTIFY ALL PATIENTS WHOSE WAITING TIME DECREASED
-========================================================= */
-
-const remainingQueue =
-    getDoctorQueue(patient.doctor);
-
-remainingQueue.forEach(nextPatient => {
-
-    const oldWaiting =
-        oldTimes.get(nextPatient.id);
-
-    const newWaiting =
-        nextPatient.waiting;
-
-    if (
-        oldWaiting !== undefined &&
-        newWaiting < oldWaiting
-    ) {
-        showWaitingNotification(
-            nextPatient,
-            oldWaiting,
-            newWaiting
+        const response = await fetch(
+            `http://localhost:5000/api/appointments/${id}/complete`,
+            {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            }
         );
-    }
-});
 
-    /* Refresh doctor's cards */
-    if (
-        patient.department &&
-        typeof window.loadDoctors === "function"
-    ) {
-        window.loadDoctors(
-            patient.department
+        if (!response.ok) {
+            throw new Error(
+                `Backend error: ${response.status}`
+            );
+        }
+
+        const result = await response.json();
+
+        console.log("Completion result:", result);
+
+
+        // =========================================
+        // UPDATE PATIENTS WITH NEW ML PREDICTIONS
+        // =========================================
+
+        if (result.updatedPatients) {
+
+            result.updatedPatients.forEach(updatedPatient => {
+
+                const patient = patients.find(
+                    p =>
+                        String(p.id) ===
+                        String(updatedPatient.id)
+                );
+
+                if (!patient) return;
+
+                const oldWaiting =
+                    Number(patient.waiting) || 0;
+
+                const newWaiting =
+                    Number(updatedPatient.waiting) || 0;
+
+
+                // Update waiting time
+                patient.waiting = newWaiting;
+
+
+                // =========================================
+                // NOTIFY ONLY IF WAITING TIME DECREASED
+                // =========================================
+
+                if (newWaiting < oldWaiting) {
+
+                    showWaitingNotification(
+                        patient,
+                        oldWaiting,
+                        newWaiting
+                    );
+
+                }
+
+            });
+
+        }
+
+
+        // =========================================
+        // MARK COMPLETED PATIENT LOCALLY
+        // =========================================
+
+        const completedPatient =
+            patients.find(
+                p =>
+                    String(p.id) ===
+                    String(id)
+            );
+
+        if (completedPatient) {
+
+            completedPatient.status =
+                "Completed";
+
+            completedPatient.waiting = 0;
+
+        }
+
+
+        // =========================================
+        // SAVE UPDATED QUEUE
+        // =========================================
+
+        saveQueueState();
+
+
+        // =========================================
+        // REFRESH DOCTOR CARDS
+        // =========================================
+
+        if (
+            completedPatient &&
+            completedPatient.department &&
+            typeof window.loadDoctors === "function"
+        ) {
+
+            window.loadDoctors(
+                completedPatient.department
+            );
+
+        }
+
+
+        // =========================================
+        // REFRESH DASHBOARD
+        // =========================================
+
+        updateDashboard();
+
+
+    } catch (error) {
+
+        console.error(
+            "Error completing appointment:",
+            error
         );
+
+        alert(
+            "Could not complete the appointment."
+        );
+
     }
-/* =========================================================
-   NOTIFY ALL PATIENTS WHOSE WAITING TIME DECREASED
-========================================================= */
 
-
-/* Refresh dashboard */
-updateDashboard();
 };
-
 /* =========================================================
    EMERGENCY REGISTRATION
 ========================================================= */
