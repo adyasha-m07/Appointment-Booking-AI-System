@@ -118,6 +118,49 @@ function getPatientWaitingTime(patient) {
         );
 }
 
+function getTokenQueueStats(patient) {
+
+    if (!patient) {
+        return {
+            patientsAhead: 0,
+            doctorQueue: 0,
+            departmentQueue: 0
+        };
+    }
+
+    // Current doctor's active queue
+    const doctorQueue = getDoctorQueue(patient.doctor);
+
+    // Position of this patient in that queue
+    const patientIndex = doctorQueue.findIndex(
+        p => p.id === patient.id
+    );
+
+    // Patients before this patient
+    const patientsAhead =
+        patientIndex >= 0
+            ? patientIndex
+            : 0;
+
+    // Total patients waiting for this doctor
+    const doctorQueueCount =
+        doctorQueue.length;
+
+    // Total non-emergency patients waiting
+    // in this department
+    const departmentQueueCount =
+        patients.filter(p =>
+            p.department === patient.department &&
+            p.status !== "Completed" &&
+            !p.emergency
+        ).length;
+
+    return {
+        patientsAhead,
+        doctorQueue: doctorQueueCount,
+        departmentQueue: departmentQueueCount
+    };
+}
 
 function saveQueueState() {
     /* Intentionally NOT stored in localStorage.
@@ -1581,9 +1624,28 @@ function showToken(patient) {
                 </div>
 
                 <div>
-                    <span>Estimated Waiting</span>
-                    <strong>${patient.waiting} min</strong>
-                </div>
+    <span>Estimated Waiting</span>
+    <strong>${patient.waiting} min</strong>
+</div>
+
+<div class="token-queue-info">
+
+    <div>
+        <span>No. of patients ahead of you</span>
+        <strong>${getTokenQueueStats(patient).patientsAhead}</strong>
+    </div>
+
+    <div>
+        <span>No. of patients waiting for your doctor</span>
+        <strong>${getTokenQueueStats(patient).doctorQueue}</strong>
+    </div>
+
+    <div>
+        <span>No. of patients in that department</span>
+        <strong>${getTokenQueueStats(patient).departmentQueue}</strong>
+    </div>
+
+</div>
 
                 <div>
                     <span>Problem</span>
@@ -1832,6 +1894,56 @@ function updateQueueTable() {
 
 window.startProcessingPatient = async function(id) {
 
+    // =====================================================
+    // FIND PATIENT
+    // =====================================================
+
+    const processingPatient =
+        patients.find(
+            p => String(p.id) === String(id)
+        );
+
+    if (!processingPatient) {
+        alert("Patient not found.");
+        return;
+    }
+
+
+    // =====================================================
+    // EMERGENCY PATIENT
+    // =====================================================
+
+    // Emergency patients do NOT use the normal
+    // backend queue-processing system.
+    //
+    // They start immediately and their waiting
+    // time must always remain 0.
+
+    if (processingPatient.emergency === true) {
+
+        if (processingPatient.status !== "Waiting") {
+            alert("Emergency patient is not waiting.");
+            return;
+        }
+
+        processingPatient.status = "Processing";
+        processingPatient.waiting = 0;
+
+        // Keep emergency waiting time permanently at 0
+        recalculateWaitingTimes(false);
+
+        saveQueueState();
+
+        updateDashboard();
+
+        return;
+    }
+
+
+    // =====================================================
+    // NORMAL / SPECIALLY-ABLED PATIENT
+    // =====================================================
+
     try {
 
         const response = await fetch(
@@ -1850,7 +1962,8 @@ window.startProcessingPatient = async function(id) {
             );
         }
 
-        const result = await response.json();
+        const result =
+            await response.json();
 
         console.log(
             "Processing result:",
@@ -1858,9 +1971,9 @@ window.startProcessingPatient = async function(id) {
         );
 
 
-        // =========================================
-        // UPDATE PATIENTS WITH REDUCED WAITING TIMES
-        // =========================================
+        // =================================================
+        // UPDATE OTHER PATIENTS' WAITING TIMES
+        // =================================================
 
         if (result.updatedPatients) {
 
@@ -1876,20 +1989,15 @@ window.startProcessingPatient = async function(id) {
 
                     if (!patient) return;
 
-
                     const oldWaiting =
                         Number(patient.waiting) || 0;
 
                     const newWaiting =
                         Number(updatedPatient.waiting) || 0;
 
-
-                    // Update waiting time
                     patient.waiting =
                         newWaiting;
 
-
-                    // Notify only when waiting decreases
                     if (newWaiting < oldWaiting) {
 
                         showWaitingNotification(
@@ -1906,42 +2014,25 @@ window.startProcessingPatient = async function(id) {
         }
 
 
-        // =========================================
+        // =================================================
         // UPDATE PROCESSING PATIENT
-        // =========================================
+        // =================================================
 
-        const processingPatient =
-            patients.find(
-                p =>
-                    String(p.id) ===
-                    String(id)
-            );
+        processingPatient.status =
+            "Processing";
 
+        processingPatient.waiting =
+            0;
 
-        if (processingPatient) {
-
-            processingPatient.status =
-                "Processing";
-
-            processingPatient.waiting =
-                0;
-
-        }
-
-
-        // =========================================
-        // SAVE QUEUE
-        // =========================================
 
         saveQueueState();
 
 
-        // =========================================
+        // =================================================
         // REFRESH DOCTOR CARDS
-        // =========================================
+        // =================================================
 
         if (
-            processingPatient &&
             processingPatient.department &&
             typeof window.loadDoctors === "function"
         ) {
@@ -1953,9 +2044,9 @@ window.startProcessingPatient = async function(id) {
         }
 
 
-        // =========================================
+        // =================================================
         // REFRESH DASHBOARD
-        // =========================================
+        // =================================================
 
         updateDashboard();
 
@@ -1980,6 +2071,28 @@ window.startProcessingPatient = async function(id) {
 ========================================================= */
 
 window.completePatient = async function(id) {
+    const completedPatient =
+    patients.find(
+        p => String(p.id) === String(id)
+    );
+
+if (!completedPatient) {
+    alert("Patient not found.");
+    return;
+}
+
+// Emergency patients are handled locally.
+// They do not go through the normal backend queue.
+if (completedPatient.emergency === true) {
+
+    completedPatient.status = "Completed";
+    completedPatient.waiting = 0;
+
+    saveQueueState();
+    updateDashboard();
+
+    return;
+}
 
     try {
 
