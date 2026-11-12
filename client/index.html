@@ -1,0 +1,2431 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <meta name="theme-color"
+          content="#5d3140">
+
+    <title>SmartQueue - Smart Hospital Queue Management</title>
+
+    <!-- ================= FONTS ================= -->
+
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
+    <!-- ================= CSS ================= -->
+
+    <link rel="stylesheet"
+          href="style.css">
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<header class="header">
+
+    <div class="logo-section">
+
+        <div class="logo">
+            🏥
+        </div>
+
+        <div class="brand-text">
+
+            <h1>
+                SmartQueue
+            </h1>
+
+            <p>
+                AI-Powered Hospital Queue Management
+            </p>
+
+        </div>
+
+    </div>
+    <div class="header-actions">
+
+    <!-- LANGUAGE SELECTOR FIRST -->
+    <div class="language-wrapper">
+        <span class="language-icon">🌐</span>
+
+        <select id="languageSelect"
+                onchange="changeLanguage(this.value)">
+            <option value="en">English</option>
+            <option value="hi">हिन्दी</option>
+            <option value="od">ଓଡ଼ିଆ</option>
+            <option value="mr">मराठी</option>
+            <option value="ta">தமிழ்</option>
+            <option value="te">తెలుగు</option>
+            <option value="kn">ಕನ್ನಡ</option>
+            <option value="gu">ગુજરાતી</option>
+            <option value="pa">ਪੰਜਾਬੀ</option>
+            <option value="ur">اردو</option>
+            <option value="fr">Français</option>
+            <option value="es">Español</option>
+        </select>
+    </div>
+
+    <!-- EMERGENCY BUTTON SECOND -->
+    <button type="button"
+            class="header-emergency-button"
+            onclick="showPage('emergency', this)"
+            aria-label="Open emergency registration">
+        <span class="emergency-button-icon">🚨</span>
+        <span>EMERGENCY</span>
+    </button>
+
+</div>
+</header>
+
+
+<!-- =====================================================
+     NAVIGATION
+===================================================== -->
+
+<nav class="navbar">
+
+    <div class="nav-inner">
+
+        <button class="nav-button active"
+                onclick="showPage('home', this)">
+
+            🏠
+            <span>Home</span>
+
+        </button>
+
+
+        <button class="nav-button"
+                onclick="showPage('booking', this)">
+
+            📅
+            <span>Book Appointment</span>
+
+        </button>
+
+
+        <button class="nav-button"
+                onclick="showPage('token', this)">
+
+            🎫
+            <span>My Token</span>
+
+        </button>
+
+
+        <button class="nav-button"
+                onclick="showPage('staff', this)">
+
+            📊
+            <span>Staff Dashboard</span>
+
+        </button>
+
+
+        <button class="nav-button emergency-nav"
+                onclick="showPage('emergency', this)">
+
+            🚑
+            <span>Emergency</span>
+
+        </button>
+
+    </div>
+
+</nav>
+
+
+
+<main>
+
+
+<!-- =====================================================
+     HOME
+===================================================== -->
+
+<section id="home"
+         class="page active">
+
+
+    <div class="hero-section">
+
+        <div class="hero-content">
+
+            <div class="hero-badge">
+                ✨ Smart Healthcare • Less Waiting
+            </div>
+
+            <h2>
+                Healthcare that puts you first.
+            </h2>
+
+            <p>
+                Book appointments, find the right doctor,
+                and manage your hospital visit with ease.
+            </p>
+
+            <button class="hero-button"
+                    onclick="openBooking('normal')">
+
+                Book an Appointment
+                <span>→</span>
+
+            </button>
+
+        </div>
+
+
+        <div class="hero-visual">
+
+            <div class="hero-circle"></div>
+
+            <div class="floating-card card-one">
+
+                <span>⏱️</span>
+
+                <div>
+
+                    <strong>
+                        Wait Less.
+                    </strong>
+
+                    <small>
+                        Care, on Cue
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <div class="floating-card card-two">
+
+                <span>🤖</span>
+
+                <div>
+
+                    <strong>
+                        AI
+                    </strong>
+
+                    <small>
+                        Smart Recommendation
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <div class="doctor-illustration">
+                👩‍⚕️
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="section-title">
+
+        <span>
+            OUR SERVICES
+        </span>
+
+        <h2>
+            How can we help you?
+        </h2>
+
+        <p>
+            Choose the service that best fits your needs.
+        </p>
+
+    </div>
+
+
+
+    <div class="service-grid">
+
+
+        <div class="service-card normal-service"
+             onclick="openBooking('normal')">
+
+            <div class="service-icon">
+                👤
+            </div>
+
+            <div class="service-content">
+
+                <span class="service-label">
+                    REGULAR CARE
+                </span>
+
+                <h3>
+                    Normal Patient
+                </h3>
+
+                <p>
+                    Book a regular consultation with
+                    a doctor of your choice.
+                </p>
+
+                <span class="service-link">
+                    Book Now →
+                </span>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="service-card special-service"
+             onclick="openBooking('special')">
+
+            <div class="service-icon">
+                ♿
+            </div>
+
+            <div class="service-content">
+
+                <span class="service-label">
+                    PRIORITY CARE
+                </span>
+
+                <h3>
+                    Specially-Abled Patient
+                </h3>
+
+                <p>
+                    Receive priority assistance and
+                    suitable doctor recommendations.
+                </p>
+
+                <span class="service-link">
+                    Get Priority →
+                </span>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="service-card emergency-service"
+             onclick="showPage('emergency')">
+
+            <div class="service-icon">
+                🚑
+            </div>
+
+            <div class="service-content">
+
+                <span class="service-label">
+                    URGENT CARE
+                </span>
+
+                <h3>
+                    Emergency
+                </h3>
+
+                <p>
+                    Quickly register an emergency
+                    patient for immediate attention.
+                </p>
+
+                <span class="service-link">
+                    Register Now →
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="feature-strip">
+
+        <div class="feature-item">
+
+            <span>🔒</span>
+
+            <div>
+
+                <strong>
+                    Secure
+                </strong>
+
+                <small>
+                    Your information stays protected
+                </small>
+
+            </div>
+
+        </div>
+
+
+        <div class="feature-item">
+
+            <span>🤖</span>
+
+            <div>
+
+                <strong>
+                    AI Powered
+                </strong>
+
+                <small>
+                    Smarter doctor recommendations
+                </small>
+
+            </div>
+
+        </div>
+
+
+        <div class="feature-item">
+
+            <span>⏱️</span>
+
+            <div>
+
+                <strong>
+                    Less Waiting
+                </strong>
+
+                <small>
+                    Know your estimated waiting time
+                </small>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     BOOKING
+===================================================== -->
+
+<section id="booking"
+         class="page">
+
+
+    <div class="booking-header">
+
+        <div>
+
+            <span class="page-eyebrow">
+                APPOINTMENT
+            </span>
+
+            <h2>
+                Book Your Appointment
+            </h2>
+
+            <p>
+                Complete the steps below to book your visit.
+            </p>
+
+        </div>
+
+
+        <div class="booking-step">
+
+            <span>✓</span>
+            Simple & Fast
+
+        </div>
+
+    </div>
+
+
+
+    <!-- PROGRESS -->
+
+    <div class="booking-progress">
+
+        <div class="progress-item active">
+
+            <span>1</span>
+
+            <small>
+                Patient
+            </small>
+
+        </div>
+
+
+        <div class="progress-line"></div>
+
+
+        <div class="progress-item">
+
+            <span>2</span>
+
+            <small>
+                Department
+            </small>
+
+        </div>
+
+
+        <div class="progress-line"></div>
+
+
+        <div class="progress-item">
+
+            <span>3</span>
+
+            <small>
+                Doctor
+            </small>
+
+        </div>
+
+
+        <div class="progress-line"></div>
+
+
+        <div class="progress-item">
+
+            <span>4</span>
+
+            <small>
+                Details
+            </small>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =================================================
+         STEP 01
+    ================================================== -->
+
+    <div class="booking-section">
+
+        <div class="booking-section-heading">
+
+            <div class="step-number">
+                01
+            </div>
+
+            <div>
+
+                <h3>
+                    Patient Type
+                </h3>
+
+                <p>
+                    Who are you booking the appointment for?
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="choice-grid">
+
+
+            <button type="button"
+                    id="normalChoice"
+                    class="choice-card selected"
+                    onclick="selectPatientType('normal')">
+
+                <div class="choice-icon">
+                    👤
+                </div>
+
+                <div class="choice-info">
+
+                    <h4>
+                        Normal Patient
+                    </h4>
+
+                    <p>
+                        Standard medical consultation
+                    </p>
+
+                </div>
+
+                <div class="choice-check">
+                    ✓
+                </div>
+
+            </button>
+
+
+
+            <button type="button"
+                    id="specialChoice"
+                    class="choice-card"
+                    onclick="selectPatientType('special')">
+
+                <div class="choice-icon">
+                    ♿
+                </div>
+
+                <div class="choice-info">
+
+                    <h4>
+                        Specially-Abled Patient
+                    </h4>
+
+                    <p>
+                        Priority assistance and support
+                    </p>
+
+                </div>
+
+                <div class="choice-check">
+                    ✓
+                </div>
+
+            </button>
+
+        </div>
+
+
+        <input type="hidden"
+               id="patientType"
+               value="normal">
+
+    </div>
+
+
+
+    <!-- =================================================
+         STEP 02 DEPARTMENT
+    ================================================== -->
+
+    <div class="booking-section">
+
+        <div class="booking-section-heading">
+
+            <div class="step-number">
+                02
+            </div>
+
+            <div>
+
+                <h3>
+                    Department
+                </h3>
+
+                <p>
+                    Choose the medical department you need.
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- MOBILE / DESKTOP DROPDOWN -->
+
+        <div class="mobile-select-wrapper">
+
+            <label for="departmentDropdown">
+                Select Department
+            </label>
+
+            <select id="departmentDropdown"
+                    onchange="selectDepartment(this.value)">
+
+                <option value="">
+                    -- Select Department --
+                </option>
+
+                <option value="General Medicine">
+                    🩺 General Medicine
+                </option>
+
+                <option value="Orthopedics">
+                    🦴 Orthopedics
+                </option>
+
+                <option value="Cardiology">
+                    ❤️ Cardiology
+                </option>
+
+                <option value="Neurology">
+                    🧠 Neurology
+                </option>
+
+            </select>
+
+        </div>
+
+
+
+        <!-- CLICKABLE DEPARTMENT CARDS -->
+
+        <div id="departmentGrid"
+             class="department-grid">
+
+
+            <button type="button"
+                    class="department-card"
+                    data-department="General Medicine"
+                    onclick="selectDepartment('General Medicine')">
+
+                <span class="department-icon">
+                    🩺
+                </span>
+
+                <div>
+
+                    <h4>
+                        General Medicine
+                    </h4>
+
+                    <p>
+                        General health & consultation
+                    </p>
+
+                </div>
+
+                <span class="department-check">
+                    ✓
+                </span>
+
+            </button>
+
+
+
+            <button type="button"
+                    class="department-card"
+                    data-department="Orthopedics"
+                    onclick="selectDepartment('Orthopedics')">
+
+                <span class="department-icon">
+                    🦴
+                </span>
+
+                <div>
+
+                    <h4>
+                        Orthopedics
+                    </h4>
+
+                    <p>
+                        Bones, joints & muscles
+                    </p>
+
+                </div>
+
+                <span class="department-check">
+                    ✓
+                </span>
+
+            </button>
+
+
+
+            <button type="button"
+                    class="department-card"
+                    data-department="Cardiology"
+                    onclick="selectDepartment('Cardiology')">
+
+                <span class="department-icon">
+                    ❤️
+                </span>
+
+                <div>
+
+                    <h4>
+                        Cardiology
+                    </h4>
+
+                    <p>
+                        Heart & cardiovascular care
+                    </p>
+
+                </div>
+
+                <span class="department-check">
+                    ✓
+                </span>
+
+            </button>
+
+
+
+            <button type="button"
+                    class="department-card"
+                    data-department="Neurology"
+                    onclick="selectDepartment('Neurology')">
+
+                <span class="department-icon">
+                    🧠
+                </span>
+
+                <div>
+
+                    <h4>
+                        Neurology
+                    </h4>
+
+                    <p>
+                        Brain & nervous system
+                    </p>
+
+                </div>
+
+                <span class="department-check">
+                    ✓
+                </span>
+
+            </button>
+
+
+        </div>
+
+
+        <input type="hidden"
+               id="department">
+
+    </div>
+
+
+
+    <!-- =================================================
+         STEP 03 DOCTOR
+    ================================================== -->
+
+    <div class="booking-section">
+
+        <div class="booking-section-heading">
+
+            <div class="step-number">
+                03
+            </div>
+
+            <div>
+
+                <h3>
+                    Choose Your Doctor
+                </h3>
+
+                <p>
+                    Compare doctors and waiting times.
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="ai-recommendation">
+
+            <div class="ai-icon">
+                🤖
+            </div>
+
+            <div class="ai-content">
+
+                <div class="ai-heading">
+
+                    <h3>
+                        SmartQueue AI
+                    </h3>
+
+                    <span>
+                        SMART PICK
+                    </span>
+
+                </div>
+
+                <p id="aiMessage">
+                    Select a department to see
+                    doctor recommendations.
+                </p>
+
+            </div>
+
+
+            <button class="ai-button"
+                    type="button"
+                    onclick="getAIRecommendation()">
+
+                🤖 QUICKEST SLOT
+
+            </button>
+
+        </div>
+
+
+
+        <div id="doctorGrid"
+             class="doctor-grid">
+
+            <div class="empty-doctors">
+
+                <div>
+                    👨‍⚕️
+                </div>
+
+                <h3>
+                    Select a department first
+                </h3>
+
+                <p>
+                    Available doctors will appear here.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <input type="hidden"
+               id="doctor">
+
+    </div>
+
+
+
+    <!-- =================================================
+         STEP 04 PATIENT DETAILS
+    ================================================== -->
+
+    <div class="booking-section">
+
+        <div class="booking-section-heading">
+
+            <div class="step-number">
+                04
+            </div>
+
+            <div>
+
+                <h3>
+                    Patient Details
+                </h3>
+
+                <p>
+                    Provide information to help the doctor
+                    prepare for the consultation.
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             BASIC INFORMATION
+        ================================================== -->
+
+        <details class="form-collapse"
+                 open>
+
+            <summary>
+
+                <div class="collapse-title">
+
+                    <span class="collapse-icon">
+                        👤
+                    </span>
+
+                    <div>
+
+                        <strong>
+                            Basic Information
+                        </strong>
+
+                        <small>
+                            Name, age, gender & contact
+                        </small>
+
+                    </div>
+
+                </div>
+
+                <span class="collapse-arrow">
+                    ▼
+                </span>
+
+            </summary>
+
+
+
+            <div class="collapse-content">
+
+                <div class="patient-form">
+
+
+                    <!-- NAME -->
+
+                    <div class="form-group">
+
+                        <label for="patientName">
+                            Patient Name *
+                        </label>
+
+                        <input type="text"
+                               id="patientName"
+                               placeholder="Enter full name"
+                               autocomplete="name">
+
+                    </div>
+
+
+
+                    <!-- AGE -->
+
+                    <div class="form-group">
+
+                        <label for="patientAge">
+                            Age *
+                        </label>
+
+                        <input type="number"
+                               id="patientAge"
+                               min="1"
+                               max="120"
+                               placeholder="Age">
+
+                    </div>
+
+
+
+                    <!-- GENDER -->
+
+                    <div class="form-group full-width">
+
+                        <label>
+                            Gender *
+                        </label>
+
+
+                        <div class="gender-selector">
+
+
+                            <button type="button"
+                                    class="gender-option selected"
+                                    onclick="selectGender(this, 'Male')">
+
+                                <span class="gender-icon">
+                                    👨
+                                </span>
+
+                                <span class="gender-text">
+                                    Male
+                                </span>
+
+                                <span class="gender-radio">
+                                    ✓
+                                </span>
+
+                            </button>
+
+
+
+                            <button type="button"
+                                    class="gender-option"
+                                    onclick="selectGender(this, 'Female')">
+
+                                <span class="gender-icon">
+                                    👩
+                                </span>
+
+                                <span class="gender-text">
+                                    Female
+                                </span>
+
+                                <span class="gender-radio">
+                                    ✓
+                                </span>
+
+                            </button>
+
+
+
+                            <button type="button"
+                                    class="gender-option"
+                                    onclick="selectGender(this, 'Other')">
+
+                                <span class="gender-icon">
+                                    🧑
+                                </span>
+
+                                <span class="gender-text">
+                                    Other
+                                </span>
+
+                                <span class="gender-radio">
+                                    ✓
+                                </span>
+
+                            </button>
+
+
+                        </div>
+
+
+                        <input type="hidden"
+                               id="patientGender"
+                               value="Male">
+
+                    </div>
+
+
+
+                    <!-- MOBILE -->
+
+                    <div class="form-group">
+
+                        <label for="patientMobile">
+                            📱 Mobile Number *
+                        </label>
+
+                        <input type="tel"
+                               id="patientMobile"
+                               inputmode="numeric"
+                               maxlength="10"
+                               placeholder="10-digit mobile number">
+
+                    </div>
+
+
+
+                    <!-- EMAIL -->
+
+                    <div class="form-group">
+
+                        <label for="patientEmail">
+
+                            📧 Email
+
+                            <span class="optional">
+                                Optional
+                            </span>
+
+                        </label>
+
+                        <input type="email"
+                               id="patientEmail"
+                               placeholder="example@email.com"
+                               autocomplete="email">
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </details>
+
+
+
+        <!-- =================================================
+             REASON FOR VISIT
+        ================================================== -->
+
+        <details class="form-collapse"
+                 open>
+
+            <summary>
+
+                <div class="collapse-title">
+
+                    <span class="collapse-icon">
+                        🩺
+                    </span>
+
+                    <div>
+
+                        <strong>
+                            Reason for Visit
+                        </strong>
+
+                        <small>
+                            Symptoms and reason for consultation
+                        </small>
+
+                    </div>
+
+                </div>
+
+                <span class="collapse-arrow">
+                    ▼
+                </span>
+
+            </summary>
+
+
+
+            <div class="collapse-content">
+
+
+                <!-- PROBLEM DROPDOWN -->
+
+                <div class="form-group full-width">
+
+                    <label for="problemDropdown">
+                        Select Main Problem
+                    </label>
+
+
+                    <select id="problemDropdown"
+                            onchange="selectProblemDropdown(this.value)">
+
+                        <option value="">
+                            Select the main problem
+                        </option>
+
+                        <option value="Fever / Infection">
+                            🤒 Fever / Infection
+                        </option>
+
+                        <option value="Pain / Injury">
+                            🤕 Pain / Injury
+                        </option>
+
+                        <option value="Breathing Problem">
+                            🫁 Breathing Problem
+                        </option>
+
+                        <option value="Heart Related">
+                            ❤️ Heart Related
+                        </option>
+
+                        <option value="Bone / Joint Problem">
+                            🦴 Bone / Joint
+                        </option>
+
+                        <option value="Cold / Cough">
+                            🤧 Cold / Cough
+                        </option>
+
+                        <option value="Stomach / Digestive">
+                            🤢 Stomach / Digestive
+                        </option>
+
+                        <option value="Neurological">
+                            🧠 Neurological
+                        </option>
+
+                        <option value="Eye Problem">
+                            👁️ Eye Problem
+                        </option>
+
+                        <option value="Dental">
+                            🦷 Dental
+                        </option>
+
+                        <option value="Other">
+                            🩺 Other
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <input type="hidden"
+                       id="patientProblemCategory">
+
+
+
+                <!-- DESCRIPTION -->
+
+                <div class="form-group full-width">
+
+                    <label for="patientProblem">
+                        Describe the Problem *
+                    </label>
+
+                    <textarea id="patientProblem"
+                              rows="4"
+                              maxlength="500"
+                              placeholder="Describe symptoms or reason for visiting..."></textarea>
+
+                    <small class="input-help">
+
+                        Please briefly describe the patient's
+                        symptoms or reason for the visit.
+
+                    </small>
+
+                </div>
+
+
+
+                <!-- DURATION -->
+
+                <div class="form-group full-width">
+
+                    <label class="field-label">
+                        How long has the patient had this problem?
+                    </label>
+
+
+                    <div class="duration-grid">
+
+
+                        <button type="button"
+                                class="duration-card selected"
+                                onclick="selectDuration(this, 'Today')">
+
+                            Today
+
+                        </button>
+
+
+                        <button type="button"
+                                class="duration-card"
+                                onclick="selectDuration(this, '2–3 Days')">
+
+                            2–3 Days
+
+                        </button>
+
+
+                        <button type="button"
+                                class="duration-card"
+                                onclick="selectDuration(this, 'About a Week')">
+
+                            About a Week
+
+                        </button>
+
+
+                        <button type="button"
+                                class="duration-card"
+                                onclick="selectDuration(this, 'More than a Week')">
+
+                            More than a Week
+
+                        </button>
+
+
+                    </div>
+
+
+                    <input type="hidden"
+                           id="problemDuration"
+                           value="Today">
+
+                </div>
+
+
+            </div>
+
+        </details>
+
+
+
+        <!-- =================================================
+             MEDICAL INFORMATION
+        ================================================== -->
+
+        <details class="form-collapse">
+
+            <summary>
+
+                <div class="collapse-title">
+
+                    <span class="collapse-icon">
+                        💊
+                    </span>
+
+                    <div>
+
+                        <strong>
+                            Medical Information
+                        </strong>
+
+                        <small>
+                            Conditions, allergies & medications
+                        </small>
+
+                    </div>
+
+                </div>
+
+                <span class="collapse-arrow">
+                    ▼
+                </span>
+
+            </summary>
+
+
+
+            <div class="collapse-content">
+
+
+                <!-- CONDITIONS -->
+
+                <div class="form-group full-width">
+
+                    <label class="field-label">
+                        Existing Medical Conditions
+                    </label>
+
+
+                    <div class="condition-grid">
+
+
+                        <button type="button"
+                                class="condition-card selected"
+                                onclick="toggleCondition(this, 'None')">
+
+                            ✓ None
+
+                        </button>
+
+
+                        <button type="button"
+                                class="condition-card"
+                                onclick="toggleCondition(this, 'Diabetes')">
+
+                            Diabetes
+
+                        </button>
+
+
+                        <button type="button"
+                                class="condition-card"
+                                onclick="toggleCondition(this, 'Hypertension')">
+
+                            Hypertension
+
+                        </button>
+
+
+                        <button type="button"
+                                class="condition-card"
+                                onclick="toggleCondition(this, 'Asthma')">
+
+                            Asthma
+
+                        </button>
+
+
+                        <button type="button"
+                                class="condition-card"
+                                onclick="toggleCondition(this, 'Heart Disease')">
+
+                            Heart Disease
+
+                        </button>
+
+
+                        <button type="button"
+                                class="condition-card"
+                                onclick="toggleCondition(this, 'Other')">
+
+                            Other
+
+                        </button>
+
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- OTHER CONDITION -->
+
+                <div class="form-group full-width">
+
+                    <label for="otherCondition">
+
+                        Other Medical Condition
+
+                        <span class="optional">
+                            Optional
+                        </span>
+
+                    </label>
+
+                    <input type="text"
+                           id="otherCondition"
+                           placeholder="Enter other condition">
+
+                </div>
+
+
+
+                <!-- ALLERGIES -->
+
+                <div class="form-group full-width">
+
+                    <label for="patientAllergies">
+                        ⚠️ Allergies
+                    </label>
+
+
+                    <select id="patientAllergies">
+
+                        <option value="No Known Allergies">
+                            No Known Allergies
+                        </option>
+
+                        <option value="Medicine Allergy">
+                            Medicine Allergy
+                        </option>
+
+                        <option value="Food Allergy">
+                            Food Allergy
+                        </option>
+
+                        <option value="Environmental Allergy">
+                            Environmental Allergy
+                        </option>
+
+                        <option value="Other Allergy">
+                            Other Allergy
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+
+                <!-- MEDICATIONS -->
+
+                <div class="form-group full-width">
+
+                    <label for="currentMedications">
+
+                        💊 Current Medications
+
+                        <span class="optional">
+                            Optional
+                        </span>
+
+                    </label>
+
+
+                    <textarea id="currentMedications"
+                              rows="3"
+                              placeholder="List medicines currently being taken..."></textarea>
+
+                </div>
+
+
+            </div>
+
+        </details>
+
+
+    </div>
+
+
+
+    <!-- =================================================
+         CONFIRM
+    ================================================== -->
+
+    <div class="booking-footer">
+
+        <div class="booking-summary">
+
+            <span>
+                ✓
+            </span>
+
+            <div>
+
+                <strong>
+                    Ready to book?
+                </strong>
+
+                <small>
+                    Review your details before confirming.
+                </small>
+
+            </div>
+
+        </div>
+
+
+        <button class="book-button"
+                onclick="bookAppointment()">
+
+            <span>
+                Confirm Appointment
+            </span>
+
+            <span>
+                →
+            </span>
+
+        </button>
+
+    </div>
+
+
+</section>
+
+
+
+<!-- =====================================================
+     TOKEN
+===================================================== -->
+
+<section id="token"
+         class="page">
+
+
+    <div class="token-page">
+
+        <div class="page-eyebrow">
+            YOUR APPOINTMENT
+        </div>
+
+        <h2>
+            Appointment Token
+        </h2>
+
+        <p>
+            Your appointment details will appear here.
+        </p>
+
+
+        <div id="tokenResult"
+             class="token-card">
+
+            <div class="empty-token">
+
+                <div class="empty-icon">
+                    🎫
+                </div>
+
+                <h3>
+                    No appointment booked yet
+                </h3>
+
+                <p>
+                    Book an appointment to receive your token.
+                </p>
+
+                <button class="small-primary"
+                        onclick="openBooking('normal')">
+
+                    Book Now
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     STAFF
+===================================================== -->
+
+<section id="staff"
+         class="page">
+
+
+    <div class="dashboard-header">
+
+        <div>
+
+            <span class="page-eyebrow">
+                STAFF DASHBOARD
+            </span>
+
+            <h2>
+                Queue Overview
+            </h2>
+
+            <p>
+                Monitor patients, doctors and hospital capacity.
+            </p>
+
+        </div>
+
+
+        <div class="live-status">
+
+            <span></span>
+
+            Live
+
+        </div>
+
+    </div>
+
+
+
+    <div class="stats-grid">
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon purple">
+                👥
+            </div>
+
+            <div>
+
+                <span>
+                    Total Patients
+                </span>
+
+                <strong id="totalPatients">
+                    0
+                </strong>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon pink">
+                ⏱️
+            </div>
+
+            <div>
+
+                <span>
+                    Waiting
+                </span>
+
+                <strong id="waitingPatients">
+                    0
+                </strong>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon green">
+                ✓
+            </div>
+
+            <div>
+
+                <span>
+                    Completed
+                </span>
+
+                <strong id="completedPatients">
+                    0
+                </strong>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon orange">
+                🛏️
+            </div>
+
+            <div>
+
+                <span>
+                    Available Beds
+                </span>
+
+                <strong id="dashboardAvailableBeds">
+                    15
+                </strong>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+
+    <div class="dashboard-panel">
+
+        <div class="panel-heading">
+
+            <div>
+
+                <h3>
+                    Patient Queue
+                </h3>
+
+                <p>
+                    Current appointments and their status.
+                </p>
+
+            </div>
+
+
+            <span class="queue-count"
+                  id="queueCount">
+
+                0 Patients
+
+            </span>
+
+        </div>
+
+
+
+        <div class="table-container">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>Token</th>
+                        <th>Patient</th>
+                        <th>Contact</th>
+                        <th>Problem</th>
+                        <th>Doctor</th>
+                        <th>Type</th>
+                        <th>Waiting</th>
+                        <th>Status</th>
+                        <th>Action</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="queueTable">
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="dashboard-panel bed-panel">
+
+        <div class="panel-heading">
+
+            <div>
+
+                <h3>
+                    Emergency Bed Status
+                </h3>
+
+                <p>
+                    Current emergency department capacity.
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="bed-cards">
+
+
+            <div class="bed-card">
+
+                <span class="bed-icon">
+                    🛏️
+                </span>
+
+                <div>
+
+                    <small>
+                        Total Beds
+                    </small>
+
+                    <strong id="totalBeds">
+                        20
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="bed-card occupied">
+
+                <span class="bed-icon">
+                    🔴
+                </span>
+
+                <div>
+
+                    <small>
+                        Occupied
+                    </small>
+
+                    <strong id="occupiedBeds">
+                        5
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="bed-card available">
+
+                <span class="bed-icon">
+                    🟢
+                </span>
+
+                <div>
+
+                    <small>
+                        Available
+                    </small>
+
+                    <strong id="availableBeds">
+                        15
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     EMERGENCY
+===================================================== -->
+
+<section id="emergency"
+         class="page">
+
+
+    <div class="emergency-page">
+
+
+        <div class="emergency-header">
+
+            <div class="emergency-icon-large">
+                🚑
+            </div>
+
+            <div>
+
+                <span class="page-eyebrow">
+                    EMERGENCY
+                </span>
+
+                <h2>
+                    Emergency Registration
+                </h2>
+
+                <p>
+                    Register an emergency patient immediately.
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="emergency-alert">
+
+            <div>
+                ⚠️
+            </div>
+
+            <div>
+
+                <strong>
+                    Emergency patients receive priority.
+                </strong>
+
+                <p>
+                    Please provide accurate information so
+                    hospital staff can respond quickly.
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="emergency-form">
+
+
+            <div class="form-group">
+
+                <label for="emergencyName">
+                    Patient Name
+                </label>
+
+                <input type="text"
+                       id="emergencyName"
+                       placeholder="Enter patient name">
+
+            </div>
+
+
+
+            <div class="form-group">
+
+                <label for="emergencyAge">
+                    Age
+                </label>
+
+                <input type="number"
+                       id="emergencyAge"
+                       min="1"
+                       max="120"
+                       placeholder="Age">
+
+            </div>
+
+
+
+            <div class="form-group">
+
+                <label for="emergencyMobile">
+                    📱 Mobile Number
+                </label>
+
+                <input type="tel"
+                       id="emergencyMobile"
+                       maxlength="10"
+                       placeholder="10-digit mobile number">
+
+            </div>
+
+
+
+            <div class="form-group">
+
+                <label for="emergencyProblem">
+                    🩺 Emergency Problem
+                </label>
+
+                <textarea id="emergencyProblem"
+                          rows="4"
+                          placeholder="Describe the emergency..."></textarea>
+
+            </div>
+
+
+
+            <div class="form-group">
+
+                <label for="emergencyDepartment">
+                    Department
+                </label>
+
+                <select id="emergencyDepartment">
+
+                    <option value="Emergency Care">
+                        Emergency Care
+                    </option>
+
+                    <option value="Cardiology">
+                        Cardiology
+                    </option>
+
+                    <option value="Neurology">
+                        Neurology
+                    </option>
+
+                    <option value="Orthopedics">
+                        Orthopedics
+                    </option>
+
+                    <option value="General Medicine">
+                        General Medicine
+                    </option>
+
+                </select>
+
+            </div>
+
+
+
+            <button class="emergency-button"
+                    onclick="registerEmergency()">
+
+                🚑 Register Emergency Patient
+
+            </button>
+
+
+            <div id="emergencyResult"
+                 class="emergency-result">
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+</main>
+
+
+
+<!-- =====================================================
+     EXISTING JAVASCRIPT
+===================================================== -->
+
+<script src="script.js"></script>
+
+
+
+<!-- =====================================================
+     SMARTQUEUE UI FIXES
+===================================================== -->
+
+<script>
+
+
+/* =====================================================
+   DEPARTMENT SELECTION
+   IMPORTANT: THIS IS THE FIX
+===================================================== */
+
+window.selectDepartment = function(value) {
+
+    if (!value) {
+        return;
+    }
+
+
+    console.log("Department selected:", value);
+
+
+    /* -----------------------------------------------
+       1. Update hidden department field
+    ------------------------------------------------ */
+
+    const departmentInput =
+        document.getElementById("department");
+
+    if (departmentInput) {
+
+        departmentInput.value = value;
+
+    }
+
+
+
+    /* -----------------------------------------------
+       2. Update dropdown
+    ------------------------------------------------ */
+
+    const dropdown =
+        document.getElementById("departmentDropdown");
+
+    if (dropdown) {
+
+        dropdown.value = value;
+
+    }
+
+
+
+    /* -----------------------------------------------
+       3. Highlight selected card
+    ------------------------------------------------ */
+
+    document
+        .querySelectorAll(".department-card")
+        .forEach(card => {
+
+            card.classList.remove("selected");
+
+        });
+
+
+    document
+        .querySelectorAll(".department-card")
+        .forEach(card => {
+
+            const cardDepartment =
+                card.dataset.department ||
+                card.getAttribute("data-department");
+
+            if (cardDepartment === value) {
+
+                card.classList.add("selected");
+
+            }
+
+        });
+
+
+
+    /* -----------------------------------------------
+       4. Load doctors
+    ------------------------------------------------ */
+
+    if (typeof window.loadDoctors === "function") {
+
+        window.loadDoctors(value);
+
+    }
+
+
+
+    /* -----------------------------------------------
+       5. Update AI message
+    ------------------------------------------------ */
+
+    const aiMessage =
+        document.getElementById("aiMessage");
+
+    if (aiMessage) {
+
+        aiMessage.innerText =
+            `Doctors available in ${value}. Click "Find Best Doctor" for an AI recommendation.`;
+
+    }
+
+};
+
+
+
+/* =====================================================
+   DEPARTMENT CARD CLICK FALLBACK
+===================================================== */
+
+document.addEventListener("click", function(event) {
+
+    const card =
+        event.target.closest(".department-card");
+
+
+    if (!card) {
+        return;
+    }
+
+
+    event.preventDefault();
+
+
+    const value =
+        card.dataset.department ||
+        card.getAttribute("data-department");
+
+
+    if (value) {
+
+        window.selectDepartment(value);
+
+    }
+
+});
+
+
+
+/* =====================================================
+   PROBLEM DROPDOWN
+===================================================== */
+
+window.selectProblemDropdown = function(value) {
+
+    const hiddenInput =
+        document.getElementById("patientProblemCategory");
+
+
+    if (hiddenInput) {
+
+        hiddenInput.value = value;
+
+    }
+
+};
+
+
+
+/* =====================================================
+   GENDER
+===================================================== */
+
+window.selectGender = function(button, gender) {
+
+
+    document
+        .querySelectorAll(".gender-option")
+        .forEach(option => {
+
+            option.classList.remove("selected");
+
+        });
+
+
+    button.classList.add("selected");
+
+
+    const genderInput =
+        document.getElementById("patientGender");
+
+
+    if (genderInput) {
+
+        genderInput.value = gender;
+
+    }
+
+};
+
+
+
+/* =====================================================
+   DURATION
+===================================================== */
+
+window.selectDuration = function(button, duration) {
+
+
+    document
+        .querySelectorAll(".duration-card")
+        .forEach(option => {
+
+            option.classList.remove("selected");
+
+        });
+
+
+    button.classList.add("selected");
+
+
+    const durationInput =
+        document.getElementById("problemDuration");
+
+
+    if (durationInput) {
+
+        durationInput.value = duration;
+
+    }
+
+};
+
+
+
+/* =====================================================
+   DEPARTMENT CARD KEYBOARD SUPPORT
+===================================================== */
+
+document.addEventListener("keydown", function(event) {
+
+    const card =
+        event.target.closest(".department-card");
+
+
+    if (!card) {
+        return;
+    }
+
+
+    if (event.key === "Enter" ||
+        event.key === " ") {
+
+        event.preventDefault();
+
+        const value =
+            card.dataset.department;
+
+        if (value) {
+
+            window.selectDepartment(value);
+
+        }
+
+    }
+
+});
+
+
+
+/* =====================================================
+   MOBILE NUMBER CLEANUP
+===================================================== */
+
+document.addEventListener("input", function(event) {
+
+    if (
+        event.target.id === "patientMobile" ||
+        event.target.id === "emergencyMobile"
+    ) {
+
+        event.target.value =
+            event.target.value
+                .replace(/\D/g, "")
+                .slice(0, 10);
+
+    }
+
+});
+
+
+</script>
+
+
+</body>
+
+</html>
