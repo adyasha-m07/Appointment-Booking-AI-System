@@ -79,8 +79,6 @@
             <option value="gu">ગુજરાતી</option>
             <option value="pa">ਪੰਜਾਬੀ</option>
             <option value="ur">اردو</option>
-            <option value="fr">Français</option>
-            <option value="es">Español</option>
         </select>
     </div>
 
@@ -174,76 +172,50 @@
                 ✨ Smart Healthcare • Less Waiting
             </div>
 
-            <h2>
-                Healthcare that puts you first.
-            </h2>
+            <h2>Healthcare that puts you first.</h2>
 
-            <p>
-                Book appointments, find the right doctor,
-                and manage your hospital visit with ease.
-            </p>
+            
+<p>
+    Book appointments, find the right doctor, and manage your hospital visit with ease.
+</p>
+
 
             <button class="hero-button"
+                    type="button"
                     onclick="openBooking('normal')">
-
                 Book an Appointment
                 <span>→</span>
-
             </button>
 
         </div>
-
 
         <div class="hero-visual">
 
             <div class="hero-circle"></div>
 
             <div class="floating-card card-one">
-
                 <span>⏱️</span>
-
                 <div>
-
-                    <strong>
-                        Wait Less.
-                    </strong>
-
-                    <small>
-                        Care, on Cue
-                    </small>
-
+                    <strong>Wait Less.</strong>
+                    <small>Care, on Cue</small>
                 </div>
-
             </div>
-
 
             <div class="floating-card card-two">
-
                 <span>🤖</span>
-
                 <div>
-
-                    <strong>
-                        AI
-                    </strong>
-
-                    <small>
-                        Smart Recommendation
-                    </small>
-
+                    <strong>AI</strong>
+                    <small>Smart Recommendation</small>
                 </div>
-
             </div>
 
-
-            <div class="doctor-illustration">
+            <div class="doctor-illustration" aria-hidden="true">
                 👩‍⚕️
             </div>
 
         </div>
 
     </div>
-
 
 
     <div class="section-title">
@@ -284,10 +256,7 @@
                     Normal Patient
                 </h3>
 
-                <p>
-                    Book a regular consultation with
-                    a doctor of your choice.
-                </p>
+                <p>Book a regular consultation with a doctor of your choice.</p>
 
                 <span class="service-link">
                     Book Now →
@@ -316,10 +285,7 @@
                     Specially-Abled Patient
                 </h3>
 
-                <p>
-                    Receive priority assistance and
-                    suitable doctor recommendations.
-                </p>
+                <p>Receive priority assistance and suitable doctor recommendations.</p>
 
                 <span class="service-link">
                     Get Priority →
@@ -348,10 +314,7 @@
                     Emergency
                 </h3>
 
-                <p>
-                    Quickly register an emergency
-                    patient for immediate attention.
-                </p>
+                <p>Quickly register an emergency patient for immediate attention.</p>
 
                 <span class="service-link">
                     Register Now →
@@ -440,8 +403,7 @@
     <div class="booking-header">
 
         <div>
-
-            <span class="page-eyebrow">
+                        <span class="page-eyebrow">
                 APPOINTMENT
             </span>
 
@@ -659,8 +621,7 @@
             <label for="departmentDropdown">
                 Select Department
             </label>
-
-            <select id="departmentDropdown"
+                        <select id="departmentDropdown"
                     onchange="selectDepartment(this.value)">
 
                 <option value="">
@@ -879,8 +840,7 @@
             <button class="ai-button"
                     type="button"
                     onclick="getAIRecommendation()">
-
-                🤖 QUICKEST SLOT
+                                    🤖 QUICKEST SLOT
 
             </button>
 
@@ -1100,8 +1060,7 @@
                         <input type="hidden"
                                id="patientGender"
                                value="Male">
-
-                    </div>
+                                                   </div>
 
 
 
@@ -1195,69 +1154,23 @@
 
                 <!-- PROBLEM DROPDOWN -->
 
-                <div class="form-group full-width">
+<div class="form-group full-width">
 
-                    <label for="problemDropdown">
-                        Select Main Problem
-                    </label>
+    <label for="problemDropdown">
+        Select Main Problem
+    </label>
 
+    <select id="problemDropdown"
+            onchange="selectProblemDropdown(this.value)"
+            disabled>
 
-                    <select id="problemDropdown"
-                            onchange="selectProblemDropdown(this.value)">
+        <option value="">
+            Select a department first
+        </option>
 
-                        <option value="">
-                            Select the main problem
-                        </option>
+    </select>
 
-                        <option value="Fever / Infection">
-                            🤒 Fever / Infection
-                        </option>
-
-                        <option value="Pain / Injury">
-                            🤕 Pain / Injury
-                        </option>
-
-                        <option value="Breathing Problem">
-                            🫁 Breathing Problem
-                        </option>
-
-                        <option value="Heart Related">
-                            ❤️ Heart Related
-                        </option>
-
-                        <option value="Bone / Joint Problem">
-                            🦴 Bone / Joint
-                        </option>
-
-                        <option value="Cold / Cough">
-                            🤧 Cold / Cough
-                        </option>
-
-                        <option value="Stomach / Digestive">
-                            🤢 Stomach / Digestive
-                        </option>
-
-                        <option value="Neurological">
-                            🧠 Neurological
-                        </option>
-
-                        <option value="Eye Problem">
-                            👁️ Eye Problem
-                        </option>
-
-                        <option value="Dental">
-                            🦷 Dental
-                        </option>
-
-                        <option value="Other">
-                            🩺 Other
-                        </option>
-
-                    </select>
-
-                </div>
-
-
+</div>
                 <input type="hidden"
                        id="patientProblemCategory">
 
@@ -1366,8 +1279,7 @@
                     </span>
 
                     <div>
-
-                        <strong>
+                                                <strong>
                             Medical Information
                         </strong>
 
@@ -1585,8 +1497,7 @@
             <span>
                 Confirm Appointment
             </span>
-
-            <span>
+                        <span>
                 →
             </span>
 
@@ -1804,9 +1715,7 @@
                 </p>
 
             </div>
-
-
-            <span class="queue-count"
+                        <span class="queue-count"
                   id="queueCount">
 
                 0 Patients
@@ -2025,8 +1934,7 @@
 
 
             <div class="form-group">
-
-                <label for="emergencyAge">
+                                <label for="emergencyAge">
                     Age
                 </label>
 
@@ -2155,7 +2063,7 @@ window.selectDepartment = function(value) {
 
 
     console.log("Department selected:", value);
-
+    window.updateProblemDropdown(value);
 
     /* -----------------------------------------------
        1. Update hidden department field
@@ -2245,9 +2153,6 @@ window.selectDepartment = function(value) {
     }
 
 };
-
-
-
 /* =====================================================
    DEPARTMENT CARD CLICK FALLBACK
 ===================================================== */

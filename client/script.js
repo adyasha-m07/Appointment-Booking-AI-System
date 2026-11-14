@@ -597,22 +597,6 @@ const translations = {
         emergency: "ایمرجنسی"
     },
 
-    fr: {
-        home: "Accueil",
-        booking: "Prendre rendez-vous",
-        token: "Mon jeton",
-        staff: "Tableau du personnel",
-        emergency: "Urgence"
-    },
-
-    es: {
-        home: "Inicio",
-        booking: "Reservar cita",
-        token: "Mi turno",
-        staff: "Panel del personal",
-        emergency: "Emergencia"
-    }
-
 };
 
 
@@ -728,7 +712,113 @@ window.selectPatientType = function(type) {
 
 };
 
+/* =========================================================
+   DEPARTMENT-SPECIFIC PROBLEM OPTIONS
+========================================================= */
 
+const problemOptionsByDepartment = {
+
+    "General Medicine": [
+        { value: "Fever / Infection", label: "🤒 Fever / Infection" },
+        { value: "Cold / Cough", label: "🤧 Cold / Cough" },
+        { value: "Stomach / Digestive", label: "🤢 Stomach / Digestive Problems" },
+        { value: "Breathing Problem", label: "🫁 Breathing Difficulty" },
+        { value: "Headache", label: "🤕 Headache" },
+        { value: "Weakness / Fatigue", label: "😴 Weakness / Fatigue" },
+        { value: "Body Pain", label: "💢 General Body Pain" },
+        { value: "Other", label: "🩺 Other" }
+    ],
+
+    "Orthopedics": [
+        { value: "Bone / Joint Problem", label: "🦴 Bone / Joint Pain" },
+        { value: "Back / Neck Pain", label: "🔙 Back / Neck Pain" },
+        { value: "Fracture", label: "🩼 Suspected Fracture" },
+        { value: "Sports Injury", label: "🏃 Sports Injury" },
+        { value: "Muscle / Ligament Injury", label: "💪 Muscle / Ligament Injury" },
+        { value: "Swelling / Stiffness", label: "🦵 Joint Swelling / Stiffness" },
+        { value: "Pain / Injury", label: "🤕 Other Pain / Injury" },
+        { value: "Other", label: "🩺 Other" }
+    ],
+
+    "Cardiology": [
+        { value: "Heart Related", label: "❤️ Heart-related Concern" },
+        { value: "Chest Pain", label: "💗 Chest Pain / Discomfort" },
+        { value: "Palpitations", label: "💓 Fast or Irregular Heartbeat" },
+        { value: "High Blood Pressure", label: "🩺 High Blood Pressure" },
+        { value: "Low Blood Pressure", label: "🩺 Low Blood Pressure" },
+        { value: "Breathlessness", label: "🫁 Breathlessness" },
+        { value: "Dizziness / Fainting", label: "😵 Dizziness / Fainting" },
+        { value: "Other", label: "🩺 Other" }
+    ],
+
+    "Neurology": [
+        { value: "Neurological", label: "🧠 Neurological Concern" },
+        { value: "Headache / Migraine", label: "🤕 Headache / Migraine" },
+        { value: "Dizziness / Vertigo", label: "😵 Dizziness / Vertigo" },
+        { value: "Seizures", label: "⚡ Seizures / Fits" },
+        { value: "Numbness / Tingling", label: "🖐️ Numbness / Tingling" },
+        { value: "Memory Problems", label: "🧩 Memory Problems" },
+        { value: "Balance / Coordination Problem", label: "🚶 Balance / Coordination Problem" },
+        { value: "Other", label: "🩺 Other" }
+    ]
+
+};
+
+
+/* =========================================================
+   UPDATE MAIN PROBLEM DROPDOWN
+========================================================= */
+
+window.updateProblemDropdown = function(department) {
+
+    const problemDropdown =
+        document.getElementById("problemDropdown");
+
+    const problemCategoryInput =
+        document.getElementById("patientProblemCategory");
+
+    if (!problemDropdown) return;
+
+    // Clear previous options
+    problemDropdown.innerHTML = "";
+
+    // Add placeholder
+    const placeholder = document.createElement("option");
+
+    placeholder.value = "";
+
+    placeholder.textContent = department
+        ? "Select the main problem"
+        : "Select a department first";
+
+    problemDropdown.appendChild(placeholder);
+
+    // Get department-specific problems
+    const options =
+        problemOptionsByDepartment[department] || [];
+
+    // Add relevant problems
+    options.forEach(problem => {
+
+        const option = document.createElement("option");
+
+        option.value = problem.value;
+
+        option.textContent = problem.label;
+
+        problemDropdown.appendChild(option);
+
+    });
+
+    // Disable dropdown if no department is selected
+    problemDropdown.disabled = options.length === 0;
+
+    // Clear previous selection
+    if (problemCategoryInput) {
+        problemCategoryInput.value = "";
+    }
+
+};
 /* =========================================================
    DEPARTMENT SELECTION
    IMPORTANT FIX
@@ -743,6 +833,7 @@ window.selectDepartment = function(value) {
     console.log("Department selected:", value);
 
     selectedDepartment = value;
+    window.updateProblemDropdown(value);
 
     /* -----------------------------------------------
        UPDATE HIDDEN INPUT
@@ -2469,10 +2560,152 @@ commonTranslations.kn={"Home":"ಮುಖಪುಟ","Book Appointment":"ಅಪಾ
 commonTranslations.gu={"Home":"હોમ","Book Appointment":"એપોઇન્ટમેન્ટ બુક કરો","My Token":"મારો ટોકન","Staff Dashboard":"સ્ટાફ ડેશબોર્ડ","Emergency":"કટોકટી","Book an Appointment":"એપોઇન્ટમેન્ટ બુક કરો","Normal Patient":"સામાન્ય દર્દી","Specially-Abled Patient":"વિશેષ સહાય જરૂરી દર્દી","Book Now":"હમણાં બુક કરો","Get Priority":"પ્રાથમિકતા મેળવો","Register Now":"હમણાં નોંધણી કરો","OUR SERVICES":"અમારી સેવાઓ","How can we help you?":"અમે તમને કેવી રીતે મદદ કરી શકીએ?","Choose the service that best fits your needs.":"તમારી જરૂરિયાત મુજબ સેવા પસંદ કરો.","Secure":"સુરક્ષિત","AI Powered":"AI સંચાલિત","Less Waiting":"ઓછી રાહ","APPOINTMENT":"એપોઇન્ટમેન્ટ","Book Your Appointment":"તમારી એપોઇન્ટમેન્ટ બુક કરો","Simple & Fast":"સરળ અને ઝડપી","Patient":"દર્દી","Department":"વિભાગ","Doctor":"ડોક્ટર","Details":"વિગતો","Patient Type":"દર્દીનો પ્રકાર","Who are you booking the appointment for?":"તમે કોના માટે એપોઇન્ટમેન્ટ બુક કરી રહ્યા છો?","Standard medical consultation":"સામાન્ય તબીબી સલાહ","Priority assistance and support":"પ્રાથમિકતા સહાય અને સહયોગ","Select Department":"વિભાગ પસંદ કરો","General Medicine":"સામાન્ય દવા વિભાગ","Orthopedics":"હાડકાં વિભાગ","Cardiology":"હૃદયરોગ વિભાગ","Neurology":"ન્યુરોલોજી","Choose Your Doctor":"તમારો ડોક્ટર પસંદ કરો","Compare doctors and waiting times.":"ડોક્ટરો અને રાહ સમયની સરખામણી કરો.","SMART PICK":"સ્માર્ટ પસંદગી","Find Best Doctor":"શ્રેષ્ઠ ડોક્ટર શોધો","Select a department first":"પહેલા વિભાગ પસંદ કરો","Available doctors will appear here.":"ઉપલબ્ધ ડોક્ટરો અહીં દેખાશે.","No doctors available":"ડોક્ટરો ઉપલબ્ધ નથી","Available":"ઉપલબ્ધ","patients waiting":"દર્દીઓ રાહ જોઈ રહ્યા છે","Estimated wait":"અંદાજિત રાહ","Select Doctor":"ડોક્ટર પસંદ કરો","Patient Details":"દર્દીની વિગતો","Basic Information":"મૂળભૂત માહિતી","Patient Name":"દર્દીનું નામ","Age":"ઉંમર","Gender":"લિંગ","Male":"પુરુષ","Female":"સ્ત્રી","Other":"અન્ય","Mobile Number":"મોબાઇલ નંબર","Email":"ઇમેઇલ","Optional":"વૈકલ્પિક","Reason for Visit":"મુલાકાતનું કારણ","Select Main Problem":"મુખ્ય સમસ્યા પસંદ કરો","Describe the Problem":"સમસ્યાનું વર્ણન કરો","Today":"આજે","Medical Information":"તબીબી માહિતી","Existing Medical Conditions":"હાલની તબીબી સ્થિતિઓ","None":"કંઈ નહીં","Diabetes":"ડાયાબિટીસ","Hypertension":"હાઈ બ્લડ પ્રેશર","Asthma":"અસ્થમા","Heart Disease":"હૃદય રોગ","Allergies":"એલર્જી","No Known Allergies":"કોઈ જાણીતી એલર્જી નથી","Current Medications":"હાલની દવાઓ","Ready to book?":"બુક કરવા તૈયાર છો?","Confirm Appointment":"એપોઇન્ટમેન્ટની પુષ્ટિ કરો","YOUR APPOINTMENT":"તમારી એપોઇન્ટમેન્ટ","Appointment Token":"એપોઇન્ટમેન્ટ ટોકન","No appointment booked yet":"હજુ કોઈ એપોઇન્ટમેન્ટ બુક નથી","Book an appointment to receive your token.":"ટોકન મેળવવા એપોઇન્ટમેન્ટ બુક કરો","APPOINTMENT CONFIRMED":"એપોઇન્ટમેન્ટની પુષ્ટિ થઈ","Your Token Number":"તમારો ટોકન નંબર","Estimated Waiting":"અંદાજિત રાહ","Queue Overview":"કતારનો સારાંશ","Total Patients":"કુલ દર્દીઓ","Waiting":"રાહ જોઈ રહ્યા છે","Completed":"પૂર્ણ","Available Beds":"ઉપલબ્ધ બેડ","Patient Queue":"દર્દીઓની કતાર","Token":"ટોકન","Contact":"સંપર્ક","Problem":"સમસ્યા","Type":"પ્રકાર","Status":"સ્થિતિ","Action":"ક્રિયા","Complete":"પૂર્ણ કરો","Done":"થઈ ગયું","Emergency Bed Status":"કટોકટી બેડ સ્થિતિ","Total Beds":"કુલ બેડ","Occupied":"ભરેલા","Available":"ઉપલબ્ધ","Emergency Registration":"કટોકટી નોંધણી","Emergency patients receive priority.":"કટોકટીના દર્દીઓને પ્રાથમિકતા મળે છે.","Emergency Problem":"કટોકટીની સમસ્યા","Emergency Care":"કટોકટી સારવાર","Register Emergency Patient":"કટોકટીના દર્દીની નોંધણી કરો"};
 commonTranslations.pa={"Home":"ਹੋਮ","Book Appointment":"ਅਪਾਇੰਟਮੈਂਟ ਬੁੱਕ ਕਰੋ","My Token":"ਮੇਰਾ ਟੋਕਨ","Staff Dashboard":"ਸਟਾਫ ਡੈਸ਼ਬੋਰਡ","Emergency":"ਐਮਰਜੈਂਸੀ","Book an Appointment":"ਅਪਾਇੰਟਮੈਂਟ ਬੁੱਕ ਕਰੋ","Normal Patient":"ਆਮ ਮਰੀਜ਼","Specially-Abled Patient":"ਵਿਸ਼ੇਸ਼ ਸਹਾਇਤਾ ਲੋੜੀਂਦਾ ਮਰੀਜ਼","Book Now":"ਹੁਣੇ ਬੁੱਕ ਕਰੋ","Get Priority":"ਤਰਜੀਹ ਲਵੋ","Register Now":"ਹੁਣੇ ਰਜਿਸਟਰ ਕਰੋ","OUR SERVICES":"ਸਾਡੀਆਂ ਸੇਵਾਵਾਂ","How can we help you?":"ਅਸੀਂ ਤੁਹਾਡੀ ਕਿਵੇਂ ਮਦਦ ਕਰ ਸਕਦੇ ਹਾਂ?","Choose the service that best fits your needs.":"ਆਪਣੀ ਲੋੜ ਅਨੁਸਾਰ ਸੇਵਾ ਚੁਣੋ।","Secure":"ਸੁਰੱਖਿਅਤ","AI Powered":"AI ਸੰਚਾਲਿਤ","Less Waiting":"ਘੱਟ ਉਡੀਕ","APPOINTMENT":"ਅਪਾਇੰਟਮੈਂਟ","Book Your Appointment":"ਆਪਣੀ ਅਪਾਇੰਟਮੈਂਟ ਬੁੱਕ ਕਰੋ","Simple & Fast":"ਸੌਖਾ ਅਤੇ ਤੇਜ਼","Patient":"ਮਰੀਜ਼","Department":"ਵਿਭਾਗ","Doctor":"ਡਾਕਟਰ","Details":"ਵੇਰਵੇ","Patient Type":"ਮਰੀਜ਼ ਦੀ ਕਿਸਮ","Who are you booking the appointment for?":"ਤੁਸੀਂ ਕਿਸ ਲਈ ਅਪਾਇੰਟਮੈਂਟ ਬੁੱਕ ਕਰ ਰਹੇ ਹੋ?","Standard medical consultation":"ਆਮ ਡਾਕਟਰੀ ਸਲਾਹ","Priority assistance and support":"ਤਰਜੀਹੀ ਸਹਾਇਤਾ ਅਤੇ ਸਹਿਯੋਗ","Select Department":"ਵਿਭਾਗ ਚੁਣੋ","General Medicine":"ਜਨਰਲ ਮੈਡੀਸਨ","Orthopedics":"ਆਰਥੋਪੀਡਿਕਸ","Cardiology":"ਕਾਰਡੀਓਲੋਜੀ","Neurology":"ਨਿਊਰੋਲੋਜੀ","Choose Your Doctor":"ਆਪਣਾ ਡਾਕਟਰ ਚੁਣੋ","Compare doctors and waiting times.":"ਡਾਕਟਰਾਂ ਅਤੇ ਉਡੀਕ ਸਮੇਂ ਦੀ ਤੁਲਨਾ ਕਰੋ।","SMART PICK":"ਸਮਾਰਟ ਚੋਣ","Find Best Doctor":"ਸਭ ਤੋਂ ਵਧੀਆ ਡਾਕਟਰ ਲੱਭੋ","Select a department first":"ਪਹਿਲਾਂ ਵਿਭਾਗ ਚੁਣੋ","Available doctors will appear here.":"ਉਪਲਬਧ ਡਾਕਟਰ ਇੱਥੇ ਦਿਖਾਈ ਦੇਣਗੇ।","No doctors available":"ਕੋਈ ਡਾਕਟਰ ਉਪਲਬਧ ਨਹੀਂ","Available":"ਉਪਲਬਧ","patients waiting":"ਮਰੀਜ਼ ਉਡੀਕ ਵਿੱਚ","Estimated wait":"ਅਨੁਮਾਨਿਤ ਉਡੀਕ","Select Doctor":"ਡਾਕਟਰ ਚੁਣੋ","Patient Details":"ਮਰੀਜ਼ ਦੇ ਵੇਰਵੇ","Basic Information":"ਮੁੱਢਲੀ ਜਾਣਕਾਰੀ","Patient Name":"ਮਰੀਜ਼ ਦਾ ਨਾਮ","Age":"ਉਮਰ","Gender":"ਲਿੰਗ","Male":"ਮਰਦ","Female":"ਔਰਤ","Other":"ਹੋਰ","Mobile Number":"ਮੋਬਾਈਲ ਨੰਬਰ","Email":"ਈਮੇਲ","Optional":"ਵਿਕਲਪਿਕ","Reason for Visit":"ਮੁਲਾਕਾਤ ਦਾ ਕਾਰਨ","Select Main Problem":"ਮੁੱਖ ਸਮੱਸਿਆ ਚੁਣੋ","Describe the Problem":"ਸਮੱਸਿਆ ਦਾ ਵੇਰਵਾ ਦਿਓ","Today":"ਅੱਜ","Medical Information":"ਡਾਕਟਰੀ ਜਾਣਕਾਰੀ","Existing Medical Conditions":"ਮੌਜੂਦਾ ਡਾਕਟਰੀ ਹਾਲਤਾਂ","None":"ਕੋਈ ਨਹੀਂ","Diabetes":"ਸ਼ੂਗਰ","Hypertension":"ਹਾਈ ਬਲੱਡ ਪ੍ਰੈਸ਼ਰ","Asthma":"ਦਮਾ","Heart Disease":"ਦਿਲ ਦੀ ਬਿਮਾਰੀ","Allergies":"ਐਲਰਜੀਆਂ","No Known Allergies":"ਕੋਈ ਜਾਣੀ ਐਲਰਜੀ ਨਹੀਂ","Current Medications":"ਮੌਜੂਦਾ ਦਵਾਈਆਂ","Ready to book?":"ਬੁੱਕ ਕਰਨ ਲਈ ਤਿਆਰ?","Confirm Appointment":"ਅਪਾਇੰਟਮੈਂਟ ਦੀ ਪੁਸ਼ਟੀ ਕਰੋ","YOUR APPOINTMENT":"ਤੁਹਾਡੀ ਅਪਾਇੰਟਮੈਂਟ","Appointment Token":"ਅਪਾਇੰਟਮੈਂਟ ਟੋਕਨ","No appointment booked yet":"ਅਜੇ ਕੋਈ ਅਪਾਇੰਟਮੈਂਟ ਬੁੱਕ ਨਹੀਂ","Book an appointment to receive your token.":"ਟੋਕਨ ਲੈਣ ਲਈ ਅਪਾਇੰਟਮੈਂਟ ਬੁੱਕ ਕਰੋ","APPOINTMENT CONFIRMED":"ਅਪਾਇੰਟਮੈਂਟ ਦੀ ਪੁਸ਼ਟੀ ਹੋ ਗਈ","Your Token Number":"ਤੁਹਾਡਾ ਟੋਕਨ ਨੰਬਰ","Estimated Waiting":"ਅਨੁਮਾਨਿਤ ਉਡੀਕ","Queue Overview":"ਕਤਾਰ ਦਾ ਜਾਇਜ਼ਾ","Total Patients":"ਕੁੱਲ ਮਰੀਜ਼","Waiting":"ਉਡੀਕ","Completed":"ਪੂਰਾ","Available Beds":"ਉਪਲਬਧ ਬੈੱਡ","Patient Queue":"ਮਰੀਜ਼ਾਂ ਦੀ ਕਤਾਰ","Token":"ਟੋਕਨ","Contact":"ਸੰਪਰਕ","Problem":"ਸਮੱਸਿਆ","Type":"ਕਿਸਮ","Status":"ਸਥਿਤੀ","Action":"ਕਾਰਵਾਈ","Complete":"ਪੂਰਾ ਕਰੋ","Done":"ਹੋ ਗਿਆ","Emergency Bed Status":"ਐਮਰਜੈਂਸੀ ਬੈੱਡ ਸਥਿਤੀ","Total Beds":"ਕੁੱਲ ਬੈੱਡ","Occupied":"ਭਰੇ ਹੋਏ","Available":"ਉਪਲਬਧ","Emergency Registration":"ਐਮਰਜੈਂਸੀ ਰਜਿਸਟ੍ਰੇਸ਼ਨ","Emergency patients receive priority.":"ਐਮਰਜੈਂਸੀ ਮਰੀਜ਼ਾਂ ਨੂੰ ਤਰਜੀਹ ਮਿਲਦੀ ਹੈ।","Emergency Problem":"ਐਮਰਜੈਂਸੀ ਸਮੱਸਿਆ","Emergency Care":"ਐਮਰਜੈਂਸੀ ਦੇਖਭਾਲ","Register Emergency Patient":"ਐਮਰਜੈਂਸੀ ਮਰੀਜ਼ ਰਜਿਸਟਰ ਕਰੋ"};
 commonTranslations.ur={"Home":"ہوم","Book Appointment":"اپائنٹمنٹ بک کریں","My Token":"میرا ٹوکن","Staff Dashboard":"اسٹاف ڈیش بورڈ","Emergency":"ایمرجنسی","Book an Appointment":"اپائنٹمنٹ بک کریں","Normal Patient":"عام مریض","Specially-Abled Patient":"خصوصی مدد کے ضرورت مند مریض","Book Now":"ابھی بک کریں","Get Priority":"ترجیح حاصل کریں","Register Now":"ابھی رجسٹر کریں","OUR SERVICES":"ہماری خدمات","How can we help you?":"ہم آپ کی کیسے مدد کر سکتے ہیں؟","Choose the service that best fits your needs.":"اپنی ضرورت کے مطابق خدمت منتخب کریں۔","Secure":"محفوظ","AI Powered":"AI سے چلنے والا","Less Waiting":"کم انتظار","APPOINTMENT":"اپائنٹمنٹ","Book Your Appointment":"اپنی اپائنٹمنٹ بک کریں","Simple & Fast":"آسان اور تیز","Patient":"مریض","Department":"شعبہ","Doctor":"ڈاکٹر","Details":"تفصیلات","Patient Type":"مریض کی قسم","Who are you booking the appointment for?":"آپ کس کے لیے اپائنٹمنٹ بک کر رہے ہیں؟","Standard medical consultation":"معمول کا طبی مشورہ","Priority assistance and support":"ترجیحی مدد اور معاونت","Select Department":"شعبہ منتخب کریں","General Medicine":"جنرل میڈیسن","Orthopedics":"آرتھوپیڈکس","Cardiology":"کارڈیالوجی","Neurology":"نیورولوجی","Choose Your Doctor":"اپنا ڈاکٹر منتخب کریں","Compare doctors and waiting times.":"ڈاکٹروں اور انتظار کے اوقات کا موازنہ کریں۔","SMART PICK":"اسمارٹ انتخاب","Find Best Doctor":"بہترین ڈاکٹر تلاش کریں","Select a department first":"پہلے شعبہ منتخب کریں","Available doctors will appear here.":"دستیاب ڈاکٹر یہاں نظر آئیں گے۔","No doctors available":"کوئی ڈاکٹر دستیاب نہیں","Available":"دستیاب","patients waiting":"مریض انتظار میں","Estimated wait":"متوقع انتظار","Select Doctor":"ڈاکٹر منتخب کریں","Patient Details":"مریض کی تفصیلات","Basic Information":"بنیادی معلومات","Patient Name":"مریض کا نام","Age":"عمر","Gender":"صنف","Male":"مرد","Female":"خاتون","Other":"دیگر","Mobile Number":"موبائل نمبر","Email":"ای میل","Optional":"اختیاری","Reason for Visit":"ملاقات کی وجہ","Select Main Problem":"اہم مسئلہ منتخب کریں","Describe the Problem":"مسئلہ بیان کریں","Today":"آج","Medical Information":"طبی معلومات","Existing Medical Conditions":"موجودہ طبی حالات","None":"کوئی نہیں","Diabetes":"ذیابیطس","Hypertension":"ہائی بلڈ پریشر","Asthma":"دمہ","Heart Disease":"دل کی بیماری","Allergies":"الرجی","No Known Allergies":"کوئی معلوم الرجی نہیں","Current Medications":"موجودہ ادویات","Ready to book?":"بک کرنے کے لیے تیار؟","Confirm Appointment":"اپائنٹمنٹ کی تصدیق کریں","YOUR APPOINTMENT":"آپ کی اپائنٹمنٹ","Appointment Token":"اپائنٹمنٹ ٹوکن","No appointment booked yet":"ابھی کوئی اپائنٹمنٹ بک نہیں ہوئی","Book an appointment to receive your token.":"ٹوکن حاصل کرنے کے لیے اپائنٹمنٹ بک کریں","APPOINTMENT CONFIRMED":"اپائنٹمنٹ کی تصدیق ہو گئی","Your Token Number":"آپ کا ٹوکن نمبر","Estimated Waiting":"متوقع انتظار","Queue Overview":"قطار کا جائزہ","Total Patients":"کل مریض","Waiting":"انتظار","Completed":"مکمل","Available Beds":"دستیاب بیڈز","Patient Queue":"مریضوں کی قطار","Token":"ٹوکن","Contact":"رابطہ","Problem":"مسئلہ","Type":"قسم","Status":"حیثیت","Action":"کارروائی","Complete":"مکمل کریں","Done":"ہو گیا","Emergency Bed Status":"ایمرجنسی بیڈ کی حالت","Total Beds":"کل بیڈز","Occupied":"مصروف","Available":"دستیاب","Emergency Registration":"ایمرجنسی رجسٹریشن","Emergency patients receive priority.":"ایمرجنسی مریضوں کو ترجیح دی جاتی ہے۔","Emergency Problem":"ایمرجنسی مسئلہ","Emergency Care":"ایمرجنسی نگہداشت","Register Emergency Patient":"ایمرجنسی مریض رجسٹر کریں"};
-commonTranslations.fr={"Home":"Accueil","Book Appointment":"Prendre rendez-vous","My Token":"Mon jeton","Staff Dashboard":"Tableau du personnel","Emergency":"Urgence","Book an Appointment":"Prendre rendez-vous","Normal Patient":"Patient standard","Specially-Abled Patient":"Patient ayant besoin d'une assistance spéciale","Book Now":"Réserver","Get Priority":"Obtenir la priorité","Register Now":"S'inscrire","OUR SERVICES":"NOS SERVICES","How can we help you?":"Comment pouvons-nous vous aider ?","Choose the service that best fits your needs.":"Choisissez le service qui correspond le mieux à vos besoins.","Secure":"Sécurisé","AI Powered":"Propulsé par l'IA","Less Waiting":"Moins d'attente","APPOINTMENT":"RENDEZ-VOUS","Book Your Appointment":"Prenez votre rendez-vous","Simple & Fast":"Simple et rapide","Patient":"Patient","Department":"Service","Doctor":"Médecin","Details":"Détails","Patient Type":"Type de patient","Who are you booking the appointment for?":"Pour qui prenez-vous le rendez-vous ?","Standard medical consultation":"Consultation médicale standard","Priority assistance and support":"Assistance prioritaire et accompagnement","Select Department":"Sélectionner le service","General Medicine":"Médecine générale","Orthopedics":"Orthopédie","Cardiology":"Cardiologie","Neurology":"Neurologie","Choose Your Doctor":"Choisissez votre médecin","Compare doctors and waiting times.":"Comparez les médecins et les temps d'attente.","SMART PICK":"CHOIX INTELLIGENT","Find Best Doctor":"Trouver le meilleur médecin","Select a department first":"Sélectionnez d'abord un service","Available doctors will appear here.":"Les médecins disponibles apparaîtront ici.","No doctors available":"Aucun médecin disponible","Available":"Disponible","patients waiting":"patients en attente","Estimated wait":"Attente estimée","Select Doctor":"Sélectionner le médecin","Patient Details":"Détails du patient","Basic Information":"Informations de base","Patient Name":"Nom du patient","Age":"Âge","Gender":"Sexe","Male":"Homme","Female":"Femme","Other":"Autre","Mobile Number":"Numéro de mobile","Email":"E-mail","Optional":"Facultatif","Reason for Visit":"Motif de consultation","Select Main Problem":"Sélectionner le problème principal","Describe the Problem":"Décrire le problème","Today":"Aujourd'hui","Medical Information":"Informations médicales","Existing Medical Conditions":"Antécédents médicaux","None":"Aucun","Diabetes":"Diabète","Hypertension":"Hypertension","Asthma":"Asthme","Heart Disease":"Maladie cardiaque","Allergies":"Allergies","No Known Allergies":"Aucune allergie connue","Current Medications":"Médicaments actuels","Ready to book?":"Prêt à réserver ?","Confirm Appointment":"Confirmer le rendez-vous","YOUR APPOINTMENT":"VOTRE RENDEZ-VOUS","Appointment Token":"Jeton de rendez-vous","No appointment booked yet":"Aucun rendez-vous réservé","Book an appointment to receive your token.":"Réservez un rendez-vous pour recevoir votre jeton.","APPOINTMENT CONFIRMED":"RENDEZ-VOUS CONFIRMÉ","Your Token Number":"Votre numéro de jeton","Estimated Waiting":"Attente estimée","Queue Overview":"Aperçu de la file","Total Patients":"Nombre total de patients","Waiting":"En attente","Completed":"Terminé","Available Beds":"Lits disponibles","Patient Queue":"File des patients","Token":"Jeton","Contact":"Contact","Problem":"Problème","Type":"Type","Status":"Statut","Action":"Action","Complete":"Terminer","Done":"Terminé","Emergency Bed Status":"État des lits d'urgence","Total Beds":"Nombre total de lits","Occupied":"Occupés","Available":"Disponibles","Emergency Registration":"Enregistrement d'urgence","Emergency patients receive priority.":"Les patients en urgence sont prioritaires.","Emergency Problem":"Problème urgent","Emergency Care":"Soins d'urgence","Register Emergency Patient":"Enregistrer le patient en urgence"};
-commonTranslations.es={"Home":"Inicio","Book Appointment":"Reservar cita","My Token":"Mi turno","Staff Dashboard":"Panel del personal","Emergency":"Emergencia","Book an Appointment":"Reservar una cita","Normal Patient":"Paciente normal","Specially-Abled Patient":"Paciente que requiere asistencia especial","Book Now":"Reservar ahora","Get Priority":"Obtener prioridad","Register Now":"Registrar ahora","OUR SERVICES":"NUESTROS SERVICIOS","How can we help you?":"¿Cómo podemos ayudarle?","Choose the service that best fits your needs.":"Elija el servicio que mejor se adapte a sus necesidades.","Secure":"Seguro","AI Powered":"Impulsado por IA","Less Waiting":"Menos espera","APPOINTMENT":"CITA","Book Your Appointment":"Reserve su cita","Simple & Fast":"Simple y rápido","Patient":"Paciente","Department":"Departamento","Doctor":"Médico","Details":"Detalles","Patient Type":"Tipo de paciente","Who are you booking the appointment for?":"¿Para quién está reservando la cita?","Standard medical consultation":"Consulta médica estándar","Priority assistance and support":"Asistencia prioritaria y apoyo","Select Department":"Seleccionar departamento","General Medicine":"Medicina general","Orthopedics":"Ortopedia","Cardiology":"Cardiología","Neurology":"Neurología","Choose Your Doctor":"Elija su médico","Compare doctors and waiting times.":"Compare médicos y tiempos de espera.","SMART PICK":"SELECCIÓN INTELIGENTE","Find Best Doctor":"Encontrar el mejor médico","Select a department first":"Primero seleccione un departamento","Available doctors will appear here.":"Los médicos disponibles aparecerán aquí.","No doctors available":"No hay médicos disponibles","Available":"Disponible","patients waiting":"pacientes esperando","Estimated wait":"Espera estimada","Select Doctor":"Seleccionar médico","Patient Details":"Datos del paciente","Basic Information":"Información básica","Patient Name":"Nombre del paciente","Age":"Edad","Gender":"Género","Male":"Hombre","Female":"Mujer","Other":"Otro","Mobile Number":"Número de móvil","Email":"Correo electrónico","Optional":"Opcional","Reason for Visit":"Motivo de la visita","Select Main Problem":"Seleccionar problema principal","Describe the Problem":"Describa el problema","Today":"Hoy","Medical Information":"Información médica","Existing Medical Conditions":"Enfermedades existentes","None":"Ninguna","Diabetes":"Diabetes","Hypertension":"Hipertensión","Asthma":"Asma","Heart Disease":"Enfermedad cardíaca","Allergies":"Alergias","No Known Allergies":"Sin alergias conocidas","Current Medications":"Medicamentos actuales","Ready to book?":"¿Listo para reservar?","Confirm Appointment":"Confirmar cita","YOUR APPOINTMENT":"SU CITA","Appointment Token":"Turno de cita","No appointment booked yet":"Aún no hay ninguna cita reservada","Book an appointment to receive your token.":"Reserve una cita para recibir su turno.","APPOINTMENT CONFIRMED":"CITA CONFIRMADA","Your Token Number":"Su número de turno","Estimated Waiting":"Espera estimada","Queue Overview":"Resumen de la cola","Total Patients":"Pacientes totales","Waiting":"En espera","Completed":"Completado","Available Beds":"Camas disponibles","Patient Queue":"Cola de pacientes","Token":"Turno","Contact":"Contacto","Problem":"Problema","Type":"Tipo","Status":"Estado","Action":"Acción","Complete":"Completar","Done":"Listo","Emergency Bed Status":"Estado de camas de emergencia","Total Beds":"Camas totales","Occupied":"Ocupadas","Available":"Disponibles","Emergency Registration":"Registro de emergencia","Emergency patients receive priority.":"Los pacientes de emergencia reciben prioridad.","Emergency Problem":"Problema de emergencia","Emergency Care":"Atención de emergencia","Register Emergency Patient":"Registrar paciente de emergencia"};
 
 Object.assign(uiTranslations, commonTranslations);
+Object.assign(uiTranslations.od, {
+    "Book appointments, find the right doctor, and manage your hospital visit with ease.": "ଆପଏଣ୍ଟମେଣ୍ଟ ବୁକ୍ କରନ୍ତୁ, ଉପଯୁକ୍ତ ଡାକ୍ତରଙ୍କୁ ଖୋଜନ୍ତୁ ଏବଂ ହସ୍ପିଟାଲ୍ ଯିବା ପ୍ରକ୍ରିୟାକୁ ସହଜରେ ପରିଚାଳନା କରନ୍ତୁ।",
+    "✨ Smart Healthcare • Less Waiting": "✨ ସ୍ମାର୍ଟ ସ୍ୱାସ୍ଥ୍ୟସେବା • କମ୍ ଅପେକ୍ଷା",
+    "Available": "ଉପଲବ୍ଧ",
+    "Years Experience": "ବର୍ଷର ଅଭିଜ୍ଞତା",
+    "Estimated waiting time": "ଅନୁମାନିତ ଅପେକ୍ଷା ସମୟ",
+    "min": "ମିନିଟ୍",
+    "minutes": "ମିନିଟ୍",
+    "patients ahead of you": "ଆପଣଙ୍କ ଆଗରେ ଥିବା ରୋଗୀ",
+    "patients waiting for your doctor": "ଆପଣଙ୍କ ଡାକ୍ତରଙ୍କ ପାଇଁ ଅପେକ୍ଷାରତ ରୋଗୀ",
+    "patients in that department": "ସେହି ବିଭାଗରେ ଥିବା ରୋଗୀ",
+    "QUICKEST SLOT": "ସବୁଠାରୁ ଶୀଘ୍ର ଉପଲବ୍ଧ ସମୟ",
+    "Select Doctor": "ଡାକ୍ତର ବାଛନ୍ତୁ",
+    "Wait Less.": "କମ୍ ଅପେକ୍ଷା କରନ୍ତୁ।",
+    "Care, on Cue": "ଠିକ୍ ସମୟରେ ଚିକିତ୍ସା",
+    "AI": "କୃତ୍ରିମ ବୁଦ୍ଧିମତ୍ତା",
+    "EMERGENCY": "ଜରୁରୀକାଳୀନ ସେବା",
+    "Emergency": "ଜରୁରୀକାଳୀନ ସେବା",
+    "Register Emergency Patient": "ଜରୁରୀକାଳୀନ ରୋଗୀଙ୍କ ପଞ୍ଜୀକରଣ କରନ୍ତୁ",
+    "Enter patient name": "ରୋଗୀଙ୍କ ନାମ ଲେଖନ୍ତୁ",
+    "Book appointments, find the right doctor, and manage your hospital visit with ease.": "ଆପଣଙ୍କ ହସ୍ପିଟାଲ୍‌ ଯାତ୍ରାକୁ ସହଜରେ ପରିଚାଳନା କରନ୍ତୁ, ଡାକ୍ତରଙ୍କୁ ଖୋଜନ୍ତୁ ଏବଂ ଆପଏଣ୍ଟମେଣ୍ଟ ବୁକ୍ କରନ୍ତୁ।",
+    "Normal Patient": "ସାଧାରଣ ରୋଗୀ",
+    "Book a regular consultation with a doctor of your choice.": "ଆପଣଙ୍କ ପସନ୍ଦର ଡାକ୍ତରଙ୍କ ସହ ସାଧାରଣ ଚିକିତ୍ସା ପରାମର୍ଶ ପାଇଁ ବୁକ୍ କରନ୍ତୁ।",
+    "Specially-Abled Patient": "ବିଶେଷ ସହାୟତା ଆବଶ୍ୟକ କରୁଥିବା ରୋଗୀ",
+    "Receive priority assistance and suitable doctor recommendations.": "ପ୍ରାଥମିକତା ଭିତ୍ତିକ ସହାୟତା ଏବଂ ଉପଯୁକ୍ତ ଡାକ୍ତରଙ୍କ ସୁପାରିଶ ପାଆନ୍ତୁ।",
+    "Quickly register an emergency patient for immediate attention.": "ଜରୁରୀକାଳୀନ ରୋଗୀଙ୍କୁ ତୁରନ୍ତ ଚିକିତ୍ସା ପାଇଁ ପଞ୍ଜୀକରଣ କରନ୍ତୁ।",
+    "Book Now": "ବର୍ତ୍ତମାନ ବୁକ୍ କରନ୍ତୁ",
+    "Get Priority": "ପ୍ରାଥମିକତା ପାଆନ୍ତୁ",
+    "Register Now": "ବର୍ତ୍ତମାନ ପଞ୍ଜୀକରଣ କରନ୍ତୁ"
+
+});
+/* Additional Hindi coverage for text that was missing in the earlier
+   dictionary. These labels also appear in dynamically-created token cards
+   and the live staff dashboard. */
+Object.assign(uiTranslations.hi, {
+
+    "✨ Smart Healthcare • Less Waiting": "✨ स्मार्ट स्वास्थ्य सेवा • कम प्रतीक्षा",
+    "Wait Less.": "कम प्रतीक्षा करें।",
+    "Care, on Cue": "समय पर देखभाल",
+    "AI": "कृत्रिम बुद्धिमत्ता (AI)",
+    "Smart Recommendations": "स्मार्ट सुझाव",
+    "Smart Recommendation": "स्मार्ट सुझाव",
+    "QUICKEST SLOT": "सबसे जल्दी उपलब्ध समय स्लॉट",
+    "Available": "उपलब्ध",
+    "Years Experience": "वर्षों का अनुभव",
+    "patients waiting": "मरीज प्रतीक्षा में",
+    "patients ahead of you": "मरीज आपसे आगे कतार में",
+    "patients waiting for your doctor": "मरीज आपके डॉक्टर के पास प्रतीक्षा में",
+    "patients in that department": "मरीज उस विभाग में",
+    "Book appointments, find the right doctor, and manage your hospital visit with ease.": "अपॉइंटमेंट बुक करें, सही डॉक्टर खोजें और अस्पताल में अपनी यात्रा आसानी से प्रबंधित करें।",
+    "heroDescription": "अपॉइंटमेंट बुक करें, सही डॉक्टर खोजें और अस्पताल में अपनी यात्रा आसानी से प्रबंधित करें।",
+    "Book a regular consultation with a doctor of your choice.": "अपनी पसंद के डॉक्टर से सामान्य परामर्श बुक करें।",
+    "Receive priority assistance and suitable doctor recommendations.": "प्राथमिकता के आधार पर सहायता और उपयुक्त डॉक्टरों की सिफारिश प्राप्त करें।",
+    "Quickly register an emergency patient for immediate attention.": "तत्काल उपचार के लिए आपातकालीन मरीज का तुरंत पंजीकरण करें।",
+    "Select a department to see doctor recommendations.": "डॉक्टरों की सिफारिशें देखने के लिए विभाग चुनें।",
+    "Available": "उपलब्ध",
+    "Years Experience": "वर्षों का अनुभव",
+    "patients waiting": "मरीज प्रतीक्षा में",
+    "Estimated wait": "अनुमानित प्रतीक्षा",
+    "Estimated waiting time": "अनुमानित प्रतीक्षा समय",
+    "min": "मिनट",
+    "minutes": "मिनट",
+    "Describe the Problem": "समस्या का विवरण दें",
+    "Please briefly describe the patient's symptoms or reason for the visit.": "कृपया मरीज के लक्षणों या अस्पताल आने का कारण संक्षेप में बताएं।",
+    "STAFF DASHBOARD": "कर्मचारी डैशबोर्ड",
+    "Staff Dashboard": "कर्मचारी डैशबोर्ड",
+    "Queue Overview": "कतार का अवलोकन",
+    "Monitor patients, doctors and hospital capacity.": "मरीजों, डॉक्टरों और अस्पताल की क्षमता पर नजर रखें।",
+    "Live": "लाइव",
+    "Total Patients": "कुल मरीज",
+    "Waiting": "प्रतीक्षा में",
+    "Completed": "पूर्ण",
+    "Available Beds": "उपलब्ध बेड",
+    "Patient Queue": "मरीजों की कतार",
+    "Current appointments and their status.": "वर्तमान अपॉइंटमेंट और उनकी स्थिति।",
+    "Patients": "मरीज",
+    "Token": "टोकन",
+    "Contact": "संपर्क",
+    "Type": "प्रकार",
+    "Status": "स्थिति",
+    "Action": "कार्रवाई",
+    "Regular": "सामान्य",
+    "Priority": "प्राथमिकता",
+    "Start Processing": "उपचार शुरू करें",
+    "Processing": "उपचार जारी है",
+    "Complete": "पूरा करें",
+    "Done": "हो गया",
+    "No patients in the queue.": "कतार में कोई मरीज नहीं है।",
+    "No. of patients ahead of you": "आपसे आगे कतार में मरीजों की संख्या",
+    "patients ahead of you": "मरीज आपसे आगे कतार में हैं",
+    "patients waiting for your doctor": "मरीज आपके डॉक्टर के पास प्रतीक्षा में हैं",
+    "patients in that department": "मरीज उस विभाग में हैं",
+    "No. of patients waiting for your doctor": "आपके डॉक्टर के पास प्रतीक्षा कर रहे मरीजों की संख्या",
+    "No. of patients in that department": "उस विभाग में मरीजों की कुल संख्या",
+    "Please arrive at the hospital before your estimated appointment time.": "कृपया अपने अनुमानित अपॉइंटमेंट समय से पहले अस्पताल पहुंचें।",
+    "⏱️ Please arrive at the hospital before your estimated appointment time.": "⏱️ कृपया अपने अनुमानित अपॉइंटमेंट समय से पहले अस्पताल पहुंचें।",
+    "APPOINTMENT CONFIRMED": "अपॉइंटमेंट की पुष्टि हो गई है",
+    "Your Token Number": "आपका टोकन नंबर",
+    "Please keep this token number safe.": "कृपया इस टोकन नंबर को सुरक्षित रखें।",
+    "Department": "विभाग",
+    "Doctor": "डॉक्टर",
+    "Patient Type": "मरीज का प्रकार",
+    "Problem": "समस्या",
+    "Regular Patient": "सामान्य मरीज",
+    "Priority Patient": "प्राथमिकता वाला मरीज"
+    
+});
+
+
+/* =========================================================
+   ADDITIONAL HINDI TRANSLATIONS - SMARTQUEUE
+========================================================= */
+
+Object.assign(uiTranslations.hi, {
+
+    // Emergency button and registration
+    "EMERGENCY": "आपातकाल",
+    "Emergency": "आपातकाल",
+    "Register Emergency Patient": "आपातकालीन मरीज का पंजीकरण करें",
+    "Enter patient name": "मरीज का नाम दर्ज करें",
+
+    // Patient token and queue information
+    "No. of patients ahead of you": "आपसे आगे कतार में मरीजों की संख्या",
+    "No. of patients waiting for your doctor": "आपके डॉक्टर के पास प्रतीक्षा कर रहे मरीजों की संख्या",
+    "No. of patients in that department": "उस विभाग में मरीजों की संख्या",
+
+    // Appointment instructions
+    "Please arrive at the hospital before your estimated appointment time.": "कृपया अपने निर्धारित अपॉइंटमेंट समय से पहले अस्पताल पहुँचें।",
+
+    // Problem description
+    "Describe the reason for visiting": "अस्पताल आने का कारण बताएं",
+    "Describe symptoms or reason for visiting...": "लक्षण या अस्पताल आने का कारण बताएं...",
+
+    // Doctor recommendation cards
+    "Years Experience": "वर्षों का अनुभव",
+    "Available": "उपलब्ध",
+    "patients waiting": "मरीज प्रतीक्षा में",
+
+    // AI doctor recommendation
+    "QUICKEST SLOT": "सबसे जल्दी उपलब्ध समय स्लॉट",
+    "Quickest Slot": "सबसे जल्दी उपलब्ध समय स्लॉट"
+
+});
+
 const extraLabels = {
 hi:{"REGULAR CARE":"नियमित देखभाल","PRIORITY CARE":"प्राथमिकता देखभाल","URGENT CARE":"तत्काल देखभाल","AI Recommendation:":"एआई सिफारिश:","Doctors available in":"इस विभाग में उपलब्ध डॉक्टर:","Click \"Find Best Doctor\" for an AI recommendation.":"एआई सिफारिश के लिए \"सर्वश्रेष्ठ डॉक्टर खोजें\" पर क्लिक करें।","is currently the best choice with an estimated waiting time of":"अभी सबसे अच्छा विकल्प है, अनुमानित प्रतीक्षा समय","selected. Estimated waiting time is":"चयनित किया गया। अनुमानित प्रतीक्षा समय है","min":"मिनट","minutes":"मिनट"},
 od:{"REGULAR CARE":"ନିୟମିତ ଯତ୍ନ","PRIORITY CARE":"ପ୍ରାଥମିକତା ଯତ୍ନ","URGENT CARE":"ତୁରନ୍ତ ଯତ୍ନ","AI Recommendation:":"ଏଆଇ ସୁପାରିଶ:","Doctors available in":"ଏହି ବିଭାଗରେ ଉପଲବ୍ଧ ଡାକ୍ତର:","Click \"Find Best Doctor\" for an AI recommendation.":"ଏଆଇ ସୁପାରିଶ ପାଇଁ \"ଶ୍ରେଷ୍ଠ ଡାକ୍ତର ଖୋଜନ୍ତୁ\" ଉପରେ କ୍ଲିକ୍ କରନ୍ତୁ।","is currently the best choice with an estimated waiting time of":"ବର୍ତ୍ତମାନ ସର୍ବୋତ୍ତମ ବିକଳ୍ପ, ଅନୁମାନିତ ଅପେକ୍ଷା ସମୟ","selected. Estimated waiting time is":"ଚୟନ କରାଗଲା। ଅନୁମାନିତ ଅପେକ୍ଷା ସମୟ","min":"ମିନିଟ୍","minutes":"ମିନିଟ୍"},
@@ -2483,8 +2716,6 @@ kn:{"REGULAR CARE":"ಸಾಮಾನ್ಯ ಆರೈಕೆ","PRIORITY CARE":"ಆ�
 gu:{"REGULAR CARE":"નિયમિત સંભાળ","PRIORITY CARE":"પ્રાથમિક સંભાળ","URGENT CARE":"તાત્કાલિક સંભાળ","AI Recommendation:":"AI ભલામણ:","Doctors available in":"આ વિભાગમાં ઉપલબ્ધ ડોક્ટરો:","Click \"Find Best Doctor\" for an AI recommendation.":"AI ભલામણ માટે \"શ્રેષ્ઠ ડોક્ટર શોધો\" પર ક્લિક કરો.","is currently the best choice with an estimated waiting time of":"હાલમાં શ્રેષ્ઠ વિકલ્પ, અંદાજિત રાહ સમય","selected. Estimated waiting time is":"પસંદ કરેલ. અંદાજિત રાહ સમય","min":"મિનિટ","minutes":"મિનિટ"},
 pa:{"REGULAR CARE":"ਨਿਯਮਤ ਦੇਖਭਾਲ","PRIORITY CARE":"ਤਰਜੀਹੀ ਦੇਖਭਾਲ","URGENT CARE":"ਤੁਰੰਤ ਦੇਖਭਾਲ","AI Recommendation:":"AI ਸਿਫ਼ਾਰਸ਼:","Doctors available in":"ਇਸ ਵਿਭਾਗ ਵਿੱਚ ਉਪਲਬਧ ਡਾਕਟਰ:","Click \"Find Best Doctor\" for an AI recommendation.":"AI ਸਿਫ਼ਾਰਸ਼ ਲਈ \"ਸਭ ਤੋਂ ਵਧੀਆ ਡਾਕਟਰ ਲੱਭੋ\" ਤੇ ਕਲਿੱਕ ਕਰੋ।","is currently the best choice with an estimated waiting time of":"ਇਸ ਵੇਲੇ ਸਭ ਤੋਂ ਵਧੀਆ ਚੋਣ ਹੈ, ਅਨੁਮਾਨਿਤ ਉਡੀਕ ਸਮਾਂ","selected. Estimated waiting time is":"ਚੁਣਿਆ ਗਿਆ। ਅਨੁਮਾਨਿਤ ਉਡੀਕ ਸਮਾਂ","min":"ਮਿੰਟ","minutes":"ਮਿੰਟ"},
 ur:{"REGULAR CARE":"معمول کی نگہداشت","PRIORITY CARE":"ترجیحی نگہداشت","URGENT CARE":"فوری نگہداشت","AI Recommendation:":"AI سفارش:","Doctors available in":"اس شعبے میں دستیاب ڈاکٹر:","Click \"Find Best Doctor\" for an AI recommendation.":"AI سفارش کے لیے \"بہترین ڈاکٹر تلاش کریں\" پر کلک کریں۔","is currently the best choice with an estimated waiting time of":"فی الحال بہترین انتخاب ہے، متوقع انتظار کا وقت","selected. Estimated waiting time is":"منتخب کیا گیا۔ متوقع انتظار کا وقت","min":"منٹ","minutes":"منٹ"},
-fr:{"REGULAR CARE":"SOINS STANDARD","PRIORITY CARE":"SOINS PRIORITAIRES","URGENT CARE":"SOINS URGENTS","AI Recommendation:":"Recommandation IA :","Doctors available in":"Médecins disponibles dans ce service :","Click \"Find Best Doctor\" for an AI recommendation.":"Cliquez sur « Trouver le meilleur médecin » pour une recommandation IA.","is currently the best choice with an estimated waiting time of":"est actuellement le meilleur choix, avec un temps d'attente estimé de","selected. Estimated waiting time is":"sélectionné. Le temps d'attente estimé est de","min":"min","minutes":"minutes"},
-es:{"REGULAR CARE":"ATENCIÓN REGULAR","PRIORITY CARE":"ATENCIÓN PRIORITARIA","URGENT CARE":"ATENCIÓN URGENTE","AI Recommendation:":"Recomendación de IA:","Doctors available in":"Médicos disponibles en este departamento:","Click \"Find Best Doctor\" for an AI recommendation.":"Haga clic en « Encontrar el mejor médico » para una recomendación de IA.","is currently the best choice with an estimated waiting time of":"es actualmente la mejor opción, con un tiempo de espera estimado de","selected. Estimated waiting time is":"seleccionado. El tiempo de espera estimado es de","min":"min","minutes":"minutos"}
 };
 Object.entries(extraLabels).forEach(([code, map]) => Object.assign(uiTranslations[code], map));
 
@@ -2501,7 +2732,7 @@ Object.keys(uiTranslations).forEach(code => {
 
 
 const languageNames = {
-    en:"English", hi:"हिन्दी", od:"ଓଡ଼ିଆ", mr:"मराठी", ta:"தமிழ்", te:"తెలుగు", kn:"ಕನ್ನಡ", gu:"ગુજરાતી", pa:"ਪੰਜਾਬੀ", ur:"اردو", fr:"Français", es:"Español"
+    en:"English", hi:"हिन्दी", od:"ଓଡ଼ିଆ", mr:"मराठी", ta:"தமிழ்", te:"తెలుగు", kn:"ಕನ್ನಡ", gu:"ગુજરાતી", pa:"ਪੰਜਾਬੀ", ur:"اردو"
 };
 
 const translatePatterns = (text, dict) => {
@@ -2510,6 +2741,9 @@ const translatePatterns = (text, dict) => {
     if ((m = text.match(/^(\d+)\s*minutes$/i))) return `${m[1]} ${dict["minutes"] || "minutes"}`;
     if ((m = text.match(/^(\d+)\s+patients waiting$/i))) return `${m[1]} ${dict["patients waiting"] || "patients waiting"}`;
     if ((m = text.match(/^(\d+)\s+Patients$/i))) return `${m[1]} ${dict["Patients"] || "Patients"}`;
+    if ((m = text.match(/^(\d+)\s+patients ahead of you$/i))) return `${m[1]} ${dict["patients ahead of you"] || "patients ahead of you"}`;
+    if ((m = text.match(/^(\d+)\s+patients waiting for your doctor$/i))) return `${m[1]} ${dict["patients waiting for your doctor"] || "patients waiting for your doctor"}`;
+    if ((m = text.match(/^(\d+)\s+patients in that department$/i))) return `${m[1]} ${dict["patients in that department"] || "patients in that department"}`;
     if ((m = text.match(/^Doctors available in (.+)\. Click "Find Best Doctor" for an AI recommendation\.$/))) {
         return `${dict["Doctors available in"] || "Doctors available in"} ${dict[m[1]] || m[1]}. ${dict["Click \"Find Best Doctor\" for an AI recommendation."] || "Click \"Find Best Doctor\" for an AI recommendation."}`;
     }
@@ -2522,6 +2756,36 @@ const translatePatterns = (text, dict) => {
     if ((m = text.match(/^AI Recommendation:\s*(.*)$/))) {
         return `${dict["AI Recommendation:"] || "AI Recommendation:"} ${m[1]}`;
     }
+
+    // Translate labels containing emojis
+    if ((m = text.match(/^●\s*Available$/i))) {
+        return "● " + (dict["Available"] || "Available");
+    }
+
+    if ((m = text.match(/^🎓\s*(\d+)\s+Years Experience$/i))) {
+        return `🎓 ${m[1]} ${dict["Years Experience"] || "Years Experience"}`;
+    }
+
+    if ((m = text.match(/^👥\s*(\d+)\s+patients waiting$/i))) {
+        return `👥 ${m[1]} ${dict["patients waiting"] || "patients waiting"}`;
+    }
+
+    if ((m = text.match(/^🤖\s*QUICKEST SLOT$/i))) {
+        return `🤖 ${dict["QUICKEST SLOT"] || "QUICKEST SLOT"}`;
+    }
+
+    if ((m = text.match(/^(\d+)\s+patients ahead of you$/i))) {
+        return `${m[1]} ${dict["patients ahead of you"] || "patients ahead of you"}`;
+    }
+
+    if ((m = text.match(/^(\d+)\s+patients waiting for your doctor$/i))) {
+        return `${m[1]} ${dict["patients waiting for your doctor"] || "patients waiting for your doctor"}`;
+    }
+
+    if ((m = text.match(/^(\d+)\s+patients in that department$/i))) {
+        return `${m[1]} ${dict["patients in that department"] || "patients in that department"}`;
+    }
+
     return null;
 };
 
